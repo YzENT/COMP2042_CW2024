@@ -20,7 +20,7 @@ public abstract class LevelParent extends Observable {
 	private final double enemyMaximumYPosition;
 
 	private final Group root;
-	private final Timeline timeline;
+	public final Timeline timeline; //testing to make it public to stop game
 	private final UserPlane user;
 	private final Scene scene;
 	private final ImageView background;
