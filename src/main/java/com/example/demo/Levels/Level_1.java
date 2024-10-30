@@ -1,15 +1,19 @@
-package com.example.demo;
+package com.example.demo.Levels;
 
-public class LevelOne extends LevelParent {
+import com.example.demo.ActiveActorDestructible;
+import com.example.demo.EnemyPlane;
+import com.example.demo.LevelView;
+
+public class Level_1 extends LevelParent {
 	
 	private static final String BACKGROUND_IMAGE_NAME = "/com/example/demo/images/background1.jpg";
-	private static final String NEXT_LEVEL = "com.example.demo.LevelTwo";
+	private static final String NEXT_LEVEL = "com.example.demo.Levels.Level_2";
 	private static final int TOTAL_ENEMIES = 5;
 	private static final int KILLS_TO_ADVANCE = 10;
 	private static final double ENEMY_SPAWN_PROBABILITY = .20;
 	private static final int PLAYER_INITIAL_HEALTH = 5;
 
-	public LevelOne(double screenHeight, double screenWidth) {
+	public Level_1(double screenHeight, double screenWidth) {
 		super(BACKGROUND_IMAGE_NAME, screenHeight, screenWidth, PLAYER_INITIAL_HEALTH);
     }
 

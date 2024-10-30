@@ -1,8 +1,12 @@
-package com.example.demo;
+package com.example.demo.Levels;
 
 import java.util.*;
 import java.util.stream.Collectors;
 
+import com.example.demo.ActiveActorDestructible;
+import com.example.demo.FighterPlane;
+import com.example.demo.LevelView;
+import com.example.demo.UserPlane;
 import javafx.animation.*;
 import javafx.event.EventHandler;
 import javafx.scene.Group;
@@ -88,7 +92,6 @@ public abstract class LevelParent extends Observable {
 		handleEnemyProjectileCollisions();
 		handlePlaneCollisions();
 		removeAllDestroyedActors();
-		updateKillCount();
 		updateLevelView();
 		checkIfGameOver();
 	}
@@ -127,14 +130,15 @@ public abstract class LevelParent extends Observable {
 	}
 
 	private void generateEnemyFire() {
-		enemyUnits.forEach(enemy -> spawnEnemyProjectile(((FighterPlane) enemy).fireProjectile()));
-	}
-
-	private void spawnEnemyProjectile(ActiveActorDestructible projectile) {
-		if (projectile != null) {
-			root.getChildren().add(projectile);
-			enemyProjectiles.add(projectile);
-		}
+//		enemyUnits.forEach(enemy -> {
+//			FighterPlane fighter = (FighterPlane) enemy;
+//			ActiveActorDestructible projectile = fighter.fireProjectile();
+//
+//			if (projectile != null) {
+//				root.getChildren().add(projectile);
+//				enemyProjectiles.add(projectile);
+//			}
+//		});
 	}
 
 	private void updateActors() {
@@ -158,34 +162,45 @@ public abstract class LevelParent extends Observable {
 		actors.removeAll(destroyedActors);
 	}
 
-	private void handlePlaneCollisions() {
-		handleCollisions(friendlyUnits, enemyUnits);
-	}
-
-	private void handleUserProjectileCollisions() {
-		handleCollisions(userProjectiles, enemyUnits);
-	}
-
-	private void handleEnemyProjectileCollisions() {
-		handleCollisions(enemyProjectiles, friendlyUnits);
-	}
-
-	private void handleCollisions(List<ActiveActorDestructible> actors1,
-			List<ActiveActorDestructible> actors2) {
+	private void handleCollisions(List<ActiveActorDestructible> actors1, List<ActiveActorDestructible> actors2, Runnable specialCondition) {
 		for (ActiveActorDestructible actor : actors2) {
 			for (ActiveActorDestructible otherActor : actors1) {
 				if (actor.getBoundsInParent().intersects(otherActor.getBoundsInParent())) {
 					actor.takeDamage();
 					otherActor.takeDamage();
+
+					// special condition only executed if object destroyed
+					if (actor.isDestroyed() || otherActor.isDestroyed()) {
+						specialCondition.run();
+					}
 				}
 			}
 		}
 	}
 
+	private void handlePlaneCollisions() {
+		handleCollisions(friendlyUnits, enemyUnits, () -> {});
+	}
+
+	private void handleUserProjectileCollisions() {
+		handleCollisions(userProjectiles, enemyUnits, () -> {
+			// kill count should only be incremented if missle hits enemy plane (special condition)
+			for (ActiveActorDestructible enemy : enemyUnits) {
+				if (enemy.isDestroyed()) {
+					user.incrementKillCount();
+				}
+			}
+		});
+	}
+
+	private void handleEnemyProjectileCollisions() {
+		handleCollisions(enemyProjectiles, friendlyUnits, () -> {});
+	}
+
 	private void handleEnemyPenetration() {
 		for (ActiveActorDestructible enemy : enemyUnits) {
 			if (enemyHasPenetratedDefenses(enemy)) {
-				user.takeDamage();
+//				user.takeDamage();
 				enemy.destroy();
 			}
 		}
@@ -193,12 +208,6 @@ public abstract class LevelParent extends Observable {
 
 	private void updateLevelView() {
 		levelView.removeHearts(user.getHealth());
-	}
-
-	private void updateKillCount() {
-		for (int i = 0; i < currentNumberOfEnemies - enemyUnits.size(); i++) {
-			user.incrementKillCount();
-		}
 	}
 
 	private boolean enemyHasPenetratedDefenses(ActiveActorDestructible enemy) {
