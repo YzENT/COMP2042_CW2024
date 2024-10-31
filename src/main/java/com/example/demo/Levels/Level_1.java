@@ -2,7 +2,6 @@ package com.example.demo.Levels;
 
 import com.example.demo.ActiveActorDestructible;
 import com.example.demo.EnemyPlane;
-import com.example.demo.LevelView;
 
 public class Level_1 extends LevelParent {
 	
@@ -46,8 +45,8 @@ public class Level_1 extends LevelParent {
 	}
 
 	@Override
-	protected LevelView instantiateLevelView() {
-		return new LevelView(getRoot(), PLAYER_INITIAL_HEALTH);
+	protected LevelEntities instantiateLevelView() {
+		return new LevelEntities(getRoot(), PLAYER_INITIAL_HEALTH);
 	}
 
 	private boolean userHasReachedKillTarget() {

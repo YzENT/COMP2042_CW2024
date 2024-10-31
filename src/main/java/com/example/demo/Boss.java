@@ -1,5 +1,7 @@
 package com.example.demo;
 
+import com.example.demo.Levels.LevelEntities;
+
 import java.util.*;
 
 public class Boss extends FighterPlane {
@@ -24,16 +26,16 @@ public class Boss extends FighterPlane {
 	private int consecutiveMovesInSameDirection;
 	private int indexOfCurrentMove;
 	private int framesWithShieldActivated;
-	private LevelViewLevelTwo levelView;
+	private final LevelEntities levelEntities;
 
-	public Boss(LevelViewLevelTwo levelView) {
+	public Boss(LevelEntities levelEntities) {
 		super(IMAGE_NAME, IMAGE_HEIGHT, INITIAL_X_POSITION, INITIAL_Y_POSITION, HEALTH);
 		movePattern = new ArrayList<>();
 		consecutiveMovesInSameDirection = 0;
 		indexOfCurrentMove = 0;
 		framesWithShieldActivated = 0;
 		isShielded = false;
-		this.levelView = levelView;
+		this.levelEntities = levelEntities;
 		initializeMovePattern();
 	}
 
@@ -117,13 +119,13 @@ public class Boss extends FighterPlane {
 
 	private void activateShield() {
 		isShielded = true;
-		levelView.showShield();
+		levelEntities.showShield();
 	}
 
 	private void deactivateShield() {
 		isShielded = false;
 		framesWithShieldActivated = 0;
-		levelView.hideShield();
+		levelEntities.hideShield();
 	}
 
 }

@@ -4,8 +4,6 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 import com.example.demo.ActiveActorDestructible;
-import com.example.demo.FighterPlane;
-import com.example.demo.LevelView;
 import com.example.demo.UserPlane;
 import javafx.animation.*;
 import javafx.event.EventHandler;
@@ -35,7 +33,7 @@ public abstract class LevelParent extends Observable {
 	private final List<ActiveActorDestructible> enemyProjectiles;
 	
 	private int currentNumberOfEnemies;
-	private LevelView levelView;
+	private LevelEntities levelEntities;
 
 	public LevelParent(String backgroundImageName, double screenHeight, double screenWidth, int playerInitialHealth) {
 		this.root = new Group();
@@ -51,7 +49,7 @@ public abstract class LevelParent extends Observable {
 		this.screenHeight = screenHeight;
 		this.screenWidth = screenWidth;
 		this.enemyMaximumYPosition = screenHeight - SCREEN_HEIGHT_ADJUSTMENT;
-		this.levelView = instantiateLevelView();
+		this.levelEntities = instantiateLevelView();
 		this.currentNumberOfEnemies = 0;
 		initializeTimeline();
 		friendlyUnits.add(user);
@@ -63,12 +61,12 @@ public abstract class LevelParent extends Observable {
 
 	protected abstract void spawnEnemyUnits();
 
-	protected abstract LevelView instantiateLevelView();
+	protected abstract LevelEntities instantiateLevelView();
 
 	public Scene initializeScene() {
 		initializeBackground();
 		initializeFriendlyUnits();
-		levelView.showHeartDisplay();
+		levelEntities.showHeartDisplay();
 		return scene;
 	}
 
@@ -207,7 +205,7 @@ public abstract class LevelParent extends Observable {
 	}
 
 	private void updateLevelView() {
-		levelView.removeHearts(user.getHealth());
+		levelEntities.removeHearts(user.getHealth());
 	}
 
 	private boolean enemyHasPenetratedDefenses(ActiveActorDestructible enemy) {
@@ -216,12 +214,12 @@ public abstract class LevelParent extends Observable {
 
 	protected void winGame() {
 		timeline.stop();
-		levelView.showWinImage();
+		levelEntities.showWinImage();
 	}
 
 	protected void loseGame() {
 		timeline.stop();
-		levelView.showGameOverImage();
+		levelEntities.showGameOverImage();
 	}
 
 	protected UserPlane getUser() {
