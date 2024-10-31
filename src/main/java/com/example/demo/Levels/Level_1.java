@@ -45,8 +45,8 @@ public class Level_1 extends LevelParent {
 	}
 
 	@Override
-	protected LevelEntities instantiateLevelView() {
-		return new LevelEntities(getRoot(), PLAYER_INITIAL_HEALTH);
+	protected LevelView instantiateLevelView() {
+		return new LevelView(getRoot(), PLAYER_INITIAL_HEALTH);
 	}
 
 	private boolean userHasReachedKillTarget() {
