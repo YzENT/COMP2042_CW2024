@@ -81,6 +81,7 @@ public class Plane_Boss extends Plane {
 	private void updateShield() {
 		if (isShielded) {
 			framesWithShieldActivated++;
+			levelView.showShield(getLayoutX() + getTranslateX(), getLayoutY() + getTranslateY());
 		} else if (shieldShouldBeActivated()) {
 			activateShield();
 		}
@@ -121,7 +122,6 @@ public class Plane_Boss extends Plane {
 
 	private void activateShield() {
 		isShielded = true;
-		levelView.showShield();
 	}
 
 	private void deactivateShield() {

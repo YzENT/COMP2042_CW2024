@@ -8,9 +8,7 @@ public class ShieldImage extends ImageView {
 	private static final String IMAGE_NAME = "/com/example/demo/images/shield.png";
 	private static final int SHIELD_SIZE = 200;
 	
-	public ShieldImage(double xPosition, double yPosition) {
-		this.setLayoutX(xPosition);
-		this.setLayoutY(yPosition);
+	public ShieldImage() {
 		this.setImage(new Image(getClass().getResource(IMAGE_NAME).toExternalForm()));
 		this.setVisible(false);
 		this.setFitHeight(SHIELD_SIZE);

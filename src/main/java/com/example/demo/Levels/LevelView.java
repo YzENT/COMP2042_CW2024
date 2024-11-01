@@ -27,7 +27,7 @@ public class LevelView {
 		this.heartDisplay = new HeartDisplay(HEART_DISPLAY_X_POSITION, HEART_DISPLAY_Y_POSITION, heartsToDisplay);
 		this.winImage = new WinImage(WIN_IMAGE_X_POSITION, WIN_IMAGE_Y_POSITION);
 		this.gameOverImage = new GameOverImage(LOSS_SCREEN_X_POSITION, LOSS_SCREEN_Y_POSITION);
-		this.shieldImage = new ShieldImage(SHIELD_X_POSITION, SHIELD_Y_POSITION);
+		this.shieldImage = new ShieldImage();
 	}
 	
 	public void showHeartDisplay() {
@@ -50,7 +50,7 @@ public class LevelView {
 		}
 	}
 
-	public void showShield() {
+	public void showShield(double bossX, double bossY) {
 
 		// shieldImage only added to root if it does not exist
 		// this is to ensure it does not render behind the background as the background is always rendered first
@@ -58,6 +58,9 @@ public class LevelView {
 			root.getChildren().add(shieldImage);
 		}
 
+		// dynamic shield coordinates
+		shieldImage.setLayoutX(bossX);
+		shieldImage.setLayoutY(bossY + shieldImage.getFitHeight()/4);
 		shieldImage.showShield();
 	}
 
