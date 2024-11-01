@@ -1,12 +1,12 @@
 package com.example.demo.Levels;
 
-import com.example.demo.Boss;
+import com.example.demo.Actor.Plane_Boss;
 
 public class Level_2 extends LevelParent {
 
 	private static final String BACKGROUND_IMAGE_NAME = "/com/example/demo/images/background2.jpg";
 	private static final int PLAYER_INITIAL_HEALTH = 5;
-	private Boss boss;
+	private Plane_Boss planeBoss;
 	private LevelView levelView;
 
 	public Level_2(double screenHeight, double screenWidth) {
@@ -23,7 +23,7 @@ public class Level_2 extends LevelParent {
 		if (userIsDestroyed()) {
 			loseGame();
 		}
-		else if (boss.isDestroyed()) {
+		else if (planeBoss.isDestroyed()) {
 			winGame();
 		}
 	}
@@ -31,8 +31,8 @@ public class Level_2 extends LevelParent {
 	@Override
 	protected void spawnEnemyUnits() {
 		if (getCurrentNumberOfEnemies() == 0) {
-			boss = new Boss(this.levelView);
-			addEnemyUnit(boss);
+			planeBoss = new Plane_Boss(this.levelView);
+			addEnemyUnit(planeBoss);
 		}
 	}
 

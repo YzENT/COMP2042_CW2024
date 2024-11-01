@@ -1,6 +1,9 @@
-package com.example.demo;
+package com.example.demo.Actor;
 
-public class EnemyPlane extends FighterPlane {
+import com.example.demo.ActorsLogic.ActiveActorDestructible;
+import com.example.demo.ActorsLogic.WeaponProjectiles.Projectile_Enemy;
+
+public class Plane_Enemy extends Plane {
 
 	private static final String IMAGE_NAME = "enemyplane.png";
 	private static final int IMAGE_HEIGHT = 150;
@@ -10,7 +13,7 @@ public class EnemyPlane extends FighterPlane {
 	private static final int INITIAL_HEALTH = 1;
 	private static final double FIRE_RATE = .01;
 
-	public EnemyPlane(double initialXPos, double initialYPos) {
+	public Plane_Enemy(double initialXPos, double initialYPos) {
 		super(IMAGE_NAME, IMAGE_HEIGHT, initialXPos, initialYPos, INITIAL_HEALTH);
 	}
 
@@ -24,7 +27,7 @@ public class EnemyPlane extends FighterPlane {
 		if (Math.random() < FIRE_RATE) {
 			double projectileXPosition = getProjectileXPosition(PROJECTILE_X_POSITION_OFFSET);
 			double projectileYPostion = getProjectileYPosition(PROJECTILE_Y_POSITION_OFFSET);
-			return new EnemyProjectile(projectileXPosition, projectileYPostion);
+			return new Projectile_Enemy(projectileXPosition, projectileYPostion);
 		}
 		return null;
 	}

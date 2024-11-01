@@ -3,8 +3,9 @@ package com.example.demo.Levels;
 import java.util.*;
 import java.util.stream.Collectors;
 
-import com.example.demo.ActiveActorDestructible;
-import com.example.demo.UserPlane;
+import com.example.demo.ActorsLogic.ActiveActorDestructible;
+import com.example.demo.Actor.Plane;
+import com.example.demo.Actor.Plane_User;
 import javafx.animation.*;
 import javafx.event.EventHandler;
 import javafx.scene.Group;
@@ -23,7 +24,7 @@ public abstract class LevelParent extends Observable {
 
 	private final Group root;
 	public final Timeline timeline; //testing to make it public to stop game
-	private final UserPlane user;
+	private final Plane_User user;
 	private final Scene scene;
 	private final ImageView background;
 
@@ -39,7 +40,7 @@ public abstract class LevelParent extends Observable {
 		this.root = new Group();
 		this.scene = new Scene(root, screenWidth, screenHeight);
 		this.timeline = new Timeline();
-		this.user = new UserPlane(playerInitialHealth);
+		this.user = new Plane_User(playerInitialHealth);
 		this.friendlyUnits = new ArrayList<>();
 		this.enemyUnits = new ArrayList<>();
 		this.userProjectiles = new ArrayList<>();
@@ -128,15 +129,15 @@ public abstract class LevelParent extends Observable {
 	}
 
 	private void generateEnemyFire() {
-//		enemyUnits.forEach(enemy -> {
-//			FighterPlane fighter = (FighterPlane) enemy;
-//			ActiveActorDestructible projectile = fighter.fireProjectile();
-//
-//			if (projectile != null) {
-//				root.getChildren().add(projectile);
-//				enemyProjectiles.add(projectile);
-//			}
-//		});
+		enemyUnits.forEach(enemy -> {
+			Plane fighter = (Plane) enemy;
+			ActiveActorDestructible projectile = fighter.fireProjectile();
+
+			if (projectile != null) {
+				root.getChildren().add(projectile);
+				enemyProjectiles.add(projectile);
+			}
+		});
 	}
 
 	private void updateActors() {
@@ -222,7 +223,7 @@ public abstract class LevelParent extends Observable {
 		levelView.showGameOverImage();
 	}
 
-	protected UserPlane getUser() {
+	protected Plane_User getUser() {
 		return user;
 	}
 

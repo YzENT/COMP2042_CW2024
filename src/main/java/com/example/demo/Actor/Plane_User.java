@@ -1,6 +1,9 @@
-package com.example.demo;
+package com.example.demo.Actor;
 
-public class UserPlane extends FighterPlane {
+import com.example.demo.ActorsLogic.ActiveActorDestructible;
+import com.example.demo.ActorsLogic.WeaponProjectiles.Projectile_User;
+
+public class Plane_User extends Plane {
 
 	private static final String IMAGE_NAME = "userplane.png";
 	private static final double Y_UPPER_BOUND = -40;
@@ -14,7 +17,7 @@ public class UserPlane extends FighterPlane {
 	private int velocityMultiplier;
 	private int numberOfKills;
 
-	public UserPlane(int initialHealth) {
+	public Plane_User(int initialHealth) {
 		super(IMAGE_NAME, IMAGE_HEIGHT, INITIAL_X_POSITION, INITIAL_Y_POSITION, initialHealth);
 		velocityMultiplier = 0;
 	}
@@ -38,7 +41,7 @@ public class UserPlane extends FighterPlane {
 	
 	@Override
 	public ActiveActorDestructible fireProjectile() {
-		return new UserProjectile(PROJECTILE_X_POSITION, getProjectileYPosition(PROJECTILE_Y_POSITION_OFFSET));
+		return new Projectile_User(PROJECTILE_X_POSITION, getProjectileYPosition(PROJECTILE_Y_POSITION_OFFSET));
 	}
 
 	private boolean isMoving() {
