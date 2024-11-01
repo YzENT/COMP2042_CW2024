@@ -214,7 +214,7 @@ public abstract class LevelParent extends Observable {
 	}
 
 	private void updateLevelView() {
-		levelView.removeHearts(user.getHealth());
+		levelView.displayHeartRemaining(user.getHealth());
 	}
 
 	private boolean enemyHasPenetratedDefenses(ActiveActorDestructible enemy) {
