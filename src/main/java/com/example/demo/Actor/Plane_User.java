@@ -12,21 +12,26 @@ public class Plane_User extends Plane {
 	private static final double INITIAL_Y_POSITION = 300.0;
 	private static final int IMAGE_HEIGHT = 150;
 	private static final int VERTICAL_VELOCITY = 8;
-	private static final int PROJECTILE_X_POSITION = 110;
+	private static final int HORIZONTAL_VELOCITY = 8;
+//	private static final int PROJECTILE_X_POSITION = 110;
 	private static final int PROJECTILE_Y_POSITION_OFFSET = 20;
-	private int velocityMultiplier;
+	private int verticalVelocityMultiplier;
+	private int horizontalVelocityMultiplier;
 	private int numberOfKills;
 
 	public Plane_User(int initialHealth) {
 		super(IMAGE_NAME, IMAGE_HEIGHT, INITIAL_X_POSITION, INITIAL_Y_POSITION, initialHealth);
-		velocityMultiplier = 0;
+		verticalVelocityMultiplier = 0;
+		horizontalVelocityMultiplier = 0;
 	}
 	
 	@Override
 	public void updatePosition() {
 		if (isMoving()) {
 			double initialTranslateY = getTranslateY();
-			this.moveVertically(VERTICAL_VELOCITY * velocityMultiplier);
+			double initialTranslateX = getTranslateX(); //for later x up/low bounds
+			this.moveVertically(VERTICAL_VELOCITY * verticalVelocityMultiplier);
+			this.moveHorizontally(HORIZONTAL_VELOCITY * horizontalVelocityMultiplier);
 			double newPosition = getLayoutY() + getTranslateY();
 			if (newPosition < Y_UPPER_BOUND || newPosition > Y_LOWER_BOUND) {
 				this.setTranslateY(initialTranslateY);
@@ -41,23 +46,36 @@ public class Plane_User extends Plane {
 	
 	@Override
 	public ActiveActorDestructible fireProjectile() {
+		double PROJECTILE_X_POSITION = getLayoutX() + getTranslateX() + 110;
 		return new Projectile_User(PROJECTILE_X_POSITION, getProjectileYPosition(PROJECTILE_Y_POSITION_OFFSET));
 	}
 
 	private boolean isMoving() {
-		return velocityMultiplier != 0;
+		return verticalVelocityMultiplier != 0 || horizontalVelocityMultiplier != 0;
 	}
 
 	public void moveUp() {
-		velocityMultiplier = -1;
+		verticalVelocityMultiplier = -1;
 	}
 
 	public void moveDown() {
-		velocityMultiplier = 1;
+		verticalVelocityMultiplier = 1;
 	}
 
-	public void stop() {
-		velocityMultiplier = 0;
+	public void moveForward() {
+		horizontalVelocityMultiplier = 1;
+	}
+
+	public void moveBackward() {
+		horizontalVelocityMultiplier = -1;
+	}
+
+	public void stopVerticalMovement() {
+		verticalVelocityMultiplier = 0;
+	}
+
+	public void stopHorizontalMovement() {
+		horizontalVelocityMultiplier = 0;
 	}
 
 	public int getNumberOfKills() {
