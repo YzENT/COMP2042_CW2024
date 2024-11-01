@@ -90,6 +90,7 @@ public abstract class LevelParent extends Observable {
 		handleUserProjectileCollisions();
 		handleEnemyProjectileCollisions();
 		handlePlaneCollisions();
+		handleProjectileCollisions();
 		removeAllDestroyedActors();
 		updateLevelView();
 		checkIfGameOver();
@@ -203,6 +204,10 @@ public abstract class LevelParent extends Observable {
 				enemy.destroy();
 			}
 		}
+	}
+
+	private void handleProjectileCollisions() {
+		handleCollisions(enemyProjectiles, userProjectiles, () -> {});
 	}
 
 	private void updateLevelView() {
