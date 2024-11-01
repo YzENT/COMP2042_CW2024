@@ -26,8 +26,8 @@ public class Plane_Enemy extends Plane {
 	public ActiveActorDestructible fireProjectile() {
 		if (Math.random() < FIRE_RATE) {
 			double projectileXPosition = getProjectileXPosition(PROJECTILE_X_POSITION_OFFSET);
-			double projectileYPostion = getProjectileYPosition(PROJECTILE_Y_POSITION_OFFSET);
-			return new Projectile_Enemy(projectileXPosition, projectileYPostion);
+			double projectileYPosition = getProjectileYPosition(PROJECTILE_Y_POSITION_OFFSET);
+			return new Projectile_Enemy(projectileXPosition, projectileYPosition);
 		}
 		return null;
 	}
