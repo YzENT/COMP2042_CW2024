@@ -26,8 +26,4 @@ public abstract class Projectile extends ActiveActorDestructible {
 		return health == 0;
 	}
 
-	public int getHealth() {
-		return health;
-	}
-
 }
