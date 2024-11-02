@@ -16,9 +16,4 @@ public class Projectile_User extends Projectile {
 		moveHorizontally(HORIZONTAL_VELOCITY);
 	}
 	
-	@Override
-	public void updateActor() {
-		updatePosition();
-	}
-	
 }
