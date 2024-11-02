@@ -6,6 +6,7 @@ import java.util.stream.Collectors;
 import com.example.demo.ActorsLogic.ActiveActorDestructible;
 import com.example.demo.Actor.Plane;
 import com.example.demo.Actor.Plane_User;
+import com.example.demo.ActorsLogic.UserControls;
 import javafx.animation.*;
 import javafx.event.EventHandler;
 import javafx.scene.Group;
@@ -27,6 +28,7 @@ public abstract class LevelParent extends Observable {
 	private final Plane_User user;
 	private final Scene scene;
 	private final ImageView background;
+	private final UserControls userControls;
 
 	private final List<ActiveActorDestructible> friendlyUnits;
 	private final List<ActiveActorDestructible> enemyUnits;
@@ -47,6 +49,7 @@ public abstract class LevelParent extends Observable {
 		this.enemyProjectiles = new ArrayList<>();
 
 		this.background = new ImageView(new Image(getClass().getResource(backgroundImageName).toExternalForm()));
+		this.userControls = new UserControls(user, root, userProjectiles);
 		this.screenHeight = screenHeight;
 		this.screenWidth = screenWidth;
 		this.enemyMaximumYPosition = screenHeight - SCREEN_HEIGHT_ADJUSTMENT;
@@ -84,7 +87,7 @@ public abstract class LevelParent extends Observable {
 	private void updateScene() {
 		spawnEnemyUnits();
 		updateActors();
-//		generateEnemyFire();
+		generateEnemyFire();
 		updateNumberOfEnemies();
 		handleEnemyPenetration();
 		handleUserProjectileCollisions();
@@ -106,24 +109,17 @@ public abstract class LevelParent extends Observable {
 		background.setFocusTraversable(true);
 		background.setFitHeight(screenHeight);
 		background.setFitWidth(screenWidth);
-		background.setOnKeyPressed(new EventHandler<KeyEvent>() {
-			public void handle(KeyEvent e) {
-				KeyCode kc = e.getCode();
-				if (kc == KeyCode.UP) user.moveUp();
-				if (kc == KeyCode.DOWN) user.moveDown();
-				if (kc == KeyCode.RIGHT) user.moveForward();
-				if (kc == KeyCode.LEFT) user.moveBackward();
-				if (kc == KeyCode.SPACE) fireProjectile();
-			}
-		});
-		background.setOnKeyReleased(new EventHandler<KeyEvent>() {
-			public void handle(KeyEvent e) {
-				KeyCode kc = e.getCode();
-				if (kc == KeyCode.UP || kc == KeyCode.DOWN) user.stopVerticalMovement();
-				if (kc == KeyCode.LEFT || kc == KeyCode.RIGHT) user.stopHorizontalMovement();
-			}
-		});
+		background.setOnKeyPressed(this::handleKeyPressed);
+		background.setOnKeyReleased(this::handleKeyReleased);
 		root.getChildren().add(background);
+	}
+
+	private void handleKeyPressed(KeyEvent e) {
+		userControls.handleKeyPressed(e);
+	}
+
+	private void handleKeyReleased(KeyEvent e) {
+		userControls.handleKeyReleased(e);
 	}
 
 	private void fireProjectile() {
