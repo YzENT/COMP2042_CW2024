@@ -5,7 +5,7 @@ import com.example.demo.ActorsLogic.WeaponProjectiles.Projectile_Enemy;
 
 public class Plane_Enemy extends Plane {
 
-	private static final String IMAGE_NAME = "actors/enemyplane.png";
+	private static final String IMAGE_NAME = "/com/example/demo/images/actors/enemyplane.png";
 	private static final int IMAGE_HEIGHT = 150;
 	private static final int HORIZONTAL_VELOCITY = -6;
 	private static final double PROJECTILE_X_POSITION_OFFSET = -100.0;

@@ -5,7 +5,7 @@ import com.example.demo.ActorsLogic.WeaponProjectiles.Projectile_User;
 
 public class Plane_User extends Plane {
 
-	private static final String IMAGE_NAME = "actors/userplane.png";
+	private static final String IMAGE_NAME = "/com/example/demo/images/actors/userplane.png";
 	private static final double Y_UPPER_BOUND = -40;
 	private static final double Y_LOWER_BOUND = 600.0;
 	private static final double INITIAL_X_POSITION = 5.0;

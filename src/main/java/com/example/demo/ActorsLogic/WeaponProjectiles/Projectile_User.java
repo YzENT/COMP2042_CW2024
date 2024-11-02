@@ -2,7 +2,7 @@ package com.example.demo.ActorsLogic.WeaponProjectiles;
 
 public class Projectile_User extends Projectile {
 
-	private static final String IMAGE_NAME = "weapons/userfire.png";
+	private static final String IMAGE_NAME = "/com/example/demo/images/weapons/userfire.png";
 	private static final int IMAGE_HEIGHT = 125;
 	private static final int HORIZONTAL_VELOCITY = 15;
 	private static final int HEALTH = 1;

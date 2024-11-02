@@ -8,7 +8,7 @@ import java.util.*;
 
 public class Plane_Boss extends Plane {
 
-	private static final String IMAGE_NAME = "actors/bossplane.png";
+	private static final String IMAGE_NAME = "/com/example/demo/images/actors/bossplane.png";
 	private static final double INITIAL_X_POSITION = 1000.0;
 	private static final double INITIAL_Y_POSITION = 400;
 	private static final double PROJECTILE_Y_POSITION_OFFSET = 75.0;
