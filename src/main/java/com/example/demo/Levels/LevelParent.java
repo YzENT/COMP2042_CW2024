@@ -22,7 +22,7 @@ public abstract class LevelParent extends Observable {
 	private final double enemyMaximumYPosition;
 
 	private final Group root;
-	public final Timeline timeline; //testing to make it public to stop game
+	private final Timeline timeline;
 	private final Plane_User user;
 	private final Scene scene;
 	private final ImageView background;
@@ -78,13 +78,13 @@ public abstract class LevelParent extends Observable {
 	public void goToNextLevel(String levelName) {
 		setChanged();
 		notifyObservers(levelName);
+		timeline.stop();
 	}
 
 	private void updateScene() {
 		spawnEnemyUnits();
 		updateActors();
 		generateEnemyFire();
-		updateNumberOfEnemies();
 		handleEnemyPenetration();
 		handleUserProjectileCollisions();
 		handleEnemyProjectileCollisions();
@@ -189,7 +189,7 @@ public abstract class LevelParent extends Observable {
 	private void handleEnemyPenetration() {
 		for (ActiveActorDestructible enemy : enemyUnits) {
 			if (enemyHasPenetratedDefenses(enemy)) {
-//				user.takeDamage();
+				user.takeDamage();
 				enemy.destroy();
 			}
 		}
@@ -245,8 +245,5 @@ public abstract class LevelParent extends Observable {
 	protected boolean userIsDestroyed() {
 		return user.isDestroyed();
 	}
-
-	private void updateNumberOfEnemies() {
-    }
 
 }

@@ -22,7 +22,6 @@ public class Level_1 extends LevelParent {
 			loseGame();
 		}
 		else if (userHasReachedKillTarget()) {
-			timeline.stop(); //stop timeline temporarily, if not it gets called recursively
 			goToNextLevel(NEXT_LEVEL);
 		}
 	}
