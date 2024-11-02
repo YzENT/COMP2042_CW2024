@@ -2,10 +2,12 @@ package com.example.demo.ActorsLogic;
 
 import javafx.scene.image.*;
 
+import java.util.Objects;
+
 public abstract class ActiveActor extends ImageView {
 
 	public ActiveActor(String imageName, int imageHeight, double initialXPos, double initialYPos) {
-		this.setImage(new Image(getClass().getResource(imageName).toExternalForm()));
+		this.setImage(new Image(Objects.requireNonNull(getClass().getResource(imageName)).toExternalForm()));
 		this.setLayoutX(initialXPos);
 		this.setLayoutY(initialYPos);
 		this.setFitHeight(imageHeight);

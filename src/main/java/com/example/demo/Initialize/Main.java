@@ -10,16 +10,15 @@ public class Main extends Application {
 	private static final int SCREEN_WIDTH = 1300;
 	private static final int SCREEN_HEIGHT = 750;
 	private static final String TITLE = "Sky Battle";
-	private ResourceStarter start;
 
-	@Override
+    @Override
 	public void start(Stage stage) throws ClassNotFoundException, NoSuchMethodException, SecurityException,
 			InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException {
 		stage.setTitle(TITLE);
 		stage.setResizable(false);
 		stage.setHeight(SCREEN_HEIGHT);
 		stage.setWidth(SCREEN_WIDTH);
-		start = new ResourceStarter(stage);
+        ResourceStarter start = new ResourceStarter(stage);
 		start.launchGame();
 	}
 
