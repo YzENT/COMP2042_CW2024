@@ -9,12 +9,7 @@ public class Projectile_Boss extends Projectile {
 	private static final int HEALTH = 1;
 
 	public Projectile_Boss(double initialYPos) {
-		super(IMAGE_NAME, IMAGE_HEIGHT, INITIAL_X_POSITION, initialYPos, HEALTH);
-	}
-
-	@Override
-	public void updatePosition() {
-		moveHorizontally(HORIZONTAL_VELOCITY);
+		super(IMAGE_NAME, IMAGE_HEIGHT, INITIAL_X_POSITION, initialYPos, HEALTH, HORIZONTAL_VELOCITY);
 	}
 	
 }
