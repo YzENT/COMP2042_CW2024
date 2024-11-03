@@ -6,7 +6,7 @@ import com.example.demo.Initialize.Main;
 public abstract class Projectile extends ActiveActorDestructible {
 
 	private int health;
-	private int horizontalVelocity;
+	private final int horizontalVelocity;
 
 	public Projectile(String imageName, int imageHeight, double initialXPos, double initialYPos, int health, int horizontalVelocity) {
 		super(imageName, imageHeight, initialXPos, initialYPos);
