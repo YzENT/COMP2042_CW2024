@@ -29,8 +29,14 @@ public class Screen_LevelSelection extends BaseScreen{
         Button level1Button = new Button("Level 1");
         Button level2Button = new Button("Level 2");
 
-        level1Button.setOnAction(e -> startLevel("com.example.demo.Levels.Level_1"));
-        level2Button.setOnAction(e -> startLevel("com.example.demo.Levels.Level_2"));
+        level1Button.setOnAction(e -> {
+            stopBGM();
+            startLevel("com.example.demo.Levels.Level_1");
+        });
+        level2Button.setOnAction(e -> {
+            stopBGM();
+            startLevel("com.example.demo.Levels.Level_2");
+        });
 
         VBox vbox = new VBox(50, title, level1Button, level2Button);
         vbox.setAlignment(Pos.CENTER);

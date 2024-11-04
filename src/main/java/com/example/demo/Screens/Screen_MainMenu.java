@@ -16,6 +16,9 @@ public class Screen_MainMenu extends BaseScreen{
     @Override
     public void show() {
 
+        playBGM("/com/example/demo/audio/bgm/Transformer - Scorponok.mp3");
+        setVolume(0.2);
+
         Text title = new Text("Sky Battle");
         title.setStyle("-fx-fill:white;");
 
