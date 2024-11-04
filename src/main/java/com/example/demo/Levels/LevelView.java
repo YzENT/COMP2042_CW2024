@@ -53,7 +53,6 @@ public class LevelView {
 		// this is to ensure it does not render behind the background as the background is always rendered first
 		if (!root.getChildren().contains(shieldImage)){
 			this.shieldImage = new ShieldImage();
-			System.out.println("New shield image created");
 			root.getChildren().add(shieldImage);
 		}
 

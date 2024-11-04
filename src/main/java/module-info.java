@@ -1,6 +1,7 @@
 module com.example.demo {
     requires javafx.controls;
     requires javafx.fxml;
+    requires java.desktop;
 
 
     exports com.example.demo.Initialize;
@@ -9,4 +10,5 @@ module com.example.demo {
     opens com.example.demo.ActorsLogic.WeaponProjectiles to javafx.fxml;
     opens com.example.demo.Actor to javafx.fxml;
     opens com.example.demo.ImageEntities to javafx.fxml;
+    opens com.example.demo.Screens to javafx.fxml;
 }

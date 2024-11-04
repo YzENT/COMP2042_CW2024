@@ -13,21 +13,13 @@ import com.example.demo.Levels.LevelParent;
 
 public class ResourceStarter implements Observer {
 
-	private static final String LEVEL_ONE_CLASS_NAME = "com.example.demo.Levels.Level_1";
 	private final Stage stage;
 
 	public ResourceStarter(Stage stage) {
 		this.stage = stage;
 	}
 
-	public void launchGame() throws ClassNotFoundException, NoSuchMethodException, SecurityException,
-			InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException  {
-
-			stage.show();
-			goToLevel(LEVEL_ONE_CLASS_NAME);
-	}
-
-	private void goToLevel(String className) throws ClassNotFoundException, NoSuchMethodException, SecurityException,
+	public void goToLevel(String className) throws ClassNotFoundException, NoSuchMethodException, SecurityException,
 			InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException {
 			Class<?> myClass = Class.forName(className);
 			Constructor<?> constructor = myClass.getConstructor(double.class, double.class);

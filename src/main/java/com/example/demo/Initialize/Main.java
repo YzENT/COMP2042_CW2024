@@ -1,7 +1,6 @@
 package com.example.demo.Initialize;
 
-import java.lang.reflect.InvocationTargetException;
-
+import com.example.demo.Screens.Screen_MainMenu;
 import javafx.application.Application;
 import javafx.stage.Stage;
 
@@ -12,14 +11,14 @@ public class Main extends Application {
 	private static final String TITLE = "Sky Battle";
 
     @Override
-	public void start(Stage stage) throws ClassNotFoundException, NoSuchMethodException, SecurityException,
-			InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException {
+	public void start(Stage stage) throws SecurityException, IllegalArgumentException{
 		stage.setTitle(TITLE);
 		stage.setResizable(false);
 		stage.setHeight(SCREEN_HEIGHT);
 		stage.setWidth(SCREEN_WIDTH);
-        ResourceStarter start = new ResourceStarter(stage);
-		start.launchGame();
+		Screen_MainMenu screenMainMenu = new Screen_MainMenu(stage, SCREEN_WIDTH, SCREEN_HEIGHT);
+		screenMainMenu.show();
+		stage.show();
 	}
 
 	public static void main(String[] args) {
