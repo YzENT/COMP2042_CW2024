@@ -18,14 +18,13 @@ public class LevelView {
 	private final WinImage winImage;
 	private final GameOverImage gameOverImage;
 	private final HeartDisplay heartDisplay;
-	private final ShieldImage shieldImage;
+	private ShieldImage shieldImage;
 	
 	public LevelView(Group root, int heartsToDisplay) {
 		this.root = root;
 		this.heartDisplay = new HeartDisplay(HEART_DISPLAY_X_POSITION, HEART_DISPLAY_Y_POSITION, heartsToDisplay);
 		this.winImage = new WinImage(WIN_IMAGE_X_POSITION, WIN_IMAGE_Y_POSITION);
 		this.gameOverImage = new GameOverImage(LOSS_SCREEN_X_POSITION, LOSS_SCREEN_Y_POSITION);
-		this.shieldImage = new ShieldImage();
 	}
 	
 	public void showHeartDisplay() {
@@ -50,9 +49,11 @@ public class LevelView {
 
 	public void showShield(double bossX, double bossY) {
 
-		// shieldImage only added to root if it does not exist
+		// shieldImage only created if it does not exist
 		// this is to ensure it does not render behind the background as the background is always rendered first
 		if (!root.getChildren().contains(shieldImage)){
+			this.shieldImage = new ShieldImage();
+			System.out.println("New shield image created");
 			root.getChildren().add(shieldImage);
 		}
 
