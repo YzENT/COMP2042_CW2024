@@ -35,6 +35,11 @@ public abstract class LevelParent extends Observable {
 
     private final LevelView levelView;
 
+	public enum GameStatus{
+		VICTORY,
+		DEFEAT
+	}
+
 	public LevelParent(String backgroundImageName, double screenHeight, double screenWidth, int playerInitialHealth) {
 		this.root = new Group();
 		this.scene = new Scene(root, screenWidth, screenHeight);
@@ -173,7 +178,7 @@ public abstract class LevelParent extends Observable {
 
 	private void handleUserProjectileCollisions() {
 		handleCollisions(userProjectiles, enemyUnits, () -> {
-			// kill count should only be incremented if missle hits enemy plane (special condition)
+			// kill count should only be incremented if missile hits enemy plane (special condition)
 			for (ActiveActorDestructible enemy : enemyUnits) {
 				if (enemy.isDestroyed()) {
 					user.incrementKillCount();
@@ -207,14 +212,17 @@ public abstract class LevelParent extends Observable {
 		return Math.abs(enemy.getTranslateX()) > screenWidth;
 	}
 
-	protected void winGame() {
+	protected void gameStatus(GameStatus results) {
 		timeline.stop();
-		levelView.showWinImage();
-	}
 
-	protected void loseGame() {
-		timeline.stop();
-		levelView.showGameOverImage();
+		switch (results) {
+			case VICTORY:
+				levelView.showWinImage();
+				break;
+			case DEFEAT:
+				levelView.showGameOverImage();
+				break;
+		}
 	}
 
 	protected Plane_User getUser() {

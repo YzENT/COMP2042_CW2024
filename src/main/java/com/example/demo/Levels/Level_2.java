@@ -21,10 +21,10 @@ public class Level_2 extends LevelParent {
 	@Override
 	protected void checkIfGameOver() {
 		if (userIsDestroyed()) {
-			loseGame();
+			gameStatus(GameStatus.DEFEAT);
 		}
 		else if (planeBoss.isDestroyed()) {
-			winGame();
+			gameStatus(GameStatus.VICTORY);
 		}
 	}
 
