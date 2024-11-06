@@ -6,6 +6,7 @@ import com.example.demo.ActorsLogic.ActiveActorDestructible;
 import com.example.demo.Actor.Plane;
 import com.example.demo.Actor.Plane_User;
 import com.example.demo.ActorsLogic.UserControls;
+import com.example.demo.Initialize.Main;
 import javafx.animation.*;
 import javafx.scene.Group;
 import javafx.scene.Scene;
@@ -19,7 +20,6 @@ public abstract class LevelParent extends Observable {
 	private static final int MILLISECOND_DELAY = 50;
 	private final double screenHeight;
 	private final double screenWidth;
-	private final double enemyMaximumYPosition;
 
 	private final Group root;
 	private final Timeline timeline;
@@ -54,7 +54,6 @@ public abstract class LevelParent extends Observable {
 		this.userControls = new UserControls(user, root, userProjectiles);
 		this.screenHeight = screenHeight;
 		this.screenWidth = screenWidth;
-		this.enemyMaximumYPosition = screenHeight - SCREEN_HEIGHT_ADJUSTMENT;
 		this.levelView = instantiateLevelView();
         initializeTimeline();
 		friendlyUnits.add(user);
@@ -89,7 +88,7 @@ public abstract class LevelParent extends Observable {
 	private void updateScene() {
 		spawnEnemyUnits();
 		updateActors();
-		generateEnemyFire();
+//		generateEnemyFire();
 		handleEnemyPenetration();
 		handleUserProjectileCollisions();
 		handleEnemyProjectileCollisions();
@@ -102,7 +101,7 @@ public abstract class LevelParent extends Observable {
 
 	private void initializeTimeline() {
 		timeline.setCycleCount(Timeline.INDEFINITE);
-		KeyFrame gameLoop = new KeyFrame(Duration.millis(MILLISECOND_DELAY), e -> updateScene());
+		KeyFrame gameLoop = new KeyFrame(Duration.millis(16), e -> updateScene());
 		timeline.getKeyFrames().add(gameLoop);
 	}
 
@@ -113,6 +112,8 @@ public abstract class LevelParent extends Observable {
 		background.setOnKeyPressed(this::handleKeyPressed);
 		background.setOnKeyReleased(this::handleKeyReleased);
 		root.getChildren().add(background);
+		scene.widthProperty().addListener((observable, oldValue, newValue) -> background.setFitWidth(newValue.doubleValue()));
+		scene.heightProperty().addListener((observable, oldValue, newValue) -> background.setFitHeight(newValue.doubleValue()));
 	}
 
 	private void handleKeyPressed(KeyEvent e) {
@@ -243,11 +244,7 @@ public abstract class LevelParent extends Observable {
 	}
 
 	protected double getEnemyMaximumYPosition() {
-		return enemyMaximumYPosition;
-	}
-
-	protected double getScreenWidth() {
-		return screenWidth;
+		return Main.getHeight() - SCREEN_HEIGHT_ADJUSTMENT;
 	}
 
 	protected boolean userIsDestroyed() {

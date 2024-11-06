@@ -2,27 +2,29 @@ package com.example.demo.Actor;
 
 import com.example.demo.ActorsLogic.ActiveActorDestructible;
 import com.example.demo.ActorsLogic.WeaponProjectiles.Projectile_Boss;
+import com.example.demo.Initialize.Main;
 import com.example.demo.Levels.LevelView;
+import javafx.stage.Stage;
 
 import java.util.*;
 
 public class Plane_Boss extends Plane {
 
 	private static final String IMAGE_NAME = "/com/example/demo/images/actors/bossplane.png";
-	private static final double INITIAL_X_POSITION = 1000.0;
-	private static final double INITIAL_Y_POSITION = 400;
+	private static final int IMAGE_HEIGHT = 300;
+	private static final double INITIAL_X_POSITION = Main.getWidth() - IMAGE_HEIGHT;
+	private static final double INITIAL_Y_POSITION = Main.getHeight() - IMAGE_HEIGHT;
 	private static final double PROJECTILE_Y_POSITION_OFFSET = 75.0;
 	private static final double BOSS_FIRE_RATE = .04;
 	private static final double BOSS_SHIELD_PROBABILITY = .05;
-	private static final int IMAGE_HEIGHT = 300;
 	private static final int VERTICAL_VELOCITY = 8;
 	private static final int HEALTH = 100;
 	private static final int MOVE_FREQUENCY_PER_CYCLE = 5;
 	private static final int ZERO = 0;
 	private static final int MAX_FRAMES_WITH_SAME_MOVE = 10;
-	private static final int Y_POSITION_UPPER_BOUND = -100;
-	private static final int Y_POSITION_LOWER_BOUND = 475;
 	private static final int MAX_FRAMES_WITH_SHIELD = 200;
+	private int Y_POSITION_UPPER_BOUND;
+	private int Y_POSITION_LOWER_BOUND;
 	private final List<Integer> movePattern;
 	private boolean isShielded;
 	private int consecutiveMovesInSameDirection;
@@ -39,6 +41,14 @@ public class Plane_Boss extends Plane {
 		isShielded = false;
 		this.levelView = levelView;
 		initializeMovePattern();
+		Stage stage = Main.getStage();
+
+		//listener to update X coordinate value
+		stage.widthProperty().addListener((obs, oldVal, newVal) -> updateXCoordinate());
+
+		//listeners to update Y bounds
+		stage.heightProperty().addListener((obs, oldVal, newVal) -> updateYBounds(newVal.intValue()));
+		updateYBounds((int) stage.getHeight());
 	}
 
 	@Override
@@ -50,7 +60,7 @@ public class Plane_Boss extends Plane {
 			setTranslateY(initialTranslateY);
 		}
 	}
-	
+
 	@Override
 	public void updateActor() {
 		updatePosition();
@@ -61,7 +71,7 @@ public class Plane_Boss extends Plane {
 	public ActiveActorDestructible fireProjectile() {
 		return bossFiresInCurrentFrame() ? new Projectile_Boss(getProjectileInitialPosition()) : null;
 	}
-	
+
 	@Override
 	public void takeDamage() {
 		if (!isShielded) {
@@ -128,6 +138,17 @@ public class Plane_Boss extends Plane {
 		isShielded = false;
 		framesWithShieldActivated = 0;
 		levelView.hideShield();
+	}
+
+	private void updateXCoordinate() {
+		//this method took my soul away just to calculate
+		setTranslateX(Main.getWidth() - INITIAL_X_POSITION - IMAGE_HEIGHT);
+	}
+
+	private void updateYBounds(int newHeight) {
+		//this too man
+		Y_POSITION_UPPER_BOUND = -100;
+		Y_POSITION_LOWER_BOUND = newHeight - 275;
 	}
 
 }

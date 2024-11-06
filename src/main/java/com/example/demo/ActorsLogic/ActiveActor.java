@@ -1,5 +1,6 @@
 package com.example.demo.ActorsLogic;
 
+import com.example.demo.Initialize.Main;
 import javafx.scene.image.*;
 
 import java.util.Objects;
