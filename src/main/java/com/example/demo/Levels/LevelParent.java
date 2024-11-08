@@ -12,6 +12,8 @@ import javafx.scene.Scene;
 import javafx.scene.image.*;
 import javafx.scene.input.*;
 import javafx.util.Duration;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Rectangle;
 
 public abstract class LevelParent extends Observable {
 
@@ -98,11 +100,12 @@ public abstract class LevelParent extends Observable {
 		removeAllDestroyedActors();
 		updateLevelView();
 		checkIfGameOver();
+//		displayHitboxes();
 	}
 
 	private void initializeTimeline() {
 		timeline.setCycleCount(Timeline.INDEFINITE);
-		KeyFrame gameLoop = new KeyFrame(Duration.millis(MILLISECOND_DELAY), e -> updateScene());
+		KeyFrame gameLoop = new KeyFrame(Duration.millis(16), e -> updateScene());
 		timeline.getKeyFrames().add(gameLoop);
 	}
 
@@ -252,6 +255,27 @@ public abstract class LevelParent extends Observable {
 
 	protected boolean userIsDestroyed() {
 		return user.isDestroyed();
+	}
+
+	private void displayHitboxes() {
+		displayHitboxesForActors(friendlyUnits);
+		displayHitboxesForActors(enemyUnits);
+		displayHitboxesForActors(userProjectiles);
+		displayHitboxesForActors(enemyProjectiles);
+	}
+
+	private void displayHitboxesForActors(List<ActiveActorDestructible> actors) {
+		for (ActiveActorDestructible actor : actors) {
+			Rectangle hitbox = new Rectangle(
+					actor.getBoundsInParent().getMinX(),
+					actor.getBoundsInParent().getMinY(),
+					actor.getBoundsInParent().getWidth(),
+					actor.getBoundsInParent().getHeight()
+			);
+			hitbox.setStroke(Color.RED);
+			hitbox.setFill(Color.TRANSPARENT);
+			root.getChildren().add(hitbox);
+		}
 	}
 
 }
