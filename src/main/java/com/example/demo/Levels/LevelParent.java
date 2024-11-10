@@ -105,7 +105,7 @@ public abstract class LevelParent extends Observable {
 
 	private void initializeTimeline() {
 		timeline.setCycleCount(Timeline.INDEFINITE);
-		KeyFrame gameLoop = new KeyFrame(Duration.millis(16), e -> updateScene());
+		KeyFrame gameLoop = new KeyFrame(Duration.millis(MILLISECOND_DELAY), e -> updateScene());
 		timeline.getKeyFrames().add(gameLoop);
 	}
 
