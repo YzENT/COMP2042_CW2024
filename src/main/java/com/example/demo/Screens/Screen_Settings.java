@@ -1,23 +1,26 @@
 package com.example.demo.Screens;
 
-import javafx.animation.*;
+import javafx.animation.FillTransition;
+import javafx.animation.ScaleTransition;
+import javafx.animation.Timeline;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
+import javafx.scene.Node;
 import javafx.scene.control.Button;
+import javafx.scene.control.Slider;
 import javafx.scene.effect.DropShadow;
-import javafx.scene.layout.*;
+import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
-public class Screen_MainMenu extends BaseScreen {
+public class Screen_Settings extends BaseScreen {
 
-    private static final String TITLE_TEXT = "Sky Battle";
+    private static final String TITLE_TEXT = "Settings";
     private static final String FONT_PATH = "/com/example/demo/fonts/ARCADECLASSIC.ttf";
-    private static final String BGM_PATH = "/com/example/demo/audio/bgm/Transformer - Scorponok.mp3";
-    private static final double TITLE_SIZE = 150;
+    private static final double TITLE_SIZE = 100;
     private static final double BUTTON_FONT_SIZE = 50;
     private static final double SHADOW_RADIUS = 10;
     private static final double BUTTON_SCALE_NEW = 1.2;
@@ -26,7 +29,7 @@ public class Screen_MainMenu extends BaseScreen {
 
     private final DropShadow buttonShadow;
 
-    public Screen_MainMenu(Stage stage, int SCREEN_WIDTH, int SCREEN_HEIGHT) {
+    public Screen_Settings(Stage stage, int SCREEN_WIDTH, int SCREEN_HEIGHT) {
         super(stage, SCREEN_WIDTH, SCREEN_HEIGHT);
         buttonShadow = createButtonShadow(SHADOW_RADIUS);
     }
@@ -35,9 +38,9 @@ public class Screen_MainMenu extends BaseScreen {
     public void show() {
         Text title = initializeTitle();
         Button[] buttons = initializeButtons();
-        playBGM(BGM_PATH);
+        Slider volumeSlider = initializeVolumeSlider();
 
-        VBox vbox = new VBox(50, title);
+        VBox vbox = new VBox(50, title, volumeSlider);
         vbox.getChildren().addAll(buttons);
         vbox.setAlignment(Pos.CENTER);
         vbox.setStyle("-fx-background-color: black;");
@@ -54,7 +57,6 @@ public class Screen_MainMenu extends BaseScreen {
         title.setFont(arcadeFont);
         title.setStyle("-fx-font-size: " + TITLE_SIZE + "px;");
 
-        //colour transition
         FillTransition fillTransition = new FillTransition(Duration.seconds(1), title);
         fillTransition.setFromValue(Color.RED);
         fillTransition.setToValue(Color.MEDIUMVIOLETRED);
@@ -67,10 +69,8 @@ public class Screen_MainMenu extends BaseScreen {
 
     @Override
     protected Button[] initializeButtons() {
-        Button startButton = createButton("Play Game", this::goScreen_LevelSelection);
-        Button settingsButton = createButton("Settings", this::goScreen_Settings);
-        Button quitButton = createButton("Quit", () -> System.exit(0));
-        return new Button[]{startButton, settingsButton, quitButton};
+        Button backButton = createButton("Back", this::goScreen_MainMenu);
+        return new Button[]{backButton};
     }
 
     @Override
@@ -87,44 +87,63 @@ public class Screen_MainMenu extends BaseScreen {
         return button;
     }
 
-    private void setupFocusListener(Button button) {
-        button.focusedProperty().addListener((focusProperty, wasFocused, isFocused) -> {
+    private void setupFocusListener(Node node) {
+        node.focusedProperty().addListener((focusProperty, wasFocused, isFocused) -> {
             if (isFocused) {
-                addEffect(button);
+                addEffect(node);
             } else {
-                removeEffect(button);
+                removeEffect(node);
             }
         });
     }
 
-    private void addEffect(Button button) {
-        ScaleTransition st = new ScaleTransition(Duration.seconds(TRANSITION_DURATION), button);
+    private void addEffect(Node node) {
+        ScaleTransition st = new ScaleTransition(Duration.seconds(TRANSITION_DURATION), node);
         st.setToX(BUTTON_SCALE_NEW);
         st.setToY(BUTTON_SCALE_NEW);
         st.setAutoReverse(true);
         st.setCycleCount(ScaleTransition.INDEFINITE);
         st.play();
 
-        button.setEffect(buttonShadow);
-        button.setUserData(st); // Store transition in user data for easy retrieval in removeEffect
+        node.setEffect(buttonShadow);
+        node.setUserData(st);
     }
 
-    private void removeEffect(Button button) {
-        ScaleTransition st = (ScaleTransition) button.getUserData();
+    private void removeEffect(Node node) {
+        ScaleTransition st = (ScaleTransition) node.getUserData();
         if (st != null) {
             st.stop();
         }
-        button.setScaleX(BUTTON_SCALE_OLD);
-        button.setScaleY(BUTTON_SCALE_OLD);
-        button.setEffect(null);
-        button.setUserData(null); //clear user data to avoid leaks
+        node.setScaleX(BUTTON_SCALE_OLD);
+        node.setScaleY(BUTTON_SCALE_OLD);
+        node.setEffect(null);
+        node.setUserData(null); //clear user data to avoid leaks
     }
 
-    private void goScreen_LevelSelection() {
-        goScreen(Screen_LevelSelection.class);
+    private Slider initializeVolumeSlider() {
+        Slider volumeSlider = new Slider(0, 100, returnMediaVolume() * 100);
+        volumeSlider.setShowTickLabels(true);
+        volumeSlider.setShowTickMarks(true);
+        volumeSlider.setBlockIncrement(1);
+        volumeSlider.setMaxWidth((double)SCREEN_WIDTH / 2);
+
+        volumeSlider.setStyle(
+                "-fx-control-inner-background: black; " +
+                        "-fx-tick-label-fill: white; " +
+                        "-fx-tick-mark-fill: white; " +
+                        "-fx-font-size: " + BUTTON_FONT_SIZE / 2 + "px; "
+        );
+
+        volumeSlider.valueProperty().addListener((observable, oldValue, newValue) -> {
+            setMediaVolume(newValue.doubleValue() / 100);
+        });
+
+        setupFocusListener(volumeSlider);
+
+        return volumeSlider;
     }
 
-    private void goScreen_Settings() {
-        goScreen(Screen_Settings.class);
+    private void goScreen_MainMenu() {
+        goScreen(Screen_MainMenu.class);
     }
 }

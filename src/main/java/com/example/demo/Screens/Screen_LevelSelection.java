@@ -20,6 +20,7 @@ public class Screen_LevelSelection extends BaseScreen {
 
     private static final String TITLE_TEXT = "Select Level";
     private static final String FONT_PATH = "/com/example/demo/fonts/ARCADECLASSIC.ttf";
+    private static final double TITLE_SIZE = 100;
     private static final double BUTTON_FONT_SIZE = 50;
     private static final double SHADOW_RADIUS = 10;
     private static final double BUTTON_SCALE_NEW = 1.2;
@@ -52,7 +53,7 @@ public class Screen_LevelSelection extends BaseScreen {
         Font arcadeFont = Font.loadFont(getClass().getResourceAsStream(FONT_PATH), 0);
         Text title = new Text(TITLE_TEXT);
         title.setFont(arcadeFont);
-        title.setStyle("-fx-font-size: 100px; -fx-fill: white;");
+        title.setStyle("-fx-font-size: " + TITLE_SIZE + "px;");
 
         FillTransition fillTransition = new FillTransition(Duration.seconds(1), title);
         fillTransition.setFromValue(Color.RED);
@@ -68,7 +69,7 @@ public class Screen_LevelSelection extends BaseScreen {
     protected Button[] initializeButtons() {
         Button level1Button = createButton("Level 1", () -> startLevel("com.example.demo.Levels.Level_1"));
         Button level2Button = createButton("Level 2", () -> startLevel("com.example.demo.Levels.Level_2"));
-        Button backButton = createButton("Main Menu", this::goBackToMainMenu);
+        Button backButton = createButton("Back", this::goScreen_MainMenu);
         return new Button[]{level1Button, level2Button, backButton};
     }
 
@@ -131,7 +132,7 @@ public class Screen_LevelSelection extends BaseScreen {
         }
     }
 
-    private void goBackToMainMenu() {
+    private void goScreen_MainMenu() {
         goScreen(Screen_MainMenu.class);
     }
 }

@@ -1,5 +1,8 @@
 package com.example.demo.Screens;
 
+import javafx.scene.input.MouseEvent;
+import javafx.event.Event;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.effect.DropShadow;
@@ -8,7 +11,6 @@ import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.scene.media.Media;
 import javafx.scene.text.Text;
-
 import java.util.Objects;
 
 public abstract class BaseScreen {
@@ -48,10 +50,18 @@ public abstract class BaseScreen {
         }
     }
 
-    protected void setVolume(double volume) {
+    protected static void setMediaVolume(double volume) {
         if (mediaPlayer != null) {
             mediaPlayer.setVolume(volume);
         }
+    }
+
+    protected static double returnMediaVolume() {
+        double volume = 0;
+        if (mediaPlayer != null) {
+            volume = mediaPlayer.getVolume();
+        }
+        return volume;
     }
 
     protected void goScreen(Class<?> screenClass) {
@@ -73,4 +83,7 @@ public abstract class BaseScreen {
         return shadow;
     }
 
+    protected void disableMouseInput(Scene scene) {
+        scene.addEventFilter(MouseEvent.ANY, Event::consume);
+    }
 }
