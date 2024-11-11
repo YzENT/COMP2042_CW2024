@@ -38,6 +38,7 @@ public abstract class BaseScreen {
         if (mediaPlayer == null) {
             Media media = new Media(Objects.requireNonNull(getClass().getResource(musicPath)).toExternalForm());
             mediaPlayer = new MediaPlayer(media);
+            mediaPlayer.setVolume(0.5);
             mediaPlayer.setCycleCount(MediaPlayer.INDEFINITE);
             mediaPlayer.play();
         }
@@ -50,18 +51,18 @@ public abstract class BaseScreen {
         }
     }
 
-    protected static void setMediaVolume(double volume) {
+    protected static void setMusicVolume(double volume) {
         if (mediaPlayer != null) {
             mediaPlayer.setVolume(volume);
         }
     }
 
-    protected static double returnMediaVolume() {
-        double volume = 0;
+    protected static double returnMusicVolume() {
+        double musicVolume = 0;
         if (mediaPlayer != null) {
-            volume = mediaPlayer.getVolume();
+            musicVolume = mediaPlayer.getVolume();
         }
-        return volume;
+        return musicVolume;
     }
 
     protected void goScreen(Class<?> screenClass) {

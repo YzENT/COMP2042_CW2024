@@ -3,12 +3,14 @@ package com.example.demo.Screens;
 import javafx.animation.FillTransition;
 import javafx.animation.ScaleTransition;
 import javafx.animation.Timeline;
+import javafx.application.Platform;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Slider;
 import javafx.scene.effect.DropShadow;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
@@ -38,9 +40,9 @@ public class Screen_Settings extends BaseScreen {
     public void show() {
         Text title = initializeTitle();
         Button[] buttons = initializeButtons();
-        Slider volumeSlider = initializeVolumeSlider();
+        VBox musicVolumeSlider = initializeVolumeSlider();
 
-        VBox vbox = new VBox(50, title, volumeSlider);
+        VBox vbox = new VBox(50, title, musicVolumeSlider);
         vbox.getChildren().addAll(buttons);
         vbox.setAlignment(Pos.CENTER);
         vbox.setStyle("-fx-background-color: black;");
@@ -120,27 +122,28 @@ public class Screen_Settings extends BaseScreen {
         node.setUserData(null); //clear user data to avoid leaks
     }
 
-    private Slider initializeVolumeSlider() {
-        Slider volumeSlider = new Slider(0, 100, returnMediaVolume() * 100);
-        volumeSlider.setShowTickLabels(true);
-        volumeSlider.setShowTickMarks(true);
-        volumeSlider.setBlockIncrement(1);
-        volumeSlider.setMaxWidth((double)SCREEN_WIDTH / 2);
+    private VBox initializeVolumeSlider() {
+        Slider volumeSlider = new Slider(0, 1, returnMusicVolume());
+        volumeSlider.setBlockIncrement(0.1);
+        volumeSlider.setMaxWidth((double) SCREEN_WIDTH / 4);
 
-        volumeSlider.setStyle(
-                "-fx-control-inner-background: black; " +
-                        "-fx-tick-label-fill: white; " +
-                        "-fx-tick-mark-fill: white; " +
-                        "-fx-font-size: " + BUTTON_FONT_SIZE / 2 + "px; "
-        );
-
-        volumeSlider.valueProperty().addListener((observable, oldValue, newValue) -> {
-            setMediaVolume(newValue.doubleValue() / 100);
+        volumeSlider.valueProperty().addListener((volumeLevel, oldVolume, newVolume) -> {
+            setMusicVolume(newVolume.doubleValue());
         });
+
+        Text volumeLabel = new Text("Music");
+        volumeLabel.setFill(Color.WHITE);
+        volumeLabel.setFont(Font.loadFont(getClass().getResourceAsStream(FONT_PATH), 50));
+
+        HBox sliderContainer = new HBox(100, volumeLabel, volumeSlider);
+        sliderContainer.setAlignment(Pos.CENTER);
+
+        VBox vbox = new VBox(sliderContainer);
+        vbox.setAlignment(Pos.CENTER);
 
         setupFocusListener(volumeSlider);
 
-        return volumeSlider;
+        return vbox;
     }
 
     private void goScreen_MainMenu() {
