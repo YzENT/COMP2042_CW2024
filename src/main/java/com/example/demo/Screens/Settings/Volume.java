@@ -1,14 +1,16 @@
-package com.example.demo.Screens;
+package com.example.demo.Screens.Settings;
 
-import com.example.demo.Screens.Settings.Volume;
+import com.example.demo.Screens.Screen_Settings;
 import javafx.animation.FillTransition;
 import javafx.animation.ScaleTransition;
 import javafx.animation.Timeline;
 import javafx.geometry.Pos;
-import javafx.scene.Scene;
 import javafx.scene.Node;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Slider;
 import javafx.scene.effect.DropShadow;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
@@ -16,9 +18,9 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
-public class Screen_Settings extends BaseScreen {
+public class Volume extends Screen_Settings {
 
-    private static final String TITLE_TEXT = "Settings";
+    private static final String TITLE_TEXT = "Volume";
     private static final String FONT_PATH = "/com/example/demo/fonts/ARCADECLASSIC.ttf";
     private static final double TITLE_SIZE = 100;
     private static final double BUTTON_FONT_SIZE = 50;
@@ -29,7 +31,7 @@ public class Screen_Settings extends BaseScreen {
 
     private final DropShadow buttonShadow;
 
-    public Screen_Settings(Stage stage, int SCREEN_WIDTH, int SCREEN_HEIGHT) {
+    public Volume(Stage stage, int SCREEN_WIDTH, int SCREEN_HEIGHT) {
         super(stage, SCREEN_WIDTH, SCREEN_HEIGHT);
         buttonShadow = createButtonShadow(SHADOW_RADIUS);
     }
@@ -38,8 +40,9 @@ public class Screen_Settings extends BaseScreen {
     public void show() {
         Text title = initializeTitle();
         Button[] buttons = initializeButtons();
+        VBox musicVolumeSlider = initializeVolumeSlider();
 
-        VBox vbox = new VBox(50, title);
+        VBox vbox = new VBox(50, title, musicVolumeSlider);
         vbox.getChildren().addAll(buttons);
         vbox.setAlignment(Pos.CENTER);
         vbox.setStyle("-fx-background-color: black;");
@@ -68,9 +71,8 @@ public class Screen_Settings extends BaseScreen {
 
     @Override
     protected Button[] initializeButtons() {
-        Button volumeButton = createButton("Volume", this::goScreen_volumeSettings);
-        Button backButton = createButton("Back", this::goScreen_MainMenu);
-        return new Button[]{volumeButton, backButton};
+        Button backButton = createButton("Back", this::goScreen_Settings);
+        return new Button[]{backButton};
     }
 
     @Override
@@ -120,11 +122,31 @@ public class Screen_Settings extends BaseScreen {
         node.setUserData(null); //clear user data to avoid leaks
     }
 
-    private void goScreen_MainMenu() {
-        goScreen(Screen_MainMenu.class);
+    private VBox initializeVolumeSlider() {
+        Slider volumeSlider = new Slider(0, 1, returnMusicVolume());
+        volumeSlider.setBlockIncrement(0.1);
+        volumeSlider.setMaxWidth((double) SCREEN_WIDTH / 4);
+
+        volumeSlider.valueProperty().addListener((volumeLevel, oldVolume, newVolume) -> {
+            setMusicVolume(newVolume.doubleValue());
+        });
+
+        Text volumeLabel = new Text("Music");
+        volumeLabel.setFill(Color.WHITE);
+        volumeLabel.setFont(Font.loadFont(getClass().getResourceAsStream(FONT_PATH), 50));
+
+        HBox sliderContainer = new HBox(100, volumeLabel, volumeSlider);
+        sliderContainer.setAlignment(Pos.CENTER);
+
+        VBox vbox = new VBox(sliderContainer);
+        vbox.setAlignment(Pos.CENTER);
+
+        setupFocusListener(volumeSlider);
+
+        return vbox;
     }
 
-    private void goScreen_volumeSettings() {
-        goScreen(Volume.class);
+    private void goScreen_Settings() {
+        goScreen(Screen_Settings.class);
     }
 }
