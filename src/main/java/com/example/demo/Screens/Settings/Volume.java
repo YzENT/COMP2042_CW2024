@@ -45,7 +45,7 @@ public class Volume extends Screen_Settings {
     }
 
     private VBox initializeVolumeSlider() {
-        Slider volumeSlider = new Slider(0, 1, returnMusicVolume());
+        Slider volumeSlider = new Slider(0, 1, getMusicVolume());
         volumeSlider.setBlockIncrement(0.1);
         volumeSlider.setMaxWidth((double) SCREEN_WIDTH / 4);
 

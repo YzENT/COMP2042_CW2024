@@ -13,7 +13,6 @@ public class Screen_LevelSelection extends BaseScreen {
 
     private static final String TITLE_TEXT = "Select Level";
     private static final double TITLE_SIZE = 100;
-
     private static String prevScreen;
 
     public Screen_LevelSelection(Stage stage, int SCREEN_WIDTH, int SCREEN_HEIGHT) {

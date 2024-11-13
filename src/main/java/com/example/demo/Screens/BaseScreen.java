@@ -35,6 +35,9 @@ public abstract class BaseScreen {
     private static final double SHADOW_RADIUS = 10;
     private final DropShadow buttonShadow;
 
+    private static double musicVolume = 0.5;
+    private static double sfxVolume = 0.5;
+
     public BaseScreen(Stage stage, int SCREEN_WIDTH, int SCREEN_HEIGHT) {
         this.stage = stage;
         this.SCREEN_WIDTH = SCREEN_WIDTH;
@@ -113,7 +116,7 @@ public abstract class BaseScreen {
         if (mediaPlayer == null) {
             Media media = new Media(Objects.requireNonNull(getClass().getResource(musicPath)).toExternalForm());
             mediaPlayer = new MediaPlayer(media);
-            mediaPlayer.setVolume(0.5);
+            mediaPlayer.setVolume(musicVolume);
             mediaPlayer.setCycleCount(MediaPlayer.INDEFINITE);
             mediaPlayer.play();
         }
@@ -127,16 +130,13 @@ public abstract class BaseScreen {
     }
 
     protected static void setMusicVolume(double volume) {
+        musicVolume = volume;
         if (mediaPlayer != null) {
             mediaPlayer.setVolume(volume);
         }
     }
 
-    protected static double returnMusicVolume() {
-        double musicVolume = 0;
-        if (mediaPlayer != null) {
-            musicVolume = mediaPlayer.getVolume();
-        }
+    protected static double getMusicVolume() {
         return musicVolume;
     }
 
