@@ -12,6 +12,7 @@ public class Screen_Settings extends BaseScreen {
 
     private static final String TITLE_TEXT = "Settings";
     private static final double TITLE_SIZE = 100;
+    private static String prevScreen;
 
     public Screen_Settings(Stage stage, int SCREEN_WIDTH, int SCREEN_HEIGHT) {
         super(stage, SCREEN_WIDTH, SCREEN_HEIGHT);
@@ -35,15 +36,20 @@ public class Screen_Settings extends BaseScreen {
     @Override
     protected Button[] initializeButtons() {
         Button volumeButton = createButton("Volume", this::goScreen_volumeSettings);
-        Button backButton = createButton("Back", this::goScreen_MainMenu);
+        Button backButton = createButton("Back", this::goScreen_PreviousScreen);
         return new Button[]{volumeButton, backButton};
-    }
-
-    private void goScreen_MainMenu() {
-        goScreen(Screen_MainMenu.class);
     }
 
     private void goScreen_volumeSettings() {
         goScreen(Volume.class);
+        Volume.setPrevScreen(this.getClass().getName());
+    }
+
+    private void goScreen_PreviousScreen() {
+        goScreenPrevious(prevScreen);
+    }
+
+    public static void setPrevScreen(String previousClassSimplifiedName) {
+        prevScreen = previousClassSimplifiedName;
     }
 }

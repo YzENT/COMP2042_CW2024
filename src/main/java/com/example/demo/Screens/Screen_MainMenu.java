@@ -42,10 +42,12 @@ public class Screen_MainMenu extends BaseScreen {
     }
 
     private void goScreen_LevelSelection() {
+        Screen_LevelSelection.setPrevScreen(this.getClass().getName());
         goScreen(Screen_LevelSelection.class);
     }
 
     private void goScreen_Settings() {
+        Screen_Settings.setPrevScreen(this.getClass().getName());
         goScreen(Screen_Settings.class);
     }
 }

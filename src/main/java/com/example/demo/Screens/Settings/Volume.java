@@ -16,6 +16,7 @@ public class Volume extends Screen_Settings {
 
     private static final String TITLE_TEXT = "Volume";
     private static final double TITLE_SIZE = 100;
+    private static String prevScreen;
 
     public Volume(Stage stage, int SCREEN_WIDTH, int SCREEN_HEIGHT) {
         super(stage, SCREEN_WIDTH, SCREEN_HEIGHT);
@@ -39,7 +40,7 @@ public class Volume extends Screen_Settings {
 
     @Override
     protected Button[] initializeButtons() {
-        Button backButton = createButton("Back", this::goScreen_Settings);
+        Button backButton = createButton("Back", this::goScreen_PreviousScreen);
         return new Button[]{backButton};
     }
 
@@ -67,7 +68,11 @@ public class Volume extends Screen_Settings {
         return vbox;
     }
 
-    private void goScreen_Settings() {
-        goScreen(Screen_Settings.class);
+    private void goScreen_PreviousScreen() {
+        goScreenPrevious(prevScreen);
+    }
+
+    public static void setPrevScreen(String prevScreen) {
+        Volume.prevScreen = prevScreen;
     }
 }

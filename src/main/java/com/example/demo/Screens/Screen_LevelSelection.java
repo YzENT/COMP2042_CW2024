@@ -14,6 +14,8 @@ public class Screen_LevelSelection extends BaseScreen {
     private static final String TITLE_TEXT = "Select Level";
     private static final double TITLE_SIZE = 100;
 
+    private static String prevScreen;
+
     public Screen_LevelSelection(Stage stage, int SCREEN_WIDTH, int SCREEN_HEIGHT) {
         super(stage, SCREEN_WIDTH, SCREEN_HEIGHT);
     }
@@ -30,13 +32,14 @@ public class Screen_LevelSelection extends BaseScreen {
 
         Scene scene = new Scene(vbox, SCREEN_WIDTH, SCREEN_HEIGHT);
         stage.setScene(scene);
+        disableMouseInput(scene);
     }
 
     @Override
     protected Button[] initializeButtons() {
         Button level1Button = createButton("Level 1", () -> startLevel("com.example.demo.Levels.Level_1"));
         Button level2Button = createButton("Level 2", () -> startLevel("com.example.demo.Levels.Level_2"));
-        Button backButton = createButton("Back", this::goScreen_MainMenu);
+        Button backButton = createButton("Back", this::goScreen_PreviousScreen);
         return new Button[]{level1Button, level2Button, backButton};
     }
 
@@ -52,7 +55,11 @@ public class Screen_LevelSelection extends BaseScreen {
         }
     }
 
-    private void goScreen_MainMenu() {
-        goScreen(Screen_MainMenu.class);
+    private void goScreen_PreviousScreen() {
+        goScreenPrevious(prevScreen);
+    }
+
+    public static void setPrevScreen(String prevScreen) {
+        Screen_LevelSelection.prevScreen = prevScreen;
     }
 }

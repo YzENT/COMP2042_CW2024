@@ -152,6 +152,17 @@ public abstract class BaseScreen {
         }
     }
 
+    protected void goScreenPrevious(String previousClass) {
+        try {
+            Class<?> goPrevious = Class.forName(previousClass);
+            goScreen(goPrevious);
+        } catch (Exception e) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setContentText(e.getClass().toString());
+            alert.show();
+        }
+    }
+
     protected DropShadow createButtonShadow() {
         DropShadow shadow = new DropShadow();
         shadow.setColor(Color.WHITE);
