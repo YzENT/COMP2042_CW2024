@@ -5,17 +5,12 @@ import com.example.demo.Actor.Plane_Boss;
 public class Level_2 extends LevelParent {
 
 	private static final String BACKGROUND_IMAGE_NAME = "/com/example/demo/images/backgrounds/background2.jpg";
-	private static final int PLAYER_INITIAL_HEALTH = 5;
+	private static final int PLAYER_INITIAL_HEALTH = 10;
 	private Plane_Boss planeBoss;
 	private LevelView levelView;
 
 	public Level_2(double screenHeight, double screenWidth) {
 		super(BACKGROUND_IMAGE_NAME, screenHeight, screenWidth, PLAYER_INITIAL_HEALTH);
-	}
-
-	@Override
-	protected void initializeFriendlyUnits() {
-		getRoot().getChildren().add(getUser());
 	}
 
 	@Override

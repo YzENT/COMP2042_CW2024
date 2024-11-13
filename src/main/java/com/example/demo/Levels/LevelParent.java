@@ -64,7 +64,9 @@ public abstract class LevelParent extends Observable {
 		friendlyUnits.add(user);
 	}
 
-	protected abstract void initializeFriendlyUnits();
+	protected void initializeFriendlyUnits() {
+		getRoot().getChildren().add(getUser());
+	}
 
 	protected abstract void checkIfGameOver();
 
