@@ -37,6 +37,8 @@ public abstract class LevelParent extends Observable {
 
     private final LevelView levelView;
 
+	private boolean isPaused = false;
+
 	public enum GameStatus{
 		VICTORY,
 		DEFEAT
@@ -119,7 +121,31 @@ public abstract class LevelParent extends Observable {
 	}
 
 	private void handleKeyPressed(KeyEvent e) {
-		userControls.handleKeyPressed(e);
+		if (e.getCode() == KeyCode.ESCAPE) {
+			togglePause();
+		} else {
+			userControls.handleKeyPressed(e);
+		}
+	}
+
+	private void togglePause() {
+		if (isPaused) {
+			resumeGame();
+		} else {
+			pauseGame();
+		}
+	}
+
+	private void pauseGame() {
+		System.out.println("Game paused");
+		isPaused = true;
+		timeline.pause();
+	}
+
+	private void resumeGame() {
+		System.out.println("Game resumed");
+		isPaused = false;
+		timeline.play();
 	}
 
 	private void handleKeyReleased(KeyEvent e) {
