@@ -11,6 +11,7 @@ public class UserControls {
     private final Plane_User user;
     private final Group root;
     private final List<ActiveActorDestructible> userProjectiles;
+    private static Runnable pauseGame;
 
     public UserControls(Plane_User user, Group root, List<ActiveActorDestructible> userProjectiles) {
         this.user = user;
@@ -25,6 +26,7 @@ public class UserControls {
         if (kc == KeyCode.RIGHT) user.moveForward();
         if (kc == KeyCode.LEFT) user.moveBackward();
         if (kc == KeyCode.SPACE) fireProjectile();
+        if (kc == KeyCode.ESCAPE) pauseGame.run();
     }
 
     public void handleKeyReleased(KeyEvent e) {
@@ -37,6 +39,10 @@ public class UserControls {
         ActiveActorDestructible projectile = user.fireProjectile();
         root.getChildren().add(projectile);
         userProjectiles.add(projectile);
+    }
+
+    public static void receivePauseMenu(Runnable showPauseMenu) {
+        pauseGame = showPauseMenu;
     }
 
 }

@@ -6,6 +6,8 @@ import com.example.demo.ActorsLogic.ActiveActorDestructible;
 import com.example.demo.Actor.Plane;
 import com.example.demo.Actor.Plane_User;
 import com.example.demo.ActorsLogic.UserControls;
+import com.example.demo.Initialize.Main;
+import com.example.demo.Screens.Screen_PauseMenu;
 import javafx.animation.*;
 import javafx.scene.Group;
 import javafx.scene.Scene;
@@ -36,8 +38,6 @@ public abstract class LevelParent extends Observable {
 	private final List<ActiveActorDestructible> enemyProjectiles;
 
     private final LevelView levelView;
-
-	private boolean isPaused = false;
 
 	public enum GameStatus{
 		VICTORY,
@@ -76,6 +76,7 @@ public abstract class LevelParent extends Observable {
 		initializeBackground();
 		initializeFriendlyUnits();
 		levelView.showHeartDisplay();
+		sendPauseMenuRunbacks();
 		return scene;
 	}
 
@@ -121,30 +122,16 @@ public abstract class LevelParent extends Observable {
 	}
 
 	private void handleKeyPressed(KeyEvent e) {
-		if (e.getCode() == KeyCode.ESCAPE) {
-			togglePause();
-		} else {
-			userControls.handleKeyPressed(e);
-		}
-	}
-
-	private void togglePause() {
-		if (isPaused) {
-			resumeGame();
-		} else {
-			pauseGame();
-		}
+		userControls.handleKeyPressed(e);
 	}
 
 	private void pauseGame() {
-		System.out.println("Game paused");
-		isPaused = true;
 		timeline.pause();
+		Screen_PauseMenu pauseMenu = new Screen_PauseMenu(Main.getStage(), Main.getScreenWidth(), Main.getScreenHeight());
+		pauseMenu.show();
 	}
 
 	private void resumeGame() {
-		System.out.println("Game resumed");
-		isPaused = false;
 		timeline.play();
 	}
 
@@ -302,6 +289,12 @@ public abstract class LevelParent extends Observable {
 			hitbox.setFill(Color.TRANSPARENT);
 			root.getChildren().add(hitbox);
 		}
+	}
+
+	private void sendPauseMenuRunbacks() {
+		Screen_PauseMenu.receiveScene(scene); //so pause menu can set stage back to this scene
+		Screen_PauseMenu.receiveRunback(this::resumeGame); //so pause menu can resume game
+		UserControls.receivePauseMenu(this::pauseGame); //so pause menu can pause game
 	}
 
 }

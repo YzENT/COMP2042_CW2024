@@ -11,7 +11,8 @@ public class Screen_PauseMenu extends BaseScreen{
 
     private static final String TITLE_TEXT = "Game Paused";
     private static final double TITLE_SIZE = 100;
-    private Runnable onResume;
+    private static Runnable onResume;
+    public static Scene gameScene;
 
     public Screen_PauseMenu(Stage stage, int SCREEN_WIDTH, int SCREEN_HEIGHT) {
         super(stage, SCREEN_WIDTH, SCREEN_HEIGHT);
@@ -39,6 +40,15 @@ public class Screen_PauseMenu extends BaseScreen{
     }
 
     private void resumeGame() {
-        System.out.println("Resume logic here TODO!");
+        onResume.run();
+        stage.setScene(gameScene);
+    }
+
+    public static void receiveScene(Scene scene) {
+        gameScene = scene; //this is so that stage can set to the correct scene later if game is resumed
+    }
+
+    public static void receiveRunback(Runnable resume) {
+        onResume = resume; //this is added so that it could run the code(LevelParent\resumeGame) directly without creating an object
     }
 }
