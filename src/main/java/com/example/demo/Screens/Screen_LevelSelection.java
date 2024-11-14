@@ -1,9 +1,7 @@
 package com.example.demo.Screens;
 
-import com.example.demo.Initialize.ResourceStarter;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
@@ -36,22 +34,15 @@ public class Screen_LevelSelection extends BaseScreen {
 
     @Override
     protected Button[] initializeButtons() {
-        Button level1Button = createButton("Level 1", () -> startLevel("com.example.demo.Levels.Level_1"));
-        Button level2Button = createButton("Level 2", () -> startLevel("com.example.demo.Levels.Level_2"));
+        Button level1Button = createButton("Level 1", () -> goScreen_LoadingAnimation("com.example.demo.Levels.Level_1"));
+        Button level2Button = createButton("Level 2", () -> goScreen_LoadingAnimation("com.example.demo.Levels.Level_2"));
         Button backButton = createButton("Back", this::goScreen_PreviousScreen);
         return new Button[]{level1Button, level2Button, backButton};
     }
 
-    private void startLevel(String levelClassName) {
-        try {
-            ResourceStarter resourceStarter = new ResourceStarter(this.stage);
-            resourceStarter.goToLevel(levelClassName);
-            stopBGM();
-        } catch (Exception e) {
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setContentText(e.getClass().toString());
-            alert.show();
-        }
+    private void goScreen_LoadingAnimation(String levelClassName) {
+        Screen_LoadingAnimation.setGameLevel(levelClassName);
+        goScreen(Screen_LoadingAnimation.class);
     }
 
     private void goScreen_PreviousScreen() {

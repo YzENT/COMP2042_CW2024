@@ -30,7 +30,7 @@ public class Level_1 extends LevelParent {
 
 	@Override
 	protected void spawnEnemyUnits() {
-		spawnCooldown--; //subtract as method is being called every frame
+		if (spawnCooldown > 0) spawnCooldown--;
 		if (spawnCooldown <= 0) {
 			int currentNumberOfEnemies = getCurrentNumberOfEnemies();
 			if (currentNumberOfEnemies < TOTAL_ENEMIES && Math.random() < ENEMY_SPAWN_PROBABILITY) {

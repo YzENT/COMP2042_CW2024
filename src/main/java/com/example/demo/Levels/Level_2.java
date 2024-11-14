@@ -9,12 +9,15 @@ public class Level_2 extends LevelParent {
 	private Plane_Boss planeBoss;
 	private LevelView levelView;
 
+	private static double spawnCooldown = 30;
+
 	public Level_2(double screenHeight, double screenWidth) {
 		super(BACKGROUND_IMAGE_NAME, screenHeight, screenWidth, PLAYER_INITIAL_HEALTH);
 	}
 
 	@Override
 	protected void checkIfGameOver() {
+		if (spawnCooldown > 0) return; //prevent error if planeBoss = null
 		if (userIsDestroyed()) {
 			gameStatus(GameStatus.DEFEAT);
 		}
@@ -25,7 +28,8 @@ public class Level_2 extends LevelParent {
 
 	@Override
 	protected void spawnEnemyUnits() {
-		if (getCurrentNumberOfEnemies() == 0) {
+		if (spawnCooldown > 0) spawnCooldown--;
+		if (getCurrentNumberOfEnemies() == 0 && spawnCooldown <= 0) {
 			planeBoss = new Plane_Boss(this.levelView);
 			addEnemyUnit(planeBoss);
 		}
