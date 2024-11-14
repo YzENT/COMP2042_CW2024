@@ -35,14 +35,19 @@ public class Screen_PauseMenu extends BaseScreen{
 
     @Override
     protected Button[] initializeButtons() {
+        Button resumeButton = createButton("Resume Game", this::resumeGame);
         Button settingsButton = createButton("Settings", this::goScreen_Settings);
-        Button resumeButton = createButton("Resume", this::resumeGame);
-        return new Button[]{settingsButton, resumeButton};
+        Button quitButton = createButton("Quit", this::goScreen_MainMenu);
+        return new Button[]{resumeButton, settingsButton, quitButton};
     }
 
     private void goScreen_Settings() {
         Screen_Settings.setPrevScreen(this.getClass().getName());
         goScreen(Screen_Settings.class);
+    }
+
+    private void goScreen_MainMenu() {
+        goScreen(Screen_MainMenu.class);
     }
 
     private void resumeGame() {
