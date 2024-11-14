@@ -41,7 +41,7 @@ public class UserControls {
         userProjectiles.add(projectile);
     }
 
-    public static void receivePauseMenu(Runnable showPauseMenu) {
+    public static void setPauseMenuRunback(Runnable showPauseMenu) {
         pauseGame = showPauseMenu;
     }
 

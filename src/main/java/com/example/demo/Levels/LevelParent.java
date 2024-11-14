@@ -1,23 +1,26 @@
 package com.example.demo.Levels;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.*;
-
 import com.example.demo.ActorsLogic.ActiveActorDestructible;
 import com.example.demo.Actor.Plane;
 import com.example.demo.Actor.Plane_User;
 import com.example.demo.ActorsLogic.UserControls;
+import com.example.demo.Initialize.Controller;
 import com.example.demo.Initialize.Main;
 import com.example.demo.Screens.Screen_PauseMenu;
 import javafx.animation.*;
 import javafx.scene.Group;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.image.*;
 import javafx.scene.input.*;
 import javafx.util.Duration;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 
-public abstract class LevelParent extends Observable {
+public abstract class LevelParent {
 
 	private static final double SCREEN_HEIGHT_ADJUSTMENT = 150;
 	private static final int MILLISECOND_DELAY = 50;
@@ -88,9 +91,16 @@ public abstract class LevelParent extends Observable {
 	}
 
 	public void goToNextLevel(String levelName) {
-		setChanged();
-		notifyObservers(levelName);
-		timeline.stop();
+		Controller control = new Controller(Main.getStage());
+        try {
+            control.goToLevel(levelName);
+        } catch (ClassNotFoundException | NoSuchMethodException | InstantiationException | IllegalAccessException |
+                 InvocationTargetException e) {
+			Alert alert = new Alert(AlertType.ERROR);
+			alert.setContentText(e.getClass().toString());
+			alert.show();
+        }
+        timeline.stop();
 	}
 
 	private void updateScene() {
@@ -293,9 +303,9 @@ public abstract class LevelParent extends Observable {
 	}
 
 	private void sendPauseMenuRunbacks() {
-		Screen_PauseMenu.receiveScene(scene); //so pause menu can set stage back to this scene
-		Screen_PauseMenu.receiveRunback(this::resumeGame); //so pause menu can resume game
-		UserControls.receivePauseMenu(this::pauseGame); //so pause menu can pause game
+		Screen_PauseMenu.setScene(scene); //so pause menu can set stage back to this scene
+		Screen_PauseMenu.setRunback(this::resumeGame); //so pause menu can resume game
+		UserControls.setPauseMenuRunback(this::pauseGame); //so pause menu can pause game
 	}
 
 }

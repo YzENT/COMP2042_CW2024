@@ -55,11 +55,11 @@ public class Screen_PauseMenu extends BaseScreen{
         stage.setScene(gameScene);
     }
 
-    public static void receiveScene(Scene scene) {
+    public static void setScene(Scene scene) {
         gameScene = scene; //this is so that stage can set to the correct scene later if game is resumed
     }
 
-    public static void receiveRunback(Runnable resume) {
+    public static void setRunback(Runnable resume) {
         onResume = resume; //this is added so that it could run the code(LevelParent\resumeGame) directly without creating an object
     }
 }
