@@ -50,13 +50,13 @@ public class Screen_LoadingAnimation extends BaseScreen{
         PauseTransition pause = new PauseTransition(Duration.seconds(2));
         pause.setOnFinished(event -> startLevel(gameLevel));
         pause.play();
+        stopBGM();
     }
 
     private void startLevel(String levelClassName) {
         try {
             ResourceStarter resourceStarter = new ResourceStarter(this.stage);
             resourceStarter.goToLevel(levelClassName);
-            stopBGM();
         } catch (Exception e) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setContentText(e.getClass().toString());

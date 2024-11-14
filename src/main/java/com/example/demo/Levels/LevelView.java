@@ -4,7 +4,9 @@ import com.example.demo.ImageEntities.GameOverImage;
 import com.example.demo.ImageEntities.HeartDisplay;
 import com.example.demo.ImageEntities.ShieldImage;
 import com.example.demo.ImageEntities.WinImage;
+import javafx.animation.FadeTransition;
 import javafx.scene.Group;
+import javafx.util.Duration;
 
 public class LevelView {
 	
@@ -38,6 +40,8 @@ public class LevelView {
 	
 	public void showGameOverImage() {
 		root.getChildren().add(gameOverImage);
+		gameOverImage.showGameOverImage();
+
 	}
 	
 	public void displayHeartRemaining(int heartsRemaining) {
@@ -64,6 +68,18 @@ public class LevelView {
 
 	public void hideShield() {
 		shieldImage.hideShield();
+	}
+
+	public void screenFade(Runnable afterFadeEvent) {
+		FadeTransition fadeTransition = new FadeTransition(Duration.seconds(5), root);
+		fadeTransition.setFromValue(1.0);
+		fadeTransition.setToValue(0.0);
+		fadeTransition.setOnFinished(event -> {
+			root.getChildren().clear();
+			root.setOpacity(1.0); //reset opacity
+			afterFadeEvent.run();
+		});
+		fadeTransition.play();
 	}
 
 }

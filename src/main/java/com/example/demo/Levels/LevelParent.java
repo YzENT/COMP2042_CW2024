@@ -232,13 +232,12 @@ public abstract class LevelParent extends Observable {
 
 	protected void gameStatus(GameStatus results) {
 		timeline.stop();
-
 		switch (results) {
 			case VICTORY:
-				levelView.showWinImage();
+				levelView.screenFade(levelView::showWinImage);
 				break;
 			case DEFEAT:
-				levelView.showGameOverImage();
+				levelView.screenFade(levelView::showGameOverImage);
 				break;
 		}
 	}
