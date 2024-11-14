@@ -1,6 +1,6 @@
 package com.example.demo.Screens;
 
-import com.example.demo.Initialize.ResourceStarter;
+import com.example.demo.Initialize.Controller;
 import javafx.animation.KeyFrame;
 import javafx.animation.PauseTransition;
 import javafx.animation.Timeline;
@@ -55,8 +55,8 @@ public class Screen_LoadingAnimation extends BaseScreen{
 
     private void startLevel(String levelClassName) {
         try {
-            ResourceStarter resourceStarter = new ResourceStarter(this.stage);
-            resourceStarter.goToLevel(levelClassName);
+            Controller controller = new Controller(this.stage);
+            controller.goToLevel(levelClassName);
         } catch (Exception e) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setContentText(e.getClass().toString());

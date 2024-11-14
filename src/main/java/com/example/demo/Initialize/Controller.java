@@ -12,11 +12,11 @@ import javafx.stage.Stage;
 import com.example.demo.Levels.LevelParent;
 import javafx.util.Duration;
 
-public class ResourceStarter implements Observer {
+public class Controller implements Observer {
 
 	private final Stage stage;
 
-	public ResourceStarter(Stage stage) {
+	public Controller(Stage stage) {
 		this.stage = stage;
 	}
 
