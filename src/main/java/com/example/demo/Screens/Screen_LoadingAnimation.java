@@ -24,7 +24,7 @@ public class Screen_LoadingAnimation extends BaseScreen{
     }
 
     @Override
-    protected void show() {
+    public void show() {
         Text loadingText = new Text(TITLE_TEXT);
         loadingText.setFont(Font.loadFont(getClass().getResourceAsStream(FONT_PATH), 0));
         loadingText.setStyle("-fx-font-size: " + TITLE_SIZE + "px;" + "-fx-fill: white;");
@@ -48,7 +48,10 @@ public class Screen_LoadingAnimation extends BaseScreen{
 
         //pause so the text "loading" is displayed
         PauseTransition pause = new PauseTransition(Duration.seconds(2));
-        pause.setOnFinished(event -> startLevel(gameLevel));
+        pause.setOnFinished(actionEvent -> {
+            startLevel(gameLevel);
+            gameLevel = null; //just precaution in case it's somehow called again
+        });
         pause.play();
         stopBGM();
     }

@@ -1,19 +1,16 @@
 package com.example.demo.Levels;
 
-import java.lang.reflect.InvocationTargetException;
 import java.util.*;
 import com.example.demo.ActorsLogic.ActiveActorDestructible;
 import com.example.demo.Actor.Plane;
 import com.example.demo.Actor.Plane_User;
 import com.example.demo.ActorsLogic.UserControls;
-import com.example.demo.Initialize.Controller;
 import com.example.demo.Initialize.Main;
+import com.example.demo.Screens.Screen_LoadingAnimation;
 import com.example.demo.Screens.Screen_PauseMenu;
 import javafx.animation.*;
 import javafx.scene.Group;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Alert.AlertType;
 import javafx.scene.image.*;
 import javafx.scene.input.*;
 import javafx.util.Duration;
@@ -91,16 +88,12 @@ public abstract class LevelParent {
 	}
 
 	public void goToNextLevel(String levelName) {
-		Controller control = new Controller(Main.getStage());
-        try {
-            control.goToLevel(levelName);
-        } catch (ClassNotFoundException | NoSuchMethodException | InstantiationException | IllegalAccessException |
-                 InvocationTargetException e) {
-			Alert alert = new Alert(AlertType.ERROR);
-			alert.setContentText(e.getClass().toString());
-			alert.show();
-        }
-        timeline.stop();
+		timeline.stop();
+		levelView.screenFade(2, () -> {
+			Screen_LoadingAnimation.setGameLevel(levelName);
+			Screen_LoadingAnimation loadingAnimation = new Screen_LoadingAnimation(Main.getStage(), Main.getScreenWidth(), Main.getScreenHeight());
+			loadingAnimation.show();
+		});
 	}
 
 	private void updateScene() {
@@ -244,10 +237,10 @@ public abstract class LevelParent {
 		timeline.stop();
 		switch (results) {
 			case VICTORY:
-				levelView.screenFade(levelView::showWinImage);
+				levelView.screenFade(5, levelView::showWinImage);
 				break;
 			case DEFEAT:
-				levelView.screenFade(levelView::showGameOverImage);
+				levelView.screenFade(5, levelView::showGameOverImage);
 				break;
 		}
 	}

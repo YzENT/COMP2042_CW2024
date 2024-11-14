@@ -70,8 +70,8 @@ public class LevelView {
 		shieldImage.hideShield();
 	}
 
-	public void screenFade(Runnable afterFadeEvent) {
-		FadeTransition fadeTransition = new FadeTransition(Duration.seconds(5), root);
+	public void screenFade(double transition_Time, Runnable afterFadeEvent) {
+		FadeTransition fadeTransition = new FadeTransition(Duration.seconds(transition_Time), root);
 		fadeTransition.setFromValue(1.0);
 		fadeTransition.setToValue(0.0);
 		fadeTransition.setOnFinished(event -> {
