@@ -18,6 +18,8 @@ import javafx.scene.media.Media;
 import javafx.scene.text.Text;
 import javafx.util.Duration;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 
 public abstract class BaseScreen {
@@ -34,6 +36,8 @@ public abstract class BaseScreen {
     private static final double BUTTON_FONT_SIZE = 50;
     private static final double SHADOW_RADIUS = 10;
     private final DropShadow buttonShadow;
+
+    private static final Map<Class<?>, BaseScreen> screenCache = new HashMap<>();
 
     private static double musicVolume = 0.5;
     private static double sfxVolume = 0.5;
@@ -142,8 +146,12 @@ public abstract class BaseScreen {
 
     protected void goScreen(Class<?> screenClass) {
         try {
-            BaseScreen screen = (BaseScreen) screenClass.getConstructor(Stage.class, int.class, int.class)
-                    .newInstance(stage, SCREEN_WIDTH, SCREEN_HEIGHT);
+            BaseScreen screen = screenCache.get(screenClass);
+            if (screen == null) {
+                screen = (BaseScreen) screenClass.getConstructor(Stage.class, int.class, int.class)
+                        .newInstance(stage, SCREEN_WIDTH, SCREEN_HEIGHT);
+                screenCache.put(screenClass, screen);
+            }
             screen.show();
         } catch (Exception e) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
