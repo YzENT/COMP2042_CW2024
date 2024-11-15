@@ -26,7 +26,7 @@ public class UserControls {
         if (kc == KeyCode.RIGHT) user.moveForward();
         if (kc == KeyCode.LEFT) user.moveBackward();
         if (kc == KeyCode.SPACE) fireProjectile();
-        if (kc == KeyCode.ESCAPE) pauseGame.run();
+        if (kc == KeyCode.ESCAPE && pauseGame != null) pauseGame.run();
     }
 
     public void handleKeyReleased(KeyEvent e) {
