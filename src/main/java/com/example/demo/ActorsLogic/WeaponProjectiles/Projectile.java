@@ -38,7 +38,7 @@ public abstract class Projectile extends ActiveActorDestructible {
 		return health == 0;
 	}
 
-	public boolean outOfBounds() {
+	private boolean outOfBounds() {
 		return getTranslateX() > Main.getScreenWidth();
 	}
 

@@ -12,7 +12,7 @@ public class Screen_PauseMenu extends BaseScreen{
     private static final String TITLE_TEXT = "Game Paused";
     private static final double TITLE_SIZE = 100;
     private static Runnable onResume;
-    public static Scene gameScene;
+    private static Scene gameScene;
 
     public Screen_PauseMenu(Stage stage, int SCREEN_WIDTH, int SCREEN_HEIGHT) {
         super(stage, SCREEN_WIDTH, SCREEN_HEIGHT);

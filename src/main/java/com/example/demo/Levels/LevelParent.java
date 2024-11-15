@@ -221,7 +221,7 @@ public abstract class LevelParent {
 		levelView.displayHeartRemaining(user.getHealth());
 	}
 
-	public void goToNextLevel(String levelName) {
+	protected void goToNextLevel(String levelName) {
 		timeline.stop();
 		levelView.screenFade(2, () -> {
 			Screen_LoadingAnimation.setGameLevel(levelName);
