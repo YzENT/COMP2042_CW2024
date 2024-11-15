@@ -6,6 +6,7 @@ import com.example.demo.Actor.Plane;
 import com.example.demo.Actor.Plane_User;
 import com.example.demo.ActorsLogic.UserControls;
 import com.example.demo.Initialize.Main;
+import com.example.demo.Screens.Screen_GameEnded;
 import com.example.demo.Screens.Screen_LoadingAnimation;
 import com.example.demo.Screens.Screen_PauseMenu;
 import javafx.animation.*;
@@ -64,57 +65,12 @@ public abstract class LevelParent {
 		friendlyUnits.add(user);
 	}
 
-	protected void initializeFriendlyUnits() {
-		getRoot().getChildren().add(getUser());
-	}
-
-	protected abstract void checkIfGameOver();
-
-	protected abstract void spawnEnemyUnits();
-
-	protected abstract LevelView instantiateLevelView();
-
 	public Scene initializeScene() {
 		initializeBackground();
 		initializeFriendlyUnits();
 		levelView.showHeartDisplay();
 		sendPauseMenuRunbacks();
 		return scene;
-	}
-
-	public void startGame() {
-		background.requestFocus();
-		timeline.play();
-	}
-
-	public void goToNextLevel(String levelName) {
-		timeline.stop();
-		levelView.screenFade(2, () -> {
-			Screen_LoadingAnimation.setGameLevel(levelName);
-			Screen_LoadingAnimation loadingAnimation = new Screen_LoadingAnimation(Main.getStage(), Main.getScreenWidth(), Main.getScreenHeight());
-			loadingAnimation.show();
-		});
-	}
-
-	private void updateScene() {
-		spawnEnemyUnits();
-		updateActors();
-		generateEnemyFire();
-		handleEnemyPenetration();
-		handleUserProjectileCollisions();
-		handleEnemyProjectileCollisions();
-		handlePlaneCollisions();
-		handleProjectileCollisions();
-		removeAllDestroyedActors();
-		updateLevelView();
-		checkIfGameOver();
-//		displayHitboxes();
-	}
-
-	private void initializeTimeline() {
-		timeline.setCycleCount(Timeline.INDEFINITE);
-		KeyFrame gameLoop = new KeyFrame(Duration.millis(MILLISECOND_DELAY), e -> updateScene());
-		timeline.getKeyFrames().add(gameLoop);
 	}
 
 	private void initializeBackground() {
@@ -130,18 +86,56 @@ public abstract class LevelParent {
 		userControls.handleKeyPressed(e);
 	}
 
-	private void pauseGame() {
-		timeline.pause();
-		Screen_PauseMenu pauseMenu = new Screen_PauseMenu(Main.getStage(), Main.getScreenWidth(), Main.getScreenHeight());
-		pauseMenu.show();
+	private void handleKeyReleased(KeyEvent e) {
+		userControls.handleKeyReleased(e);
 	}
 
-	private void resumeGame() {
+	private void sendPauseMenuRunbacks() {
+		Screen_PauseMenu.setScene(scene); //so pause menu can set stage back to this scene
+		Screen_PauseMenu.setRunback(this::resumeGame); //so pause menu can resume game
+		UserControls.setPauseMenuRunback(this::pauseGame); //so pause menu can pause game
+	}
+
+	protected void initializeFriendlyUnits() {
+		getRoot().getChildren().add(getUser());
+	}
+
+	protected abstract void checkIfGameOver();
+
+	protected abstract void spawnEnemyUnits();
+
+	protected abstract LevelView instantiateLevelView();
+
+	public void startGame() {
+		background.requestFocus();
 		timeline.play();
 	}
 
-	private void handleKeyReleased(KeyEvent e) {
-		userControls.handleKeyReleased(e);
+	private void initializeTimeline() {
+		timeline.setCycleCount(Timeline.INDEFINITE);
+		KeyFrame gameLoop = new KeyFrame(Duration.millis(MILLISECOND_DELAY), e -> updateScene());
+		timeline.getKeyFrames().add(gameLoop);
+	}
+
+	private void updateScene() {
+		spawnEnemyUnits();
+		updateActors();
+		generateEnemyFire();
+		handleEnemyPenetration();
+		handleUserProjectileCollisions();
+		handleEnemyProjectileCollisions();
+		handlePlaneCollisions();
+		handleProjectileCollisions();
+		removeAllDestroyedActors();
+		updateLevelView();
+		checkIfGameOver();
+	}
+
+	private void updateActors() {
+		friendlyUnits.forEach(plane -> plane.updateActor());
+		enemyUnits.forEach(enemy -> enemy.updateActor());
+		userProjectiles.forEach(projectile -> projectile.updateActor());
+		enemyProjectiles.forEach(projectile -> projectile.updateActor());
 	}
 
 	private void generateEnemyFire() {
@@ -156,25 +150,9 @@ public abstract class LevelParent {
 		});
 	}
 
-	private void updateActors() {
-		friendlyUnits.forEach(plane -> plane.updateActor());
-		enemyUnits.forEach(enemy -> enemy.updateActor());
-		userProjectiles.forEach(projectile -> projectile.updateActor());
-		enemyProjectiles.forEach(projectile -> projectile.updateActor());
-	}
-
-	private void removeAllDestroyedActors() {
-		removeDestroyedActors(friendlyUnits);
-		removeDestroyedActors(enemyUnits);
-		removeDestroyedActors(userProjectiles);
-		removeDestroyedActors(enemyProjectiles);
-	}
-
-	private void removeDestroyedActors(List<ActiveActorDestructible> actors) {
-		List<ActiveActorDestructible> destroyedActors = actors.stream().filter(ActiveActorDestructible::isDestroyed)
-				.toList();
-		root.getChildren().removeAll(destroyedActors);
-		actors.removeAll(destroyedActors);
+	protected void addEnemyUnit(ActiveActorDestructible enemy) {
+		enemyUnits.add(enemy);
+		root.getChildren().add(enemy);
 	}
 
 	private void handleCollisions(List<ActiveActorDestructible> actors1, List<ActiveActorDestructible> actors2, Runnable specialCondition) {
@@ -225,24 +203,63 @@ public abstract class LevelParent {
 		handleCollisions(enemyProjectiles, userProjectiles, () -> {});
 	}
 
+	private void removeAllDestroyedActors() {
+		removeDestroyedActors(friendlyUnits);
+		removeDestroyedActors(enemyUnits);
+		removeDestroyedActors(userProjectiles);
+		removeDestroyedActors(enemyProjectiles);
+	}
+
+	private void removeDestroyedActors(List<ActiveActorDestructible> actors) {
+		List<ActiveActorDestructible> destroyedActors = actors.stream().filter(ActiveActorDestructible::isDestroyed)
+				.toList();
+		root.getChildren().removeAll(destroyedActors);
+		actors.removeAll(destroyedActors);
+	}
+
 	private void updateLevelView() {
 		levelView.displayHeartRemaining(user.getHealth());
 	}
 
-	private boolean enemyHasPenetratedDefenses(ActiveActorDestructible enemy) {
-		return Math.abs(enemy.getTranslateX()) > screenWidth;
+	public void goToNextLevel(String levelName) {
+		timeline.stop();
+		levelView.screenFade(2, () -> {
+			Screen_LoadingAnimation.setGameLevel(levelName);
+			Screen_LoadingAnimation loadingAnimation = new Screen_LoadingAnimation(Main.getStage(), Main.getScreenWidth(), Main.getScreenHeight());
+			loadingAnimation.show();
+		});
 	}
 
-	protected void gameStatus(GameStatus results) {
+	protected void gameStatus(GameStatus result) {
 		timeline.stop();
-		switch (results) {
-			case VICTORY:
-				levelView.screenFade(5, levelView::showWinImage);
-				break;
-			case DEFEAT:
-				levelView.screenFade(5, levelView::showGameOverImage);
-				break;
-		}
+		levelView.screenFade(5, () -> {
+			FadeTransition fadeTransition = new FadeTransition(Duration.seconds(2), root);
+			Rectangle background = new Rectangle(Main.getScreenWidth(), Main.getScreenHeight(), Color.BLACK);
+			root.getChildren().add(0, background);
+			fadeTransition.setFromValue(0);
+			fadeTransition.setToValue(1.0);
+			fadeTransition.play();
+
+			fadeTransition.setOnFinished(event -> {
+				Screen_GameEnded end = new Screen_GameEnded(Main.getStage(), Main.getScreenWidth(), Main.getScreenHeight());
+				end.setResults(result);
+				end.show();
+			});
+		});
+	}
+
+	private void pauseGame() {
+		timeline.pause();
+		Screen_PauseMenu pauseMenu = new Screen_PauseMenu(Main.getStage(), Main.getScreenWidth(), Main.getScreenHeight());
+		pauseMenu.show();
+	}
+
+	private void resumeGame() {
+		timeline.play();
+	}
+
+	private boolean enemyHasPenetratedDefenses(ActiveActorDestructible enemy) {
+		return Math.abs(enemy.getTranslateX()) > screenWidth;
 	}
 
 	protected Plane_User getUser() {
@@ -255,11 +272,6 @@ public abstract class LevelParent {
 
 	protected int getCurrentNumberOfEnemies() {
 		return enemyUnits.size();
-	}
-
-	protected void addEnemyUnit(ActiveActorDestructible enemy) {
-		enemyUnits.add(enemy);
-		root.getChildren().add(enemy);
 	}
 
 	protected double getEnemyMaximumYPosition() {
@@ -293,12 +305,6 @@ public abstract class LevelParent {
 			hitbox.setFill(Color.TRANSPARENT);
 			root.getChildren().add(hitbox);
 		}
-	}
-
-	private void sendPauseMenuRunbacks() {
-		Screen_PauseMenu.setScene(scene); //so pause menu can set stage back to this scene
-		Screen_PauseMenu.setRunback(this::resumeGame); //so pause menu can resume game
-		UserControls.setPauseMenuRunback(this::pauseGame); //so pause menu can pause game
 	}
 
 }
