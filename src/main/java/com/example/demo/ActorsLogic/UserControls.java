@@ -1,17 +1,12 @@
 package com.example.demo.ActorsLogic;
 
 import com.example.demo.Actor.Plane_User;
+import com.example.demo.Initialize.Main;
 import javafx.scene.Group;
-import javafx.scene.control.Alert;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
-import java.io.FileNotFoundException;
-import java.io.InputStream;
 import java.util.*;
-import java.util.Properties;
-import java.util.stream.Collectors;
 import java.util.Map;
-import java.io.IOException;
 
 public class UserControls {
 
@@ -20,7 +15,6 @@ public class UserControls {
     private final List<ActiveActorDestructible> userProjectiles;
     private static Runnable pauseGame;
     private Map<String, KeyCode> keyBindings;
-    private static final String config_Path = "/com/example/demo/keyConfigs.properties";
 
     public UserControls(Plane_User user, Group root, List<ActiveActorDestructible> userProjectiles) {
         this.user = user;
@@ -56,24 +50,6 @@ public class UserControls {
     }
 
     private void loadKeyBindings() {
-        Properties properties = new Properties();
-
-        try (InputStream inputStream = getClass().getResourceAsStream(config_Path)) {
-            if (inputStream == null) {
-                throw new FileNotFoundException("Key configuration file not found.");
-            }
-            properties.load(inputStream);
-
-            keyBindings = properties.entrySet().stream()
-                    .collect(Collectors.toMap(
-                            e -> (String) e.getKey(),
-                            e -> KeyCode.valueOf(((String) e.getValue()).toUpperCase())
-                    ));
-        } catch (IOException | IllegalArgumentException e) {
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setContentText("Error loading key bindings: " + e.getMessage());
-            alert.show();
-            alert.setOnCloseRequest(event -> System.exit(-1));
-        }
+        keyBindings = Main.getKeyBindings();
     }
 }
