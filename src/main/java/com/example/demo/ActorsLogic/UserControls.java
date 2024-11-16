@@ -14,7 +14,7 @@ public class UserControls {
     private final Group root;
     private final List<ActiveActorDestructible> userProjectiles;
     private static Runnable pauseGame;
-    private Map<String, KeyCode> keyBindings;
+    private static Map<String, KeyCode> keyBindings;
 
     public UserControls(Plane_User user, Group root, List<ActiveActorDestructible> userProjectiles) {
         this.user = user;
@@ -49,7 +49,7 @@ public class UserControls {
         pauseGame = showPauseMenu;
     }
 
-    private void loadKeyBindings() {
+    public static void loadKeyBindings() {
         keyBindings = Main.getKeyBindings();
     }
 }
