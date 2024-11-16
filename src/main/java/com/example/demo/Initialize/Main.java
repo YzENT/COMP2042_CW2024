@@ -37,10 +37,10 @@ public class Main extends Application {
 		screenMainMenu.show(); //this is to show the UI
 	}
 
-	private void setKeyBindings() {
+	public static void setKeyBindings() {
 		Properties properties = new Properties();
 
-		try (InputStream inputStream = getClass().getResourceAsStream(config_Path)) {
+		try (InputStream inputStream = Main.class.getResourceAsStream(config_Path)) {
 			if (inputStream == null) {
 				throw new FileNotFoundException("Key configuration file not found.");
 			}
