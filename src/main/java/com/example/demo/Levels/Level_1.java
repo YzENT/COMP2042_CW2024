@@ -30,15 +30,18 @@ public class Level_1 extends LevelParent {
 
 	@Override
 	protected void spawnEnemyUnits() {
-		if (spawnCooldown > 0) spawnCooldown--;
-		if (spawnCooldown <= 0) {
-			int currentNumberOfEnemies = getCurrentNumberOfEnemies();
-			if (currentNumberOfEnemies < TOTAL_ENEMIES && Math.random() < ENEMY_SPAWN_PROBABILITY) {
-				double newEnemyInitialYPosition = Math.random() * getEnemyMaximumYPosition();
-				ActiveActorDestructible newEnemy = new Plane_Enemy(getScreenWidth(), newEnemyInitialYPosition);
-				addEnemyUnit(newEnemy);
-				resetSpawnTimer();
-			}
+		if (spawnCooldown > 0) {
+			spawnCooldown--;
+			return;
+		}
+
+		int currentNumberOfEnemies = getCurrentNumberOfEnemies();
+
+		if (currentNumberOfEnemies < TOTAL_ENEMIES && Math.random() < ENEMY_SPAWN_PROBABILITY) {
+			double newEnemyInitialYPosition = Math.random() * getEnemyMaximumYPosition();
+			ActiveActorDestructible newEnemy = new Plane_Enemy(getScreenWidth(), newEnemyInitialYPosition);
+			addEnemyUnit(newEnemy);
+			resetSpawnTimer();
 		}
 	}
 

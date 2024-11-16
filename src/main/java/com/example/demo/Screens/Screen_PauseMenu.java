@@ -37,7 +37,7 @@ public class Screen_PauseMenu extends BaseScreen{
     protected Button[] initializeButtons() {
         Button resumeButton = createButton("Resume Game", this::resumeGame);
         Button settingsButton = createButton("Settings", this::goScreen_Settings);
-        Button quitButton = createButton("Quit", this::goScreen_MainMenu);
+        Button quitButton = createButton("Home", this::goScreen_MainMenu);
         return new Button[]{resumeButton, settingsButton, quitButton};
     }
 
