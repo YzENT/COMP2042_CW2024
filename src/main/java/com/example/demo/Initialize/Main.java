@@ -102,4 +102,8 @@ public class Main extends Application {
 	public static Map<String, KeyCode> getKeyBindings() {
 		return keyBindings;
 	}
+
+	public static String getConfigPath() {
+		return CONFIG_PATH;
+	}
 }

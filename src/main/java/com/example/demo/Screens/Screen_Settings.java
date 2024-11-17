@@ -1,5 +1,6 @@
 package com.example.demo.Screens;
 
+import com.example.demo.Screens.Settings.Controls;
 import com.example.demo.Screens.Settings.Volume;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -36,13 +37,19 @@ public class Screen_Settings extends BaseScreen {
     @Override
     protected Button[] initializeButtons() {
         Button volumeButton = createButton("Volume", this::goScreen_volumeSettings);
+        Button controlsButton = createButton("Controls", this::goScreen_ControlsSettings);
         Button backButton = createButton("Back", this::goScreen_PreviousScreen);
-        return new Button[]{volumeButton, backButton};
+        return new Button[]{volumeButton, controlsButton, backButton};
     }
 
     private void goScreen_volumeSettings() {
         goScreen(Volume.class);
         Volume.setPrevScreen(this.getClass().getName());
+    }
+
+    private void goScreen_ControlsSettings() {
+        goScreen(Controls.class);
+        Controls.setPrevScreen(this.getClass().getName());
     }
 
     private void goScreen_PreviousScreen() {
