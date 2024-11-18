@@ -5,7 +5,6 @@ import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.layout.VBox;
-import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
@@ -23,7 +22,7 @@ public class Screen_GameEnded extends BaseScreen{
         Text title = initializeTitle(TITLE_TEXT, TITLE_COLOUR);
         Button[] buttons = initializeButtons();
 
-        VBox vbox = new VBox(50, title);
+        VBox vbox = new VBox(70, title);
         vbox.getChildren().addAll(buttons);
         vbox.setAlignment(Pos.CENTER);
         vbox.setStyle("-fx-background-color: BLACK;");
@@ -34,11 +33,10 @@ public class Screen_GameEnded extends BaseScreen{
     }
 
     private Text initializeTitle(String TITLE_TEXT, String TITLE_COLOR) {
-        Font arcadeFont = Font.loadFont(getClass().getResourceAsStream(FONT_PATH), 0);
         Text title = new Text(TITLE_TEXT);
         title.setFont(arcadeFont);
         title.setStyle(
-                "-fx-font-size: " + 100 + "px;" +
+                "-fx-font-size: " + 70 + "px;" +
                         "-fx-fill: " + TITLE_COLOR + ";"
         );
         return title;

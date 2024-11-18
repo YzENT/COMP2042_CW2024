@@ -8,14 +8,13 @@ import javafx.scene.control.Slider;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
-import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 public class Volume extends Screen_Settings {
 
     private static final String TITLE_TEXT = "Volume";
-    private static final double TITLE_SIZE = 100;
+    private static final double TITLE_SIZE = 50;
     private static String prevScreen;
 
     public Volume(Stage stage, int SCREEN_WIDTH, int SCREEN_HEIGHT) {
@@ -28,7 +27,7 @@ public class Volume extends Screen_Settings {
         Button[] buttons = initializeButtons();
         VBox musicVolumeSlider = initializeVolumeSlider();
 
-        VBox vbox = new VBox(50, title, musicVolumeSlider);
+        VBox vbox = new VBox(70, title, musicVolumeSlider);
         vbox.getChildren().addAll(buttons);
         vbox.setAlignment(Pos.CENTER);
         vbox.setStyle("-fx-background-color: black;");
@@ -55,7 +54,8 @@ public class Volume extends Screen_Settings {
 
         Text volumeLabel = new Text("Music");
         volumeLabel.setFill(Color.WHITE);
-        volumeLabel.setFont(Font.loadFont(getClass().getResourceAsStream(FONT_PATH), 50));
+        volumeLabel.setFont(arcadeFont);
+        volumeLabel.setStyle("-fx-font-size: 30px;");
 
         HBox sliderContainer = new HBox(100, volumeLabel, volumeSlider);
         sliderContainer.setAlignment(Pos.CENTER);

@@ -12,7 +12,7 @@ import javafx.stage.Stage;
 public class Screen_Settings extends BaseScreen {
 
     private static final String TITLE_TEXT = "Settings";
-    private static final double TITLE_SIZE = 100;
+    private static final double TITLE_SIZE = 50;
     private static String prevScreen;
 
     public Screen_Settings(Stage stage, int SCREEN_WIDTH, int SCREEN_HEIGHT) {
@@ -24,7 +24,7 @@ public class Screen_Settings extends BaseScreen {
         Text title = initializeTitle(TITLE_TEXT, TITLE_SIZE);
         Button[] buttons = initializeButtons();
 
-        VBox vbox = new VBox(50, title);
+        VBox vbox = new VBox(70, title);
         vbox.getChildren().addAll(buttons);
         vbox.setAlignment(Pos.CENTER);
         vbox.setStyle("-fx-background-color: black;");
@@ -36,10 +36,10 @@ public class Screen_Settings extends BaseScreen {
 
     @Override
     protected Button[] initializeButtons() {
-        Button volumeButton = createButton("Volume", this::goScreen_volumeSettings);
         Button controlsButton = createButton("Controls", this::goScreen_ControlsSettings);
+        Button volumeButton = createButton("Volume", this::goScreen_volumeSettings);
         Button backButton = createButton("Back", this::goScreen_PreviousScreen);
-        return new Button[]{volumeButton, controlsButton, backButton};
+        return new Button[]{controlsButton, volumeButton, backButton};
     }
 
     private void goScreen_volumeSettings() {

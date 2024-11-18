@@ -10,7 +10,7 @@ import javafx.stage.Stage;
 public class Screen_LevelSelection extends BaseScreen {
 
     private static final String TITLE_TEXT = "Select Level";
-    private static final double TITLE_SIZE = 100;
+    private static final double TITLE_SIZE = 50;
     private static String prevScreen;
 
     public Screen_LevelSelection(Stage stage, int SCREEN_WIDTH, int SCREEN_HEIGHT) {
@@ -22,7 +22,7 @@ public class Screen_LevelSelection extends BaseScreen {
         Text title = initializeTitle(TITLE_TEXT, TITLE_SIZE);
         Button[] buttons = initializeButtons();
 
-        VBox vbox = new VBox(50, title);
+        VBox vbox = new VBox(70, title);
         vbox.getChildren().addAll(buttons);
         vbox.setAlignment(Pos.CENTER);
         vbox.setStyle("-fx-background-color: black;");

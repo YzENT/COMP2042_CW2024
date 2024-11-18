@@ -29,11 +29,12 @@ public abstract class BaseScreen {
     protected final int SCREEN_HEIGHT;
     protected static MediaPlayer mediaPlayer;
 
-    protected static final String FONT_PATH = "/com/example/demo/fonts/ARCADECLASSIC.ttf";
+    //https://www.fontspace.com/press-start-2p-font-f11591
+    protected static final Font arcadeFont = Font.loadFont(BaseScreen.class.getResourceAsStream("/com/example/demo/fonts/PressStart2P-vaV7.ttf"), 0);
     private static final double BUTTON_SCALE_NEW = 1.2;
     private static final double BUTTON_SCALE_OLD = 1.0;
     private static final double TRANSITION_DURATION = 0.5;
-    private static final double BUTTON_FONT_SIZE = 50;
+    private static final double BUTTON_FONT_SIZE = 30;
     private static final double SHADOW_RADIUS = 10;
     private final DropShadow buttonShadow;
 
@@ -52,7 +53,6 @@ public abstract class BaseScreen {
     protected abstract void show();
 
     protected Text initializeTitle(String TITLE_TEXT, double TITLE_SIZE) {
-        Font arcadeFont = Font.loadFont(getClass().getResourceAsStream(FONT_PATH), 0);
         Text title = new Text(TITLE_TEXT);
         title.setFont(arcadeFont);
         title.setStyle("-fx-font-size: " + TITLE_SIZE + "px;");
@@ -76,7 +76,7 @@ public abstract class BaseScreen {
                 "-fx-background-color: transparent; " +
                         "-fx-text-fill: white; " +
                         "-fx-font-size: " + BUTTON_FONT_SIZE + "px; " +
-                        "-fx-font-family: 'ArcadeClassic';"
+                        "-fx-font-family: 'Press Start 2P';"
         );
         button.setOnAction(e -> action.run());
         setupFocusListener(button);

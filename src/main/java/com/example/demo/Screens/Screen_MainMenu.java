@@ -10,7 +10,7 @@ import javafx.stage.Stage;
 public class Screen_MainMenu extends BaseScreen {
 
     private static final String TITLE_TEXT = "Sky Battle";
-    private static final double TITLE_SIZE = 150;
+    private static final double TITLE_SIZE = 100;
     private static final String BGM_PATH = "/com/example/demo/audio/bgm/Transformer - Scorponok.mp3";
 
     public Screen_MainMenu(Stage stage, int SCREEN_WIDTH, int SCREEN_HEIGHT) {
@@ -23,7 +23,7 @@ public class Screen_MainMenu extends BaseScreen {
         Button[] buttons = initializeButtons();
         playBGM(BGM_PATH);
 
-        VBox vbox = new VBox(50, title);
+        VBox vbox = new VBox(70, title);
         vbox.getChildren().addAll(buttons);
         vbox.setAlignment(Pos.CENTER);
         vbox.setStyle("-fx-background-color: black;");

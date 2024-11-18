@@ -8,7 +8,6 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.layout.StackPane;
-import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.util.Duration;
@@ -26,7 +25,7 @@ public class Screen_LoadingAnimation extends BaseScreen{
     @Override
     public void show() {
         Text loadingText = new Text(TITLE_TEXT);
-        loadingText.setFont(Font.loadFont(getClass().getResourceAsStream(FONT_PATH), 0));
+        loadingText.setFont(arcadeFont);
         loadingText.setStyle("-fx-font-size: " + TITLE_SIZE + "px;" + "-fx-fill: white;");
         StackPane loadingPane = new StackPane(loadingText);
         loadingPane.setStyle("-fx-background-color: black;");

@@ -10,7 +10,7 @@ import javafx.stage.Stage;
 public class Screen_PauseMenu extends BaseScreen{
 
     private static final String TITLE_TEXT = "Game Paused";
-    private static final double TITLE_SIZE = 100;
+    private static final double TITLE_SIZE = 50;
     private static Runnable onResume;
     private static Scene gameScene;
 
@@ -23,7 +23,7 @@ public class Screen_PauseMenu extends BaseScreen{
         Text title = initializeTitle(TITLE_TEXT, TITLE_SIZE);
         Button[] buttons = initializeButtons();
 
-        VBox vbox = new VBox(50, title);
+        VBox vbox = new VBox(70, title);
         vbox.getChildren().addAll(buttons);
         vbox.setAlignment(Pos.CENTER);
         vbox.setStyle("-fx-background-color: black;");

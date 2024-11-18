@@ -47,11 +47,11 @@ public class Main extends Application {
 				}
 
 				try (PrintWriter writer = new PrintWriter(new FileWriter(configFile))) {
-					writer.println("moveUp=W");
+					writer.println("fire=SPACE");
 					writer.println("moveDown=S");
 					writer.println("moveLeft=A");
 					writer.println("moveRight=D");
-					writer.println("fire=SPACE");
+					writer.println("moveUp=W");
 					writer.println("pause=ESCAPE");
 				}
 			} catch (IOException e) {
