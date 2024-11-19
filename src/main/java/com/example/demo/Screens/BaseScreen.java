@@ -27,6 +27,7 @@ public abstract class BaseScreen {
 
     //https://www.fontspace.com/press-start-2p-font-f11591
     protected static final Font arcadeFont = Font.loadFont(BaseScreen.class.getResourceAsStream("/com/example/demo/fonts/PressStart2P-vaV7.ttf"), 0);
+    protected static final String fontName = arcadeFont.getName();
     private static final double BUTTON_SCALE_NEW = 1.2;
     private static final double BUTTON_SCALE_OLD = 1.0;
     private static final double TRANSITION_DURATION = 0.5;
@@ -71,7 +72,7 @@ public abstract class BaseScreen {
                 "-fx-background-color: transparent; " +
                         "-fx-text-fill: white; " +
                         "-fx-font-size: " + BUTTON_FONT_SIZE + "px; " +
-                        "-fx-font-family: 'Press Start 2P';"
+                        "-fx-font-family: '" + fontName + "'; "
         );
         button.setOnAction(e -> action.run());
         setupFocusListener(button);

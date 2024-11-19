@@ -16,6 +16,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import java.io.FileWriter;
@@ -58,11 +59,7 @@ public class Controls extends Screen_Settings {
         Text title = initializeTitle(TITLE_TEXT, TITLE_SIZE);
         Button[] buttons = initializeButtons();
         VBox bindingBoxes = initializeBindingSection();
-
-        Label instructionsLabel = new Label("TAB to Navigate\nENTER to Edit\nR to Restore Defaults");
-        instructionsLabel.setStyle("-fx-font-family: 'Press Start 2P'; " +
-                "-fx-font-size: 15px; " +
-                "-fx-text-fill: white;");
+        Text instructions = initializeInstructions();
 
         HBox bottomButtons = new HBox(20, buttons);
         bottomButtons.setAlignment(Pos.CENTER);
@@ -73,9 +70,9 @@ public class Controls extends Screen_Settings {
         vbox.setStyle("-fx-background-color: black;");
 
         StackPane root = new StackPane();
-        StackPane.setAlignment(instructionsLabel, Pos.BOTTOM_LEFT);
+        StackPane.setAlignment(instructions, Pos.BOTTOM_LEFT);
 
-        root.getChildren().addAll(vbox, instructionsLabel);
+        root.getChildren().addAll(vbox, instructions);
 
         Scene scene = new Scene(root, SCREEN_WIDTH, SCREEN_HEIGHT);
         stage.setScene(scene);
@@ -111,7 +108,7 @@ public class Controls extends Screen_Settings {
 
             //moveUp, moveDown, etc..
             Label actionLabel = new Label(action);
-            actionLabel.setStyle("-fx-font-family: 'Press Start 2P'; " +
+            actionLabel.setStyle("-fx-font-family: '" + fontName + "'; " +
                     "-fx-font-size: 20px; " +
                     "-fx-text-fill: yellow;");
             actionLabel.setAlignment(Pos.CENTER_LEFT);
@@ -141,6 +138,15 @@ public class Controls extends Screen_Settings {
             keyBindingArea.getChildren().addAll(keyBindingRow);
         });
         return keyBindingArea;
+    }
+
+    private Text initializeInstructions (){
+        Text instructionsText = new Text("TAB to Navigate\nENTER to Edit\nR to Restore Defaults");
+        instructionsText.setFill(Color.WHITE);
+        instructionsText.setFont(arcadeFont);
+        instructionsText.setStyle("-fx-font-size: 15px; ");
+
+        return instructionsText;
     }
 
     private void startKeyCapture(TextField keyField, String action) {
@@ -213,7 +219,7 @@ public class Controls extends Screen_Settings {
     }
 
     private void styleKeys_Normal(Node node) {
-        node.setStyle("-fx-font-family: 'Press Start 2P'; " +
+        node.setStyle("-fx-font-family: '" + fontName + "'; " +
                 "-fx-font-size: 20px; " +
                 "-fx-text-fill: red; " +
                 "-fx-background-color: transparent; " +
@@ -221,7 +227,7 @@ public class Controls extends Screen_Settings {
     }
 
     private void styleKeys_Editing(Node node) {
-        node.setStyle("-fx-font-family: 'Press Start 2P'; " +
+        node.setStyle("-fx-font-family: '" + fontName + "'; " +
                 "-fx-font-size: 20px; " +
                 "-fx-text-fill: #90EE90; " +
                 "-fx-background-color: transparent; " +
