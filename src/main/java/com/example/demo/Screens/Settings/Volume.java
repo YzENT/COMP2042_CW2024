@@ -1,5 +1,6 @@
 package com.example.demo.Screens.Settings;
 
+import com.example.demo.Initialize.Controller;
 import com.example.demo.Screens.Screen_Settings;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -44,12 +45,12 @@ public class Volume extends Screen_Settings {
     }
 
     private VBox initializeVolumeSlider() {
-        Slider volumeSlider = new Slider(0, 1, getMusicVolume());
+        Slider volumeSlider = new Slider(0, 1, Controller.getMusicVolume());
         volumeSlider.setBlockIncrement(0.1);
         volumeSlider.setMaxWidth((double) SCREEN_WIDTH / 4);
 
         volumeSlider.valueProperty().addListener((volumeLevel, oldVolume, newVolume) -> {
-            setMusicVolume(newVolume.doubleValue());
+            Controller.setMusicVolume(newVolume.doubleValue());
         });
 
         Text volumeLabel = new Text("Music");

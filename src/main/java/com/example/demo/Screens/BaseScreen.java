@@ -1,5 +1,6 @@
 package com.example.demo.Screens;
 
+import com.example.demo.Initialize.Controller;
 import javafx.animation.FillTransition;
 import javafx.animation.ScaleTransition;
 import javafx.animation.Timeline;
@@ -10,24 +11,19 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.effect.DropShadow;
-import javafx.scene.media.MediaPlayer;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
-import javafx.scene.media.Media;
 import javafx.scene.text.Text;
 import javafx.util.Duration;
-
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 
 public abstract class BaseScreen {
 
     protected final Stage stage;
     protected final int SCREEN_WIDTH;
     protected final int SCREEN_HEIGHT;
-    protected static MediaPlayer mediaPlayer;
 
     //https://www.fontspace.com/press-start-2p-font-f11591
     protected static final Font arcadeFont = Font.loadFont(BaseScreen.class.getResourceAsStream("/com/example/demo/fonts/PressStart2P-vaV7.ttf"), 0);
@@ -37,17 +33,16 @@ public abstract class BaseScreen {
     private static final double BUTTON_FONT_SIZE = 30;
     private static final double SHADOW_RADIUS = 10;
     private final DropShadow buttonShadow;
+    private final Controller controller;
 
     private static final Map<Class<?>, BaseScreen> screenCache = new HashMap<>();
-
-    private static double musicVolume = 0.5;
-    private static double sfxVolume = 0.5;
 
     public BaseScreen(Stage stage, int SCREEN_WIDTH, int SCREEN_HEIGHT) {
         this.stage = stage;
         this.SCREEN_WIDTH = SCREEN_WIDTH;
         this.SCREEN_HEIGHT = SCREEN_HEIGHT;
         this.buttonShadow = createButtonShadow();
+        this.controller = new Controller(stage);
     }
 
     protected abstract void show();
@@ -117,31 +112,11 @@ public abstract class BaseScreen {
     }
 
     protected void playBGM(String musicPath) {
-        if (mediaPlayer == null) {
-            Media media = new Media(Objects.requireNonNull(getClass().getResource(musicPath)).toExternalForm());
-            mediaPlayer = new MediaPlayer(media);
-            mediaPlayer.setVolume(musicVolume);
-            mediaPlayer.setCycleCount(MediaPlayer.INDEFINITE);
-            mediaPlayer.play();
-        }
+        controller.playBGM(musicPath);
     }
 
     protected void stopBGM() {
-        if (mediaPlayer != null) {
-            mediaPlayer.stop();
-            mediaPlayer = null;
-        }
-    }
-
-    protected static void setMusicVolume(double volume) {
-        musicVolume = volume;
-        if (mediaPlayer != null) {
-            mediaPlayer.setVolume(volume);
-        }
-    }
-
-    protected static double getMusicVolume() {
-        return musicVolume;
+        controller.stopBGM();
     }
 
     protected void goScreen(Class<?> screenClass) {
@@ -164,6 +139,16 @@ public abstract class BaseScreen {
         try {
             Class<?> goPrevious = Class.forName(previousClass);
             goScreen(goPrevious);
+        } catch (Exception e) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setContentText(e.getClass().toString());
+            alert.show();
+        }
+    }
+
+    protected void startLevel(String levelClassName) {
+        try {
+            controller.goToLevel(levelClassName);
         } catch (Exception e) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setContentText(e.getClass().toString());

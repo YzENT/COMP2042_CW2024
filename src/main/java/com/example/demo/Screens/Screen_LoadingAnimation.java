@@ -1,11 +1,9 @@
 package com.example.demo.Screens;
 
-import com.example.demo.Initialize.Controller;
 import javafx.animation.KeyFrame;
 import javafx.animation.PauseTransition;
 import javafx.animation.Timeline;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.layout.StackPane;
 import javafx.scene.text.Text;
@@ -53,17 +51,6 @@ public class Screen_LoadingAnimation extends BaseScreen{
         });
         pause.play();
         stopBGM();
-    }
-
-    private void startLevel(String levelClassName) {
-        try {
-            Controller controller = new Controller(this.stage);
-            controller.goToLevel(levelClassName);
-        } catch (Exception e) {
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setContentText(e.getClass().toString());
-            alert.show();
-        }
     }
 
     @Override
