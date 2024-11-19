@@ -21,7 +21,7 @@ if errorlevel 1 (
 
 if exist "target" (
     cd target
-    java --module-path "%PATH_TO_FX%" --add-modules javafx.controls,javafx.fxml,javafx.media -jar CW2024-1.0-SNAPSHOT.jar
+    "%JAVA_HOME%\bin\java" --module-path "%PATH_TO_FX%" --add-modules javafx.controls,javafx.fxml,javafx.media -jar CW2024-1.0-SNAPSHOT.jar
 	cd ..
 ) else (
     echo Error: "target" folder not found. Maven build might have failed.
