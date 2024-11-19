@@ -22,6 +22,7 @@ import javafx.stage.Stage;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.HashMap;
 import java.util.Map;
 
 public class Controls extends Screen_Settings {
@@ -30,6 +31,7 @@ public class Controls extends Screen_Settings {
     private static final double TITLE_SIZE = 50;
     private static String prevScreen;
     private EventHandler<KeyEvent> activeKeyListener = null;
+    private final Map<String, KeyCode> tempKeyBindings = new HashMap<>(Main.getKeyBindings());
 
     //keys that need to go through modifier (Shift + 1 = !), are ignored.
     private static final Map<KeyCode, String> SYMBOL_MAP = Map.ofEntries(
@@ -80,8 +82,12 @@ public class Controls extends Screen_Settings {
         disableMouseInput(scene);
 
         scene.addEventHandler(KeyEvent.KEY_PRESSED, event -> {
+            if (activeKeyListener != null) return;
             if (event.getCode() == KeyCode.R) {
                 resetKeybinds();
+            }
+            if (event.getCode() == KeyCode.ESCAPE) {
+                goScreen_PreviousScreen();
             }
         });
     }
@@ -99,6 +105,7 @@ public class Controls extends Screen_Settings {
         keyBindingArea.setMaxWidth(400);
         keyBindingArea.setMaxHeight(400);
 
+        //reads from main
         Main.getKeyBindings().entrySet().stream().sorted(Map.Entry.comparingByKey()).forEach(entry -> {
             String action = entry.getKey();
             KeyCode key = entry.getValue();
@@ -140,7 +147,7 @@ public class Controls extends Screen_Settings {
         return keyBindingArea;
     }
 
-    private Text initializeInstructions (){
+    private Text initializeInstructions() {
         Text instructionsText = new Text("TAB to Navigate\nENTER to Edit\nR to Restore Defaults");
         instructionsText.setFill(Color.WHITE);
         instructionsText.setFont(arcadeFont);
@@ -181,7 +188,7 @@ public class Controls extends Screen_Settings {
                 //handle certain special symbols
                 String displayText = SYMBOL_MAP.getOrDefault(newKey, newKey.getName().toUpperCase());
                 keyField.setText(displayText);
-                Main.getKeyBindings().put(action, newKey);
+                tempKeyBindings.put(action, newKey);
 
                 //reset status
                 styleKeys_Normal(keyField);
@@ -194,8 +201,12 @@ public class Controls extends Screen_Settings {
     }
 
     private void saveKeyBindings() {
+        //only put to main if saved is clicked
+        Main.getKeyBindings().clear();
+        Main.getKeyBindings().putAll(tempKeyBindings);
+
         try (PrintWriter writer = new PrintWriter(new FileWriter(Main.getConfigPath()))) {
-            Main.getKeyBindings().entrySet().stream().sorted(Map.Entry.comparingByKey()).forEach(entry -> writer.println(entry.getKey() + "=" + entry.getValue().toString()));
+            tempKeyBindings.entrySet().stream().sorted(Map.Entry.comparingByKey()).forEach(entry -> writer.println(entry.getKey() + "=" + entry.getValue().toString()));
 
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setTitle("Success");
@@ -211,6 +222,9 @@ public class Controls extends Screen_Settings {
     }
 
     private void goScreen_PreviousScreen() {
+        //revert content if it's not saved
+        tempKeyBindings.clear();
+        tempKeyBindings.putAll(Main.getKeyBindings());
         goScreenPrevious(prevScreen);
     }
 
@@ -236,12 +250,13 @@ public class Controls extends Screen_Settings {
     }
 
     private void resetKeybinds() {
-        Main.getKeyBindings().put("fire", KeyCode.SPACE);
-        Main.getKeyBindings().put("moveDown", KeyCode.S);
-        Main.getKeyBindings().put("moveLeft", KeyCode.A);
-        Main.getKeyBindings().put("moveRight", KeyCode.D);
-        Main.getKeyBindings().put("moveUp", KeyCode.W);
-        Main.getKeyBindings().put("pause", KeyCode.ESCAPE);
+        tempKeyBindings.clear();
+        tempKeyBindings.put("fire", KeyCode.SPACE);
+        tempKeyBindings.put("moveDown", KeyCode.S);
+        tempKeyBindings.put("moveLeft", KeyCode.A);
+        tempKeyBindings.put("moveRight", KeyCode.D);
+        tempKeyBindings.put("moveUp", KeyCode.W);
+        tempKeyBindings.put("pause", KeyCode.ESCAPE);
         saveKeyBindings();
     }
 
