@@ -1,7 +1,6 @@
 package com.example.demo.Levels;
 
 import com.example.demo.ImageEntities.HeartDisplay;
-import com.example.demo.ImageEntities.ShieldImage;
 import javafx.animation.FadeTransition;
 import javafx.scene.Group;
 import javafx.util.Duration;
@@ -12,7 +11,6 @@ public class LevelView {
 	private static final double HEART_DISPLAY_Y_POSITION = 25;
 	private final Group root;
 	private final HeartDisplay heartDisplay;
-	private ShieldImage shieldImage;
 	
 	public LevelView(Group root, int heartsToDisplay) {
 		this.root = root;
@@ -28,25 +26,6 @@ public class LevelView {
 		for (int i = 0; i < currentNumberOfHearts - heartsRemaining; i++) {
 			heartDisplay.removeHeart();
 		}
-	}
-
-	public void showShield(double bossX, double bossY) {
-
-		// shieldImage only created if it does not exist
-		// this is to ensure it does not render behind the background as the background is always rendered first
-		if (!root.getChildren().contains(shieldImage)){
-			this.shieldImage = new ShieldImage();
-			root.getChildren().add(shieldImage);
-		}
-
-		// dynamic shield coordinates
-		shieldImage.setLayoutX(bossX);
-		shieldImage.setLayoutY(bossY + shieldImage.getFitHeight()/4);
-		shieldImage.showShield();
-	}
-
-	public void hideShield() {
-		shieldImage.hideShield();
 	}
 
 	public void screenFade(double transition_Time, Runnable afterFadeEvent) {

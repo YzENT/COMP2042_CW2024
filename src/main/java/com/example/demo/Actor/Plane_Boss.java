@@ -2,7 +2,7 @@ package com.example.demo.Actor;
 
 import com.example.demo.ActorsLogic.ActiveActorDestructible;
 import com.example.demo.ActorsLogic.WeaponProjectiles.Projectile_Boss;
-import com.example.demo.Levels.LevelView;
+import com.example.demo.ImageEntities.ShieldImage;
 
 import java.util.*;
 
@@ -28,17 +28,17 @@ public class Plane_Boss extends Plane {
 	private int consecutiveMovesInSameDirection;
 	private int indexOfCurrentMove;
 	private int framesWithShieldActivated;
-	private final LevelView levelView;
+	private final ShieldImage shieldImage;
 
-	public Plane_Boss(LevelView levelView) {
+	public Plane_Boss() {
 		super(IMAGE_NAME, IMAGE_HEIGHT, INITIAL_X_POSITION, INITIAL_Y_POSITION, HEALTH);
 		movePattern = new ArrayList<>();
 		consecutiveMovesInSameDirection = 0;
 		indexOfCurrentMove = 0;
 		framesWithShieldActivated = 0;
 		isShielded = false;
-		this.levelView = levelView;
 		initializeMovePattern();
+		shieldImage = new ShieldImage();
 	}
 
 	@Override
@@ -81,7 +81,7 @@ public class Plane_Boss extends Plane {
 	private void updateShield() {
 		if (isShielded) {
 			framesWithShieldActivated++;
-			levelView.showShield(getLayoutX() + getTranslateX(), getLayoutY() + getTranslateY());
+			shieldImage.updateShieldPosition(Boss_XCoordinate(), Boss_YCoordinate());
 		} else if (shieldShouldBeActivated()) {
 			activateShield();
 		}
@@ -120,14 +120,27 @@ public class Plane_Boss extends Plane {
 		return framesWithShieldActivated == MAX_FRAMES_WITH_SHIELD;
 	}
 
+	private double Boss_XCoordinate() {
+		return getLayoutX() + getTranslateX();
+	}
+
+	private double Boss_YCoordinate() {
+		return getLayoutY() + getTranslateY();
+	}
+
 	private void activateShield() {
 		isShielded = true;
+		shieldImage.showShield();
 	}
 
 	private void deactivateShield() {
 		isShielded = false;
 		framesWithShieldActivated = 0;
-		levelView.hideShield();
+		shieldImage.hideShield();
+	}
+
+	public ShieldImage getShieldImage() {
+		return shieldImage;
 	}
 
 }

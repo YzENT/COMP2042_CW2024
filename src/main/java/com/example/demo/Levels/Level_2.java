@@ -7,7 +7,6 @@ public class Level_2 extends LevelParent {
 	private static final String BACKGROUND_IMAGE_NAME = "/com/example/demo/images/backgrounds/background2.jpg";
 	private static final int PLAYER_INITIAL_HEALTH = 10;
 	private Plane_Boss planeBoss;
-	private LevelView levelView;
 
 	private static double spawnCooldown = 30;
 
@@ -30,15 +29,15 @@ public class Level_2 extends LevelParent {
 	protected void spawnEnemyUnits() {
 		if (spawnCooldown > 0) spawnCooldown--;
 		if (getCurrentNumberOfEnemies() == 0 && spawnCooldown <= 0) {
-			planeBoss = new Plane_Boss(this.levelView);
+			planeBoss = new Plane_Boss();
 			addEnemyUnit(planeBoss);
+			getRoot().getChildren().add(planeBoss.getShieldImage());
 		}
 	}
 
 	@Override
 	protected LevelView instantiateLevelView() {
-		this.levelView = new LevelView(getRoot(), PLAYER_INITIAL_HEALTH);
-		return this.levelView;
+		return new LevelView(getRoot(), PLAYER_INITIAL_HEALTH);
 	}
 
 }
