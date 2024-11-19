@@ -3,12 +3,14 @@ package com.example.demo.Actor;
 import com.example.demo.ActorsLogic.ActiveActorDestructible;
 import com.example.demo.ActorsLogic.WeaponProjectiles.Projectile_Boss;
 import com.example.demo.ImageEntities.ShieldImage;
+import javafx.scene.control.ProgressBar;
 
 import java.util.*;
 
 public class Plane_Boss extends Plane {
 
 	private static final String IMAGE_NAME = "/com/example/demo/images/actors/bossplane.png";
+
 	private static final double INITIAL_X_POSITION = 1000;
 	private static final double INITIAL_Y_POSITION = 400;
 	private static final double PROJECTILE_Y_POSITION_OFFSET = 50;
@@ -16,19 +18,23 @@ public class Plane_Boss extends Plane {
 	private static final double BOSS_SHIELD_PROBABILITY = .05;
 	private static final int IMAGE_HEIGHT = 70;
 	private static final int VERTICAL_VELOCITY = 8;
-	private static final int HEALTH = 1;
+	private static final int HEALTH = 30;
 	private static final int MOVE_FREQUENCY_PER_CYCLE = 5;
-	private static final int ZERO = 0;
 	private static final int MAX_FRAMES_WITH_SAME_MOVE = 10;
 	private static final int Y_POSITION_UPPER_BOUND = 20;
 	private static final int Y_POSITION_LOWER_BOUND = 600;
 	private static final int MAX_FRAMES_WITH_SHIELD = 50;
-	private final List<Integer> movePattern;
-	private boolean isShielded;
+	private static final int MIN_FRAMES_SHIELD_INTERVAL = 50;
 	private int consecutiveMovesInSameDirection;
 	private int indexOfCurrentMove;
 	private int framesWithShieldActivated;
+	private int framesWithShieldDeactivated;
+
+	private final List<Integer> movePattern;
 	private final ShieldImage shieldImage;
+	private final ProgressBar healthBar;
+
+	private boolean isShielded;
 
 	public Plane_Boss() {
 		super(IMAGE_NAME, IMAGE_HEIGHT, INITIAL_X_POSITION, INITIAL_Y_POSITION, HEALTH);
@@ -39,6 +45,7 @@ public class Plane_Boss extends Plane {
 		isShielded = false;
 		initializeMovePattern();
 		shieldImage = new ShieldImage();
+		healthBar = createHealthBar();
 	}
 
 	@Override
@@ -55,6 +62,7 @@ public class Plane_Boss extends Plane {
 	public void updateActor() {
 		updatePosition();
 		updateShield();
+		updateHealthBar();
 	}
 
 	@Override
@@ -73,27 +81,34 @@ public class Plane_Boss extends Plane {
 		for (int i = 0; i < MOVE_FREQUENCY_PER_CYCLE; i++) {
 			movePattern.add(VERTICAL_VELOCITY);
 			movePattern.add(-VERTICAL_VELOCITY);
-			movePattern.add(ZERO);
+			movePattern.add(0);
 		}
 		Collections.shuffle(movePattern);
 	}
 
 	private void updateShield() {
 		shieldImage.updateShieldPosition(Boss_XCoordinate(), Boss_YCoordinate() + shieldImage.getFitHeight()/4);
+
 		if (isShielded) {
 			framesWithShieldActivated++;
-		} else if (shieldShouldBeActivated()) {
+		} else {
+			framesWithShieldDeactivated++;
+		}
+
+		if (shieldShouldBeActivated()) {
 			activateShield();
 		}
+
 		if (shieldExhausted()) {
 			deactivateShield();
 		}
+
 	}
 
 	private int getNextMove() {
 		int currentMove = movePattern.get(indexOfCurrentMove);
 		consecutiveMovesInSameDirection++;
-		if (consecutiveMovesInSameDirection == MAX_FRAMES_WITH_SAME_MOVE) {
+		if (consecutiveMovesInSameDirection >= MAX_FRAMES_WITH_SAME_MOVE) {
 			Collections.shuffle(movePattern);
 			consecutiveMovesInSameDirection = 0;
 			indexOfCurrentMove++;
@@ -102,6 +117,21 @@ public class Plane_Boss extends Plane {
 			indexOfCurrentMove = 0;
 		}
 		return currentMove;
+	}
+
+	private ProgressBar createHealthBar() {
+		ProgressBar healthBar = new ProgressBar();
+		healthBar.setPrefWidth(200);
+		healthBar.setStyle("-fx-accent: red; -fx-background-color: lightgray;");
+		healthBar.setLayoutX(Boss_XCoordinate());
+		healthBar.setLayoutY(Boss_YCoordinate());
+		return healthBar;
+	}
+
+	private void updateHealthBar() {
+		healthBar.setLayoutX(Boss_XCoordinate());
+		healthBar.setLayoutY(Boss_YCoordinate());
+		healthBar.setProgress((double) getHealth() / HEALTH); //expects a value between 0.0 and 1.0 only
 	}
 
 	private boolean bossFiresInCurrentFrame() {
@@ -113,7 +143,7 @@ public class Plane_Boss extends Plane {
 	}
 
 	private boolean shieldShouldBeActivated() {
-		return Math.random() < BOSS_SHIELD_PROBABILITY;
+		return (Math.random() < BOSS_SHIELD_PROBABILITY) && (framesWithShieldDeactivated >= MIN_FRAMES_SHIELD_INTERVAL);
 	}
 
 	private boolean shieldExhausted() {
@@ -130,6 +160,7 @@ public class Plane_Boss extends Plane {
 
 	private void activateShield() {
 		isShielded = true;
+		framesWithShieldDeactivated = 0;
 		shieldImage.showShield();
 	}
 
@@ -141,6 +172,10 @@ public class Plane_Boss extends Plane {
 
 	public ShieldImage getShieldImage() {
 		return shieldImage;
+	}
+
+	public ProgressBar getHealthBar() {
+		return healthBar;
 	}
 
 }

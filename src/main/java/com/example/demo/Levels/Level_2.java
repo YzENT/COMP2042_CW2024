@@ -31,7 +31,7 @@ public class Level_2 extends LevelParent {
 		if (getCurrentNumberOfEnemies() == 0 && spawnCooldown <= 0) {
 			planeBoss = new Plane_Boss();
 			addEnemyUnit(planeBoss);
-			getRoot().getChildren().add(planeBoss.getShieldImage());
+			getRoot().getChildren().addAll(planeBoss.getShieldImage(), planeBoss.getHealthBar());
 		}
 	}
 
