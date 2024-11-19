@@ -43,6 +43,7 @@ public class Screen_LevelSelection extends BaseScreen {
     private void goScreen_LoadingAnimation(String levelClassName) {
         Screen_LoadingAnimation.setGameLevel(levelClassName);
         goScreen(Screen_LoadingAnimation.class);
+        stopBGM();
     }
 
     private void goScreen_PreviousScreen() {

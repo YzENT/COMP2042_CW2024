@@ -5,6 +5,7 @@ import com.example.demo.ActorsLogic.ActiveActorDestructible;
 import com.example.demo.Actor.Plane;
 import com.example.demo.Actor.Plane_User;
 import com.example.demo.ActorsLogic.UserControls;
+import com.example.demo.Initialize.Controller;
 import com.example.demo.Initialize.Main;
 import com.example.demo.Screens.Screen_GameEnded;
 import com.example.demo.Screens.Screen_LoadingAnimation;
@@ -26,12 +27,16 @@ public abstract class LevelParent {
 	private final double screenWidth;
 	private final double enemyMaximumYPosition;
 
+	//https://pixabay.com/music/main-title-cinematic-epic-237173/
+	private static final String BGM_PATH = "/com/example/demo/audio/bgm/cinematic-epic-237173.mp3";
+
 	private final Group root;
 	private final Timeline timeline;
 	private final Plane_User user;
 	private final Scene scene;
 	private final ImageView background;
 	private final UserControls userControls;
+	private final Controller controller;
 
 	private final List<ActiveActorDestructible> friendlyUnits;
 	private final List<ActiveActorDestructible> enemyUnits;
@@ -57,6 +62,7 @@ public abstract class LevelParent {
 
 		this.background = new ImageView(new Image(Objects.requireNonNull(getClass().getResource(backgroundImageName)).toExternalForm()));
 		this.userControls = new UserControls(user, root, userProjectiles);
+		this.controller = new Controller(Main.getStage());
 		this.screenHeight = screenHeight;
 		this.screenWidth = screenWidth;
 		this.enemyMaximumYPosition = screenHeight - SCREEN_HEIGHT_ADJUSTMENT;
@@ -70,6 +76,7 @@ public abstract class LevelParent {
 		initializeFriendlyUnits();
 		levelView.showHeartDisplay();
 		sendPauseMenuRunbacks();
+		controller.playBGM(BGM_PATH);
 		return scene;
 	}
 
@@ -241,6 +248,7 @@ public abstract class LevelParent {
 			fadeTransition.play();
 
 			fadeTransition.setOnFinished(event -> {
+				controller.stopBGM();
 				Screen_GameEnded end = new Screen_GameEnded(Main.getStage(), Main.getScreenWidth(), Main.getScreenHeight());
 				end.setResults(result);
 				end.show();

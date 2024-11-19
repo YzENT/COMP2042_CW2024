@@ -55,6 +55,7 @@ public class Screen_GameEnded extends BaseScreen{
     }
 
     private void goScreen_MainMenu() {
+        stopBGM();
         goScreen(Screen_MainMenu.class);
     }
 
@@ -63,10 +64,16 @@ public class Screen_GameEnded extends BaseScreen{
             case VICTORY:
                 TITLE_TEXT = "Victory";
                 TITLE_COLOUR = "green";
+
+                //https://pixabay.com/music/main-title-victory-epic-music-155790/
+                playBGM("/com/example/demo/audio/bgm/victory-epic-music-155790.mp3");
                 break;
             case DEFEAT:
                 TITLE_TEXT = "Defeat";
                 TITLE_COLOUR = "red";
+
+                //https://www.youtube.com/watch?v=AtPrjYp75uA
+                playBGM("/com/example/demo/audio/bgm/miaw miaw miaw song sad (lyrics video visual).mp3");
                 break;
             default:
                 TITLE_TEXT = "null";

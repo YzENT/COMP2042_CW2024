@@ -56,6 +56,18 @@ public class Controller {
 		}
 	}
 
+	public void pauseBGM() {
+		if (mediaPlayer != null) {
+			mediaPlayer.pause();
+		}
+	}
+
+	public void resumeBGM() {
+		if (mediaPlayer != null) {
+			mediaPlayer.play();
+		}
+	}
+
 	public static void setMusicVolume(double volume) {
 		musicVolume = volume;
 		if (mediaPlayer != null) {

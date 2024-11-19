@@ -22,6 +22,7 @@ public class Screen_PauseMenu extends BaseScreen{
     public void show() {
         Text title = initializeTitle(TITLE_TEXT, TITLE_SIZE);
         Button[] buttons = initializeButtons();
+        pauseBGM();
 
         VBox vbox = new VBox(70, title);
         vbox.getChildren().addAll(buttons);
@@ -47,12 +48,14 @@ public class Screen_PauseMenu extends BaseScreen{
     }
 
     private void goScreen_MainMenu() {
+        stopBGM();
         goScreen(Screen_MainMenu.class);
     }
 
     private void resumeGame() {
         onResume.run();
         stage.setScene(gameScene);
+        resumeBGM();
     }
 
     public static void setScene(Scene scene) {

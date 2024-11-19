@@ -120,6 +120,14 @@ public abstract class BaseScreen {
         controller.stopBGM();
     }
 
+    protected void pauseBGM() {
+        controller.pauseBGM();
+    }
+
+    protected void resumeBGM() {
+        controller.resumeBGM();
+    }
+
     protected void goScreen(Class<?> screenClass) {
         try {
             BaseScreen screen = screenCache.get(screenClass);

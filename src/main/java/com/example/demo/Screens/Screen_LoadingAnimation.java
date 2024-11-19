@@ -50,7 +50,6 @@ public class Screen_LoadingAnimation extends BaseScreen{
             gameLevel = null; //just precaution in case it's somehow called again
         });
         pause.play();
-        stopBGM();
     }
 
     @Override

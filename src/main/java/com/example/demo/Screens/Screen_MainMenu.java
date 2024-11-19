@@ -11,7 +11,8 @@ public class Screen_MainMenu extends BaseScreen {
 
     private static final String TITLE_TEXT = "Sky Battle";
     private static final double TITLE_SIZE = 100;
-    private static final String BGM_PATH = "/com/example/demo/audio/bgm/Transformer - Scorponok.mp3";
+    //https://pixabay.com/music/upbeat-intense-electro-trailer-music-243987/
+    private static final String BGM_PATH = "/com/example/demo/audio/bgm/intense-electro-trailer-music-243987.mp3";
 
     public Screen_MainMenu(Stage stage, int SCREEN_WIDTH, int SCREEN_HEIGHT) {
         super(stage, SCREEN_WIDTH, SCREEN_HEIGHT);
