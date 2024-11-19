@@ -128,10 +128,12 @@ public class Controls extends Screen_Settings {
             HBox.setHgrow(keyField, Priority.ALWAYS);
             setupFocusListener(keyField);
 
-            //edit if ENTER detected
             keyField.setOnKeyPressed(event -> {
                 if (event.getCode() == KeyCode.ENTER) {
                     startKeyCapture(keyField, action);
+                }
+                if (event.getCode() == KeyCode.R) {
+                    resetKeybinds();
                 }
             });
 
