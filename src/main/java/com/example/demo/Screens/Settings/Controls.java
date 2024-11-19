@@ -195,6 +195,7 @@ public class Controls extends Screen_Settings {
                 removeEffect(keyField);
                 scene.removeEventHandler(KeyEvent.KEY_PRESSED, this);
                 activeKeyListener = null;
+                keyField.requestFocus();
             }
         };
         scene.addEventHandler(KeyEvent.KEY_PRESSED, activeKeyListener);
