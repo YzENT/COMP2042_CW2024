@@ -74,7 +74,11 @@ public abstract class BaseScreen {
                         "-fx-font-size: " + BUTTON_FONT_SIZE + "px; " +
                         "-fx-font-family: '" + fontName + "'; "
         );
-        button.setOnAction(e -> action.run());
+        button.setOnAction(e -> {
+            action.run();
+            //https://github.com/YzENT/Auntys-Kopitiam/blob/main/assets/SharedAssets/MouseClick.mp3
+            playSFX("/com/example/demo/audio/sfx/MouseClick.mp3");
+        });
         setupFocusListener(button);
         return button;
     }
@@ -126,6 +130,14 @@ public abstract class BaseScreen {
 
     protected void resumeBGM() {
         controller.resumeBGM();
+    }
+
+    protected void playSFX(String sfxPath) {
+        controller.playSFX(sfxPath);
+    }
+
+    protected void stopSFX() {
+        controller.stopSFX();
     }
 
     protected void goScreen(Class<?> screenClass) {

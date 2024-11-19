@@ -5,12 +5,14 @@ import com.example.demo.Screens.Screen_Settings;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+
+import java.util.function.Consumer;
 
 public class Volume extends Screen_Settings {
 
@@ -45,28 +47,37 @@ public class Volume extends Screen_Settings {
     }
 
     private VBox initializeVolumeSlider() {
-        Slider volumeSlider = new Slider(0, 1, Controller.getMusicVolume());
-        volumeSlider.setBlockIncrement(0.1);
-        volumeSlider.setMaxWidth((double) SCREEN_WIDTH / 4);
+        HBox musicSlider = createSlider("Music", Controller.getMusicVolume(), Controller::setMusicVolume);
+        HBox sfxSlider = createSlider("SFX", Controller.getSfxVolume(), Controller::setSfxVolume);
 
-        volumeSlider.valueProperty().addListener((volumeLevel, oldVolume, newVolume) -> {
-            Controller.setMusicVolume(newVolume.doubleValue());
-        });
-
-        Text volumeLabel = new Text("Music");
-        volumeLabel.setFill(Color.WHITE);
-        volumeLabel.setFont(arcadeFont);
-        volumeLabel.setStyle("-fx-font-size: 30px;");
-
-        HBox sliderContainer = new HBox(100, volumeLabel, volumeSlider);
-        sliderContainer.setAlignment(Pos.CENTER);
-
-        VBox vbox = new VBox(sliderContainer);
+        VBox vbox = new VBox(40, musicSlider, sfxSlider);
         vbox.setAlignment(Pos.CENTER);
 
-        setupFocusListener(volumeSlider);
-
         return vbox;
+    }
+
+    private HBox createSlider(String labelText, double initialValue, Consumer<Double> valueUpdater) {
+        HBox sliderContainer = new HBox(20);
+        sliderContainer.setAlignment(Pos.CENTER);
+        sliderContainer.setMaxSize(400, 400);
+
+        Label label = new Label(labelText);
+        label.setStyle("-fx-font-family: '" + fontName + "'; " +
+                "-fx-font-size: 30px; " +
+                "-fx-text-fill: white;");
+        label.setAlignment(Pos.CENTER_LEFT);
+        label.setPrefWidth(200);
+
+        Slider slider = new Slider(0, 1, initialValue);
+        slider.setBlockIncrement(0.1);
+        slider.setPrefWidth(200);
+        slider.valueProperty().addListener((observable, oldValue, newValue) -> {
+            valueUpdater.accept(newValue.doubleValue());
+        });
+        setupFocusListener(slider);
+
+        sliderContainer.getChildren().addAll(label, slider);
+        return sliderContainer;
     }
 
     private void goScreen_PreviousScreen() {

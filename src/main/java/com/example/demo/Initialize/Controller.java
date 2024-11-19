@@ -5,6 +5,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.Objects;
 import javafx.animation.FadeTransition;
 import javafx.scene.Scene;
+import javafx.scene.media.AudioClip;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.stage.Stage;
@@ -16,8 +17,9 @@ public class Controller {
 	private final Stage stage;
 
 	private static MediaPlayer mediaPlayer;
+	private AudioClip audioClip;
 	private static double musicVolume = 0.5;
-//	private static double sfxVolume = 0.5;
+	private static double sfxVolume = 0.5;
 
 	public Controller(Stage stage) {
 		this.stage = stage;
@@ -68,6 +70,16 @@ public class Controller {
 		}
 	}
 
+	public void playSFX(String sfxPath) {
+		audioClip = new AudioClip(Objects.requireNonNull(getClass().getResource(sfxPath)).toExternalForm());
+		audioClip.setVolume(sfxVolume);
+		audioClip.play();
+	}
+
+	public void stopSFX() {
+		audioClip.stop();
+	}
+
 	public static void setMusicVolume(double volume) {
 		musicVolume = volume;
 		if (mediaPlayer != null) {
@@ -77,6 +89,14 @@ public class Controller {
 
 	public static double getMusicVolume() {
 		return musicVolume;
+	}
+
+	public static void setSfxVolume(double volume) {
+		sfxVolume = volume;
+	}
+
+	public static double getSfxVolume() {
+		return sfxVolume;
 	}
 
 }
