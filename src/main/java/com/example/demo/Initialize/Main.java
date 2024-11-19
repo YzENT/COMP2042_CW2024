@@ -47,12 +47,12 @@ public class Main extends Application {
 				}
 
 				try (PrintWriter writer = new PrintWriter(new FileWriter(configFile))) {
-					writer.println("fire=SPACE");
-					writer.println("moveDown=S");
-					writer.println("moveLeft=A");
-					writer.println("moveRight=D");
-					writer.println("moveUp=W");
-					writer.println("pause=ESCAPE");
+					writer.println("Fire=SPACE");
+					writer.println("Move_DOWN=S");
+					writer.println("Move_LEFT=A");
+					writer.println("Move_RIGHT=D");
+					writer.println("Move_UP=W");
+					writer.println("Pause=ESCAPE");
 				}
 			} catch (IOException e) {
 				Alert alert = new Alert(Alert.AlertType.ERROR);

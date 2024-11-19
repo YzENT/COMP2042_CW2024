@@ -251,12 +251,12 @@ public class Controls extends Screen_Settings {
 
     private void resetKeybinds() {
         tempKeyBindings.clear();
-        tempKeyBindings.put("fire", KeyCode.SPACE);
-        tempKeyBindings.put("moveDown", KeyCode.S);
-        tempKeyBindings.put("moveLeft", KeyCode.A);
-        tempKeyBindings.put("moveRight", KeyCode.D);
-        tempKeyBindings.put("moveUp", KeyCode.W);
-        tempKeyBindings.put("pause", KeyCode.ESCAPE);
+        tempKeyBindings.put("Fire", KeyCode.SPACE);
+        tempKeyBindings.put("Move_DOWN", KeyCode.S);
+        tempKeyBindings.put("Move_LEFT", KeyCode.A);
+        tempKeyBindings.put("Move_RIGHT", KeyCode.D);
+        tempKeyBindings.put("Move_UP", KeyCode.W);
+        tempKeyBindings.put("Pause", KeyCode.ESCAPE);
         saveKeyBindings();
     }
 

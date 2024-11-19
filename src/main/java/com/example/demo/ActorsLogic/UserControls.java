@@ -25,18 +25,18 @@ public class UserControls {
 
     public void handleKeyPressed(KeyEvent e) {
         KeyCode kc = e.getCode();
-        if (kc == keyBindings.get("moveUp")) user.moveUp();
-        if (kc == keyBindings.get("moveDown")) user.moveDown();
-        if (kc == keyBindings.get("moveRight")) user.moveForward();
-        if (kc == keyBindings.get("moveLeft")) user.moveBackward();
-        if (kc == keyBindings.get("fire")) fireProjectile();
-        if (kc == keyBindings.get("pause") && pauseGame != null) pauseGame.run();
+        if (kc == keyBindings.get("Move_UP")) user.moveUp();
+        if (kc == keyBindings.get("Move_DOWN")) user.moveDown();
+        if (kc == keyBindings.get("Move_RIGHT")) user.moveForward();
+        if (kc == keyBindings.get("Move_LEFT")) user.moveBackward();
+        if (kc == keyBindings.get("Fire")) fireProjectile();
+        if (kc == keyBindings.get("Pause") && pauseGame != null) pauseGame.run();
     }
 
     public void handleKeyReleased(KeyEvent e) {
         KeyCode kc = e.getCode();
-        if (kc == keyBindings.get("moveUp") || kc == keyBindings.get("moveDown")) user.stopVerticalMovement();
-        if (kc == keyBindings.get("moveLeft") || kc == keyBindings.get("moveRight")) user.stopHorizontalMovement();
+        if (kc == keyBindings.get("Move_UP") || kc == keyBindings.get("Move_DOWN")) user.stopVerticalMovement();
+        if (kc == keyBindings.get("Move_LEFT") || kc == keyBindings.get("Move_RIGHT")) user.stopHorizontalMovement();
     }
 
     private void fireProjectile() {
