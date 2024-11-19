@@ -79,9 +79,9 @@ public class Plane_Boss extends Plane {
 	}
 
 	private void updateShield() {
+		shieldImage.updateShieldPosition(Boss_XCoordinate(), Boss_YCoordinate() + shieldImage.getFitHeight()/4);
 		if (isShielded) {
 			framesWithShieldActivated++;
-			shieldImage.updateShieldPosition(Boss_XCoordinate(), Boss_YCoordinate());
 		} else if (shieldShouldBeActivated()) {
 			activateShield();
 		}
