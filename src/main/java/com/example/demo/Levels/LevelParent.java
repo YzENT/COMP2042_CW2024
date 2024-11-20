@@ -1,25 +1,38 @@
 package com.example.demo.Levels;
 
 import java.util.*;
-
-import com.example.demo.ActorsLogic.ActiveActorDestructible;
-import com.example.demo.Actor.Plane;
-import com.example.demo.Actor.Plane_User;
-import com.example.demo.ActorsLogic.UserControls;
 import javafx.animation.*;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.image.*;
 import javafx.scene.input.*;
 import javafx.util.Duration;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Rectangle;
+import com.example.demo.ActorsLogic.ActiveActorDestructible;
+import com.example.demo.Actor.Plane;
+import com.example.demo.Actor.Plane_User;
+import com.example.demo.ActorsLogic.UserControls;
+import com.example.demo.Initialize.Controller;
+import com.example.demo.Initialize.Main;
+import com.example.demo.Screens.Screen_GameEnded;
+import com.example.demo.Screens.Screen_LoadingAnimation;
+import com.example.demo.Screens.Screen_PauseMenu;
 
-public abstract class LevelParent extends Observable {
+public abstract class LevelParent {
 
 	private static final double SCREEN_HEIGHT_ADJUSTMENT = 150;
 	private static final int MILLISECOND_DELAY = 50;
 	private final double screenHeight;
 	private final double screenWidth;
 	private final double enemyMaximumYPosition;
+	private final int KILLS_TO_ADVANCE;
+
+	//https://pixabay.com/music/main-title-cinematic-epic-237173/
+	private static final String BGM_PATH = "/com/example/demo/audio/bgm/cinematic-epic-237173.mp3";
+
+	//https://www.youtube.com/watch?v=f8mL0_4GeV0
+	private static final String METAL_PIPE = "/com/example/demo/audio/sfx/metal pipe falling.mp3";
 
 	private final Group root;
 	private final Timeline timeline;
@@ -27,20 +40,20 @@ public abstract class LevelParent extends Observable {
 	private final Scene scene;
 	private final ImageView background;
 	private final UserControls userControls;
+	private final Controller controller;
+	private final LevelView levelView;
 
 	private final List<ActiveActorDestructible> friendlyUnits;
 	private final List<ActiveActorDestructible> enemyUnits;
 	private final List<ActiveActorDestructible> userProjectiles;
 	private final List<ActiveActorDestructible> enemyProjectiles;
 
-    private final LevelView levelView;
-
 	public enum GameStatus{
 		VICTORY,
 		DEFEAT
 	}
 
-	public LevelParent(String backgroundImageName, double screenHeight, double screenWidth, int playerInitialHealth) {
+	public LevelParent(String backgroundImageName, double screenHeight, double screenWidth, int playerInitialHealth, int killsToAdvance) {
 		this.root = new Group();
 		this.scene = new Scene(root, screenWidth, screenHeight);
 		this.timeline = new Timeline();
@@ -52,58 +65,24 @@ public abstract class LevelParent extends Observable {
 
 		this.background = new ImageView(new Image(Objects.requireNonNull(getClass().getResource(backgroundImageName)).toExternalForm()));
 		this.userControls = new UserControls(user, root, userProjectiles);
+		this.controller = new Controller(Main.getStage());
 		this.screenHeight = screenHeight;
 		this.screenWidth = screenWidth;
 		this.enemyMaximumYPosition = screenHeight - SCREEN_HEIGHT_ADJUSTMENT;
 		this.levelView = instantiateLevelView();
         initializeTimeline();
 		friendlyUnits.add(user);
+		this.KILLS_TO_ADVANCE = killsToAdvance;
 	}
-
-	protected abstract void initializeFriendlyUnits();
-
-	protected abstract void checkIfGameOver();
-
-	protected abstract void spawnEnemyUnits();
-
-	protected abstract LevelView instantiateLevelView();
 
 	public Scene initializeScene() {
 		initializeBackground();
 		initializeFriendlyUnits();
 		levelView.showHeartDisplay();
+		levelView.initializeKillCounter();
+		sendPauseMenuRunbacks();
+		controller.playBGM(BGM_PATH);
 		return scene;
-	}
-
-	public void startGame() {
-		background.requestFocus();
-		timeline.play();
-	}
-
-	public void goToNextLevel(String levelName) {
-		setChanged();
-		notifyObservers(levelName);
-		timeline.stop();
-	}
-
-	private void updateScene() {
-		spawnEnemyUnits();
-		updateActors();
-		generateEnemyFire();
-		handleEnemyPenetration();
-		handleUserProjectileCollisions();
-		handleEnemyProjectileCollisions();
-		handlePlaneCollisions();
-		handleProjectileCollisions();
-		removeAllDestroyedActors();
-		updateLevelView();
-		checkIfGameOver();
-	}
-
-	private void initializeTimeline() {
-		timeline.setCycleCount(Timeline.INDEFINITE);
-		KeyFrame gameLoop = new KeyFrame(Duration.millis(MILLISECOND_DELAY), e -> updateScene());
-		timeline.getKeyFrames().add(gameLoop);
 	}
 
 	private void initializeBackground() {
@@ -123,6 +102,54 @@ public abstract class LevelParent extends Observable {
 		userControls.handleKeyReleased(e);
 	}
 
+	private void sendPauseMenuRunbacks() {
+		Screen_PauseMenu.setScene(scene); //so pause menu can set stage back to this scene
+		Screen_PauseMenu.setRunback(this::resumeGame); //so pause menu can resume game
+		UserControls.setPauseMenuRunback(this::pauseGame); //so pause menu can pause game
+	}
+
+	protected void initializeFriendlyUnits() {
+		getRoot().getChildren().add(getUser());
+	}
+
+	protected abstract void checkIfGameOver();
+
+	protected abstract void spawnEnemyUnits();
+
+	protected abstract LevelView instantiateLevelView();
+
+	public void startGame() {
+		background.requestFocus();
+		timeline.play();
+	}
+
+	private void initializeTimeline() {
+		timeline.setCycleCount(Timeline.INDEFINITE);
+		KeyFrame gameLoop = new KeyFrame(Duration.millis(MILLISECOND_DELAY), e -> updateScene());
+		timeline.getKeyFrames().add(gameLoop);
+	}
+
+	private void updateScene() {
+		spawnEnemyUnits();
+		updateActors();
+		generateEnemyFire();
+		handleEnemyPenetration();
+		handleUserProjectileCollisions();
+		handleEnemyProjectileCollisions();
+		handlePlaneCollisions();
+		handleProjectileCollisions();
+		removeAllDestroyedActors();
+		updateLevelView();
+		checkIfGameOver();
+	}
+
+	private void updateActors() {
+		friendlyUnits.forEach(plane -> plane.updateActor());
+		enemyUnits.forEach(enemy -> enemy.updateActor());
+		userProjectiles.forEach(projectile -> projectile.updateActor());
+		enemyProjectiles.forEach(projectile -> projectile.updateActor());
+	}
+
 	private void generateEnemyFire() {
 		enemyUnits.forEach(enemy -> {
 			Plane fighter = (Plane) enemy;
@@ -135,25 +162,9 @@ public abstract class LevelParent extends Observable {
 		});
 	}
 
-	private void updateActors() {
-		friendlyUnits.forEach(plane -> plane.updateActor());
-		enemyUnits.forEach(enemy -> enemy.updateActor());
-		userProjectiles.forEach(projectile -> projectile.updateActor());
-		enemyProjectiles.forEach(projectile -> projectile.updateActor());
-	}
-
-	private void removeAllDestroyedActors() {
-		removeDestroyedActors(friendlyUnits);
-		removeDestroyedActors(enemyUnits);
-		removeDestroyedActors(userProjectiles);
-		removeDestroyedActors(enemyProjectiles);
-	}
-
-	private void removeDestroyedActors(List<ActiveActorDestructible> actors) {
-		List<ActiveActorDestructible> destroyedActors = actors.stream().filter(ActiveActorDestructible::isDestroyed)
-				.toList();
-		root.getChildren().removeAll(destroyedActors);
-		actors.removeAll(destroyedActors);
+	protected void addEnemyUnit(ActiveActorDestructible enemy) {
+		enemyUnits.add(enemy);
+		root.getChildren().add(enemy);
 	}
 
 	private void handleCollisions(List<ActiveActorDestructible> actors1, List<ActiveActorDestructible> actors2, Runnable specialCondition) {
@@ -173,7 +184,7 @@ public abstract class LevelParent extends Observable {
 	}
 
 	private void handlePlaneCollisions() {
-		handleCollisions(friendlyUnits, enemyUnits, () -> {});
+		handleCollisions(friendlyUnits, enemyUnits, this::shakeScreen);
 	}
 
 	private void handleUserProjectileCollisions() {
@@ -188,7 +199,7 @@ public abstract class LevelParent extends Observable {
 	}
 
 	private void handleEnemyProjectileCollisions() {
-		handleCollisions(enemyProjectiles, friendlyUnits, () -> {});
+		handleCollisions(enemyProjectiles, friendlyUnits, this::shakeScreen);
 	}
 
 	private void handleEnemyPenetration() {
@@ -204,25 +215,81 @@ public abstract class LevelParent extends Observable {
 		handleCollisions(enemyProjectiles, userProjectiles, () -> {});
 	}
 
+	private void removeAllDestroyedActors() {
+		removeDestroyedActors(friendlyUnits);
+		removeDestroyedActors(enemyUnits);
+		removeDestroyedActors(userProjectiles);
+		removeDestroyedActors(enemyProjectiles);
+	}
+
+	private void removeDestroyedActors(List<ActiveActorDestructible> actors) {
+		List<ActiveActorDestructible> destroyedActors = actors.stream().filter(ActiveActorDestructible::isDestroyed)
+				.toList();
+		root.getChildren().removeAll(destroyedActors);
+		actors.removeAll(destroyedActors);
+	}
+
 	private void updateLevelView() {
 		levelView.displayHeartRemaining(user.getHealth());
+		levelView.updateKillCounter(user.getNumberOfKills(), KILLS_TO_ADVANCE);
+	}
+
+	protected void goToNextLevel(String levelName) {
+		timeline.stop();
+		levelView.screenFade(2, () -> {
+			Screen_LoadingAnimation.setGameLevel(levelName);
+			Screen_LoadingAnimation loadingAnimation = new Screen_LoadingAnimation(Main.getStage(), Main.getScreenWidth(), Main.getScreenHeight());
+			loadingAnimation.show();
+		});
+	}
+
+	protected void gameStatus(GameStatus result) {
+		timeline.stop();
+		levelView.screenFade(5, () -> {
+			FadeTransition fadeTransition = new FadeTransition(Duration.seconds(2), root);
+			Rectangle background = new Rectangle(Main.getScreenWidth(), Main.getScreenHeight(), Color.BLACK);
+			root.getChildren().add(0, background);
+			fadeTransition.setFromValue(0);
+			fadeTransition.setToValue(1.0);
+			fadeTransition.play();
+
+			Timeline volumeFade = new Timeline(
+					new KeyFrame(Duration.ZERO, new KeyValue(Controller.getMediaPlayer().volumeProperty(), Controller.getMusicVolume())),
+					new KeyFrame(Duration.seconds(2), new KeyValue(Controller.getMediaPlayer().volumeProperty(), 0))
+			);
+			volumeFade.play();
+
+			fadeTransition.setOnFinished(event -> {
+				controller.stopBGM();
+				Screen_GameEnded end = new Screen_GameEnded(Main.getStage(), Main.getScreenWidth(), Main.getScreenHeight());
+				end.setResults(result);
+				end.show();
+			});
+		});
+	}
+
+	private void pauseGame() {
+		timeline.pause();
+		Screen_PauseMenu pauseMenu = new Screen_PauseMenu(Main.getStage(), Main.getScreenWidth(), Main.getScreenHeight());
+		pauseMenu.show();
+	}
+
+	private void resumeGame() {
+		timeline.play();
+	}
+
+	private void shakeScreen() {
+		TranslateTransition translateTransition = new TranslateTransition(Duration.millis(50), root);
+		translateTransition.setFromX(-5);
+		translateTransition.setToX(5);
+		translateTransition.setCycleCount(4);
+		translateTransition.setAutoReverse(true);
+		translateTransition.play();
+		controller.playSFX(METAL_PIPE);
 	}
 
 	private boolean enemyHasPenetratedDefenses(ActiveActorDestructible enemy) {
 		return Math.abs(enemy.getTranslateX()) > screenWidth;
-	}
-
-	protected void gameStatus(GameStatus results) {
-		timeline.stop();
-
-		switch (results) {
-			case VICTORY:
-				levelView.showWinImage();
-				break;
-			case DEFEAT:
-				levelView.showGameOverImage();
-				break;
-		}
 	}
 
 	protected Plane_User getUser() {
@@ -237,11 +304,6 @@ public abstract class LevelParent extends Observable {
 		return enemyUnits.size();
 	}
 
-	protected void addEnemyUnit(ActiveActorDestructible enemy) {
-		enemyUnits.add(enemy);
-		root.getChildren().add(enemy);
-	}
-
 	protected double getEnemyMaximumYPosition() {
 		return enemyMaximumYPosition;
 	}
@@ -252,6 +314,32 @@ public abstract class LevelParent extends Observable {
 
 	protected boolean userIsDestroyed() {
 		return user.isDestroyed();
+	}
+
+	protected boolean userHasReachedKillTarget() {
+		return getUser().getNumberOfKills() >= KILLS_TO_ADVANCE;
+	}
+
+	//debug purposes
+	private void displayHitboxes() {
+		displayHitboxesForActors(friendlyUnits);
+		displayHitboxesForActors(enemyUnits);
+		displayHitboxesForActors(userProjectiles);
+		displayHitboxesForActors(enemyProjectiles);
+	}
+
+	private void displayHitboxesForActors(List<ActiveActorDestructible> actors) {
+		for (ActiveActorDestructible actor : actors) {
+			Rectangle hitbox = new Rectangle(
+					actor.getBoundsInParent().getMinX(),
+					actor.getBoundsInParent().getMinY(),
+					actor.getBoundsInParent().getWidth(),
+					actor.getBoundsInParent().getHeight()
+			);
+			hitbox.setStroke(Color.RED);
+			hitbox.setFill(Color.TRANSPARENT);
+			root.getChildren().add(hitbox);
+		}
 	}
 
 }

@@ -1,43 +1,29 @@
 package com.example.demo.Levels;
 
-import com.example.demo.ImageEntities.GameOverImage;
-import com.example.demo.ImageEntities.HeartDisplay;
-import com.example.demo.ImageEntities.ShieldImage;
-import com.example.demo.ImageEntities.WinImage;
+import javafx.util.Duration;
+import javafx.animation.FadeTransition;
 import javafx.scene.Group;
+import javafx.scene.control.Label;
+import com.example.demo.ImageEntities.HeartDisplay;
+import com.example.demo.Initialize.Main;
+import static com.example.demo.Screens.BaseScreen.fontName;
 
 public class LevelView {
 	
 	private static final double HEART_DISPLAY_X_POSITION = 5;
 	private static final double HEART_DISPLAY_Y_POSITION = 25;
-	private static final int WIN_IMAGE_X_POSITION = 355;
-	private static final int WIN_IMAGE_Y_POSITION = 175;
-	private static final int LOSS_SCREEN_X_POSITION = -160;
-	private static final int LOSS_SCREEN_Y_POSITION = -375;
+
 	private final Group root;
-	private final WinImage winImage;
-	private final GameOverImage gameOverImage;
 	private final HeartDisplay heartDisplay;
-	private ShieldImage shieldImage;
+	private Label killCounterLabel;
 	
 	public LevelView(Group root, int heartsToDisplay) {
 		this.root = root;
 		this.heartDisplay = new HeartDisplay(HEART_DISPLAY_X_POSITION, HEART_DISPLAY_Y_POSITION, heartsToDisplay);
-		this.winImage = new WinImage(WIN_IMAGE_X_POSITION, WIN_IMAGE_Y_POSITION);
-		this.gameOverImage = new GameOverImage(LOSS_SCREEN_X_POSITION, LOSS_SCREEN_Y_POSITION);
 	}
 	
 	public void showHeartDisplay() {
 		root.getChildren().add(heartDisplay.getContainer());
-	}
-
-	public void showWinImage() {
-		root.getChildren().add(winImage);
-		winImage.showWinImage();
-	}
-	
-	public void showGameOverImage() {
-		root.getChildren().add(gameOverImage);
 	}
 	
 	public void displayHeartRemaining(int heartsRemaining) {
@@ -47,24 +33,29 @@ public class LevelView {
 		}
 	}
 
-	public void showShield(double bossX, double bossY) {
-
-		// shieldImage only created if it does not exist
-		// this is to ensure it does not render behind the background as the background is always rendered first
-		if (!root.getChildren().contains(shieldImage)){
-			this.shieldImage = new ShieldImage();
-			System.out.println("New shield image created");
-			root.getChildren().add(shieldImage);
-		}
-
-		// dynamic shield coordinates
-		shieldImage.setLayoutX(bossX);
-		shieldImage.setLayoutY(bossY + shieldImage.getFitHeight()/4);
-		shieldImage.showShield();
+	public void initializeKillCounter() {
+		killCounterLabel = new Label("Kills:");
+		killCounterLabel.setLayoutX(Main.getScreenWidth() - 300);
+		killCounterLabel.setLayoutY(10);
+		killCounterLabel.setStyle("-fx-font-family: '" + fontName + "'; " +
+				"-fx-font-size: 20px; " +
+				"-fx-text-fill: black;");
+		root.getChildren().add(killCounterLabel);
 	}
 
-	public void hideShield() {
-		shieldImage.hideShield();
+	public void updateKillCounter(int kills, int killRequired) {
+		killCounterLabel.setText("Kills :" + kills + "/" + killRequired);
+	}
+
+	public void screenFade(double transition_Time, Runnable afterFadeEvent) {
+		FadeTransition fadeTransition = new FadeTransition(Duration.seconds(transition_Time), root);
+		fadeTransition.setFromValue(1.0);
+		fadeTransition.setToValue(0.0);
+		fadeTransition.setOnFinished(event -> {
+			root.getChildren().clear();
+			afterFadeEvent.run();
+		});
+		fadeTransition.play();
 	}
 
 }
