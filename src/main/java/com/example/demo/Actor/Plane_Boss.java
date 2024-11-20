@@ -2,6 +2,7 @@ package com.example.demo.Actor;
 
 import com.example.demo.ActorsLogic.ActiveActorDestructible;
 import com.example.demo.ActorsLogic.WeaponProjectiles.Projectile_Boss;
+import com.example.demo.ImageEntities.ExplosionImage;
 import com.example.demo.ImageEntities.ShieldImage;
 import javafx.scene.control.ProgressBar;
 
@@ -33,6 +34,7 @@ public class Plane_Boss extends Plane {
 	private final List<Integer> movePattern;
 	private final ShieldImage shieldImage;
 	private final ProgressBar healthBar;
+	private final ExplosionImage explosionImage;
 	private Runnable removeHealthBar;
 
 	private boolean isShielded;
@@ -47,6 +49,7 @@ public class Plane_Boss extends Plane {
 		initializeMovePattern();
 		shieldImage = new ShieldImage();
 		healthBar = createHealthBar();
+		explosionImage = new ExplosionImage();
 	}
 
 	@Override
@@ -64,6 +67,7 @@ public class Plane_Boss extends Plane {
 		updatePosition();
 		updateShield();
 		updateHealthBar();
+		updateExplosion();
 	}
 
 	@Override
@@ -78,6 +82,7 @@ public class Plane_Boss extends Plane {
 		}
 		if (getHealth() <= 0) {
 			removeHealthBar.run();
+			triggerExplosion();
 		}
 	}
 
@@ -107,6 +112,11 @@ public class Plane_Boss extends Plane {
 			deactivateShield();
 		}
 
+	}
+
+	private void updateExplosion() {
+		//has to updated every frame because it will be (0,0) when boss is destroyed
+		explosionImage.setExplostionPosition(Boss_XCoordinate(), Boss_YCoordinate() - IMAGE_HEIGHT*2);
 	}
 
 	private int getNextMove() {
@@ -154,6 +164,10 @@ public class Plane_Boss extends Plane {
 		removeHealthBar = action;
 	}
 
+	private void triggerExplosion() {
+		explosionImage.showExplosion();
+	}
+
 	private boolean shieldShouldBeActivated() {
 		return (Math.random() < BOSS_SHIELD_PROBABILITY) && (framesWithShieldDeactivated >= MIN_FRAMES_SHIELD_INTERVAL);
 	}
@@ -184,6 +198,10 @@ public class Plane_Boss extends Plane {
 
 	public ProgressBar getHealthBar() {
 		return healthBar;
+	}
+
+	public ExplosionImage getExplosionImage() {
+		return explosionImage;
 	}
 
 }

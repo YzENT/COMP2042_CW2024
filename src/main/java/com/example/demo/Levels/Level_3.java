@@ -46,7 +46,8 @@ public class Level_3 extends LevelParent {
 	private Plane_Boss createBoss() {
 		planeBoss = new Plane_Boss();
 		getRoot().getChildren().addAll(planeBoss.getShieldImage(),
-				planeBoss.getHealthBar());
+				planeBoss.getHealthBar(),
+				planeBoss.getExplosionImage());
 		planeBoss.setRemoveHealthBar(() -> getRoot().getChildren().remove(planeBoss.getHealthBar()));
 		return planeBoss;
 	}
