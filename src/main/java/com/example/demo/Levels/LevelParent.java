@@ -30,6 +30,8 @@ public abstract class LevelParent {
 	//https://pixabay.com/music/main-title-cinematic-epic-237173/
 	private static final String BGM_PATH = "/com/example/demo/audio/bgm/cinematic-epic-237173.mp3";
 
+	private static final String METAL_PIPE = "/com/example/demo/audio/sfx/metal pipe falling.mp3";
+
 	private final Group root;
 	private final Timeline timeline;
 	private final Plane_User user;
@@ -276,6 +278,7 @@ public abstract class LevelParent {
 		translateTransition.setCycleCount(4);
 		translateTransition.setAutoReverse(true);
 		translateTransition.play();
+		controller.playSFX(METAL_PIPE);
 	}
 
 	private boolean enemyHasPenetratedDefenses(ActiveActorDestructible enemy) {
