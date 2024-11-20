@@ -11,10 +11,11 @@ public class Plane_Enemy extends Plane {
 	private static final double PROJECTILE_X_POSITION_OFFSET = -50.0;
 	private static final double PROJECTILE_Y_POSITION_OFFSET = 20.0;
 	private static final int INITIAL_HEALTH = 1;
-	private static final double FIRE_RATE = .01;
+	private static double FIRE_RATE;
 
-	public Plane_Enemy(double initialXPos, double initialYPos) {
+	public Plane_Enemy(double initialXPos, double initialYPos, double fireRate) {
 		super(IMAGE_NAME, IMAGE_HEIGHT, initialXPos, initialYPos, INITIAL_HEALTH);
+		FIRE_RATE = fireRate;
 	}
 
 	@Override

@@ -36,8 +36,9 @@ public class Screen_LevelSelection extends BaseScreen {
     protected Button[] initializeButtons() {
         Button level1Button = createButton("Level 1", () -> goScreen_LoadingAnimation("com.example.demo.Levels.Level_1"));
         Button level2Button = createButton("Level 2", () -> goScreen_LoadingAnimation("com.example.demo.Levels.Level_2"));
+        Button level3Button = createButton("Level 3", () -> goScreen_LoadingAnimation("com.example.demo.Levels.Level_3"));
         Button backButton = createButton("Back", this::goScreen_PreviousScreen);
-        return new Button[]{level1Button, level2Button, backButton};
+        return new Button[]{level1Button, level2Button, level3Button, backButton};
     }
 
     private void goScreen_LoadingAnimation(String levelClassName) {
