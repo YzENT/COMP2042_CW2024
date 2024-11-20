@@ -1,8 +1,9 @@
 package com.example.demo.Initialize;
 
+import javafx.util.Duration;
+import java.util.Objects;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
-import java.util.Objects;
 import javafx.animation.FadeTransition;
 import javafx.scene.Scene;
 import javafx.scene.media.AudioClip;
@@ -10,7 +11,6 @@ import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.stage.Stage;
 import com.example.demo.Levels.LevelParent;
-import javafx.util.Duration;
 
 public class Controller {
 
@@ -42,32 +42,30 @@ public class Controller {
 	}
 
 	public void playBGM(String musicPath) {
-		if (mediaPlayer == null) {
-			Media media = new Media(Objects.requireNonNull(getClass().getResource(musicPath)).toExternalForm());
-			mediaPlayer = new MediaPlayer(media);
-			mediaPlayer.setVolume(musicVolume);
-			mediaPlayer.setCycleCount(MediaPlayer.INDEFINITE);
-			mediaPlayer.play();
-		}
+		if (mediaPlayer != null) return; //if instanced, return
+
+		Media media = new Media(Objects.requireNonNull(getClass().getResource(musicPath)).toExternalForm());
+		mediaPlayer = new MediaPlayer(media);
+		mediaPlayer.setVolume(musicVolume);
+		mediaPlayer.setCycleCount(MediaPlayer.INDEFINITE);
+		mediaPlayer.play();
 	}
 
 	public void stopBGM() {
-		if (mediaPlayer != null) {
-			mediaPlayer.stop();
-			mediaPlayer = null;
-		}
+		if (mediaPlayer == null) return; //if null no need to stop anything
+
+		mediaPlayer.stop();
+		mediaPlayer = null;
 	}
 
 	public void pauseBGM() {
-		if (mediaPlayer != null) {
-			mediaPlayer.pause();
-		}
+		if (mediaPlayer == null) return;
+		mediaPlayer.pause();
 	}
 
 	public void resumeBGM() {
-		if (mediaPlayer != null) {
-			mediaPlayer.play();
-		}
+		if (mediaPlayer == null) return;
+		mediaPlayer.play();
 	}
 
 	public void playSFX(String sfxPath) {
@@ -77,7 +75,9 @@ public class Controller {
 	}
 
 	public void stopSFX() {
-		audioClip.stop();
+		if (audioClip != null) {
+			audioClip.stop();
+		}
 	}
 
 	public static void setMusicVolume(double volume) {

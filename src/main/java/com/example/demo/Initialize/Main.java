@@ -1,14 +1,14 @@
 package com.example.demo.Initialize;
 
-import com.example.demo.Screens.Screen_MainMenu;
-import javafx.application.Application;
-import javafx.scene.control.Alert;
-import javafx.scene.input.KeyCode;
-import javafx.stage.Stage;
 import java.io.*;
 import java.util.Map;
 import java.util.Properties;
 import java.util.stream.Collectors;
+import javafx.application.Application;
+import javafx.scene.control.Alert;
+import javafx.scene.input.KeyCode;
+import javafx.stage.Stage;
+import com.example.demo.Screens.Screen_MainMenu;
 
 public class Main extends Application {
 
@@ -36,30 +36,40 @@ public class Main extends Application {
 		screenMainMenu.show(); //this is to show the UI
 	}
 
+	public static void main(String[] args) {
+		launch();
+	}
+
 	private void ensureConfigFileExists() {
 		File configFile = new File(CONFIG_PATH);
+		if (configFile.exists() && configFile.length() > 0) return;
 
-		if (!configFile.exists() || configFile.length() == 0) {
-			try {
-				File parentDir = configFile.getParentFile();
-				if (!parentDir.exists() && !parentDir.mkdirs()) {
-					throw new IOException("Failed to create directories: " + parentDir.getAbsolutePath());
-				}
-
-				try (PrintWriter writer = new PrintWriter(new FileWriter(configFile))) {
-					writer.println("Fire=SPACE");
-					writer.println("Move_DOWN=S");
-					writer.println("Move_LEFT=A");
-					writer.println("Move_RIGHT=D");
-					writer.println("Move_UP=W");
-					writer.println("Pause=ESCAPE");
-				}
-			} catch (IOException e) {
+		try {
+			createParentDirectory(configFile);
+			writeDefaultConfig(configFile);
+		} catch (IOException e) {
 				Alert alert = new Alert(Alert.AlertType.ERROR);
 				alert.setContentText("Error creating default key configuration file: " + e.getMessage());
 				alert.show();
 				alert.setOnCloseRequest(event -> System.exit(-1));
-			}
+		}
+	}
+
+	private void createParentDirectory(File configFile) throws IOException {
+		File parentDir = configFile.getParentFile();
+		if (!parentDir.exists() && !parentDir.mkdirs()) {
+			throw new IOException("Failed to create directories: " + parentDir.getAbsolutePath());
+		}
+	}
+
+	private void writeDefaultConfig(File configFile) throws IOException {
+		try (PrintWriter writer = new PrintWriter(new FileWriter(configFile))) {
+			writer.println("Fire=SPACE");
+			writer.println("Move_DOWN=S");
+			writer.println("Move_LEFT=A");
+			writer.println("Move_RIGHT=D");
+			writer.println("Move_UP=W");
+			writer.println("Pause=ESCAPE");
 		}
 	}
 
@@ -81,10 +91,6 @@ public class Main extends Application {
 			alert.show();
 			alert.setOnCloseRequest(event -> System.exit(-1));
 		}
-	}
-
-	public static void main(String[] args) {
-		launch();
 	}
 
 	public static int getScreenWidth() {

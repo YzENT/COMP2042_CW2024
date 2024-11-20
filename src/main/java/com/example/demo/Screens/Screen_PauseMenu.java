@@ -23,6 +23,7 @@ public class Screen_PauseMenu extends BaseScreen{
         Text title = initializeTitle(TITLE_TEXT, TITLE_SIZE);
         Button[] buttons = initializeButtons();
         pauseBGM();
+        stopSFX();
 
         VBox vbox = new VBox(70, title);
         vbox.getChildren().addAll(buttons);

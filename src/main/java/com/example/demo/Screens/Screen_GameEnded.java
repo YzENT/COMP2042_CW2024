@@ -1,12 +1,12 @@
 package com.example.demo.Screens;
 
-import com.example.demo.Levels.LevelParent;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import com.example.demo.Levels.LevelParent;
 
 public class Screen_GameEnded extends BaseScreen{
 

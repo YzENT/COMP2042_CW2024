@@ -11,7 +11,7 @@ public class Level_3 extends LevelParent {
 	private static double spawnCooldown = 30;
 
 	public Level_3(double screenHeight, double screenWidth) {
-		super(BACKGROUND_IMAGE_NAME, screenHeight, screenWidth, PLAYER_INITIAL_HEALTH);
+		super(BACKGROUND_IMAGE_NAME, screenHeight, screenWidth, PLAYER_INITIAL_HEALTH, 1);
 	}
 
 	@Override
@@ -19,11 +19,12 @@ public class Level_3 extends LevelParent {
 		if (spawnCooldown > 0) return; //prevent error if planeBoss = null
 		if (userIsDestroyed()) {
 			gameStatus(GameStatus.DEFEAT);
+			return;
 		}
-		else if (planeBoss.isDestroyed()) {
+		if (planeBoss.isDestroyed()) {
 			gameStatus(GameStatus.VICTORY);
 		}
-		updateKillCounter();
+
 	}
 
 	@Override
@@ -37,10 +38,6 @@ public class Level_3 extends LevelParent {
 	@Override
 	protected LevelView instantiateLevelView() {
 		return new LevelView(getRoot(), PLAYER_INITIAL_HEALTH);
-	}
-
-	private void updateKillCounter() {
-		getLevelView().updateKillCounter(getUser().getNumberOfKills(), 1);
 	}
 
 	private Plane_Boss createBoss() {

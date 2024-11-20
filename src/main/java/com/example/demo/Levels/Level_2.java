@@ -14,18 +14,18 @@ public class Level_2 extends LevelParent{
     private double spawnCooldown = 30;
 
     public Level_2(double screenHeight, double screenWidth) {
-        super(BACKGROUND_IMAGE_NAME, screenHeight, screenWidth, PLAYER_INITIAL_HEALTH);
+        super(BACKGROUND_IMAGE_NAME, screenHeight, screenWidth, PLAYER_INITIAL_HEALTH, KILLS_TO_ADVANCE);
     }
 
     @Override
     protected void checkIfGameOver() {
         if (userIsDestroyed()) {
             gameStatus(GameStatus.DEFEAT);
+            return;
         }
-        else if (userHasReachedKillTarget()) {
+        if (userHasReachedKillTarget()) {
             goToNextLevel(NEXT_LEVEL);
         }
-        updateKillCounter();
     }
 
     @Override
@@ -46,14 +46,6 @@ public class Level_2 extends LevelParent{
     @Override
     protected LevelView instantiateLevelView() {
         return new LevelView(getRoot(), PLAYER_INITIAL_HEALTH);
-    }
-
-    private void updateKillCounter() {
-        getLevelView().updateKillCounter(getUser().getNumberOfKills(), KILLS_TO_ADVANCE);
-    }
-
-    private boolean userHasReachedKillTarget() {
-        return getUser().getNumberOfKills() >= KILLS_TO_ADVANCE;
     }
 
     private void resetSpawnTimer() {

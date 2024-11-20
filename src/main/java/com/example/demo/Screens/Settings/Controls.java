@@ -1,7 +1,10 @@
 package com.example.demo.Screens.Settings;
 
-import com.example.demo.Initialize.Main;
-import com.example.demo.Screens.Screen_Settings;
+import java.util.HashMap;
+import java.util.Map;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
@@ -19,11 +22,8 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.PrintWriter;
-import java.util.HashMap;
-import java.util.Map;
+import com.example.demo.Initialize.Main;
+import com.example.demo.Screens.Screen_Settings;
 
 public class Controls extends Screen_Settings {
 

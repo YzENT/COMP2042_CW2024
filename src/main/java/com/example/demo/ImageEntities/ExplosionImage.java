@@ -1,12 +1,11 @@
 package com.example.demo.ImageEntities;
 
+import java.util.Objects;
 import javafx.animation.ParallelTransition;
 import javafx.animation.ScaleTransition;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.util.Duration;
-
-import java.util.Objects;
 
 public class ExplosionImage extends ImageView {
 
@@ -30,7 +29,6 @@ public class ExplosionImage extends ImageView {
         scaleTransition.setToY(2.0);
 
         ParallelTransition explosionEffect = new ParallelTransition(scaleTransition);
-
         this.setVisible(true);
         explosionEffect.play();
     }

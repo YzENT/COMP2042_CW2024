@@ -1,6 +1,7 @@
 package com.example.demo.Screens;
 
-import com.example.demo.Initialize.Controller;
+import java.util.HashMap;
+import java.util.Map;
 import javafx.animation.FillTransition;
 import javafx.animation.ScaleTransition;
 import javafx.animation.Timeline;
@@ -16,8 +17,7 @@ import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import javafx.scene.text.Text;
 import javafx.util.Duration;
-import java.util.HashMap;
-import java.util.Map;
+import com.example.demo.Initialize.Controller;
 
 public abstract class BaseScreen {
 
@@ -76,6 +76,7 @@ public abstract class BaseScreen {
         );
         button.setOnAction(e -> {
             action.run();
+
             //https://github.com/YzENT/Auntys-Kopitiam/blob/main/assets/SharedAssets/MouseClick.mp3
             playSFX("/com/example/demo/audio/sfx/MouseClick.mp3");
         });

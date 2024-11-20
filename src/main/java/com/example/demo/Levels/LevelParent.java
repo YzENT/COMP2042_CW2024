@@ -1,6 +1,14 @@
 package com.example.demo.Levels;
 
 import java.util.*;
+import javafx.animation.*;
+import javafx.scene.Group;
+import javafx.scene.Scene;
+import javafx.scene.image.*;
+import javafx.scene.input.*;
+import javafx.util.Duration;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Rectangle;
 import com.example.demo.ActorsLogic.ActiveActorDestructible;
 import com.example.demo.Actor.Plane;
 import com.example.demo.Actor.Plane_User;
@@ -10,14 +18,6 @@ import com.example.demo.Initialize.Main;
 import com.example.demo.Screens.Screen_GameEnded;
 import com.example.demo.Screens.Screen_LoadingAnimation;
 import com.example.demo.Screens.Screen_PauseMenu;
-import javafx.animation.*;
-import javafx.scene.Group;
-import javafx.scene.Scene;
-import javafx.scene.image.*;
-import javafx.scene.input.*;
-import javafx.util.Duration;
-import javafx.scene.paint.Color;
-import javafx.scene.shape.Rectangle;
 
 public abstract class LevelParent {
 
@@ -26,6 +26,7 @@ public abstract class LevelParent {
 	private final double screenHeight;
 	private final double screenWidth;
 	private final double enemyMaximumYPosition;
+	private final int KILLS_TO_ADVANCE;
 
 	//https://pixabay.com/music/main-title-cinematic-epic-237173/
 	private static final String BGM_PATH = "/com/example/demo/audio/bgm/cinematic-epic-237173.mp3";
@@ -40,20 +41,19 @@ public abstract class LevelParent {
 	private final ImageView background;
 	private final UserControls userControls;
 	private final Controller controller;
+	private final LevelView levelView;
 
 	private final List<ActiveActorDestructible> friendlyUnits;
 	private final List<ActiveActorDestructible> enemyUnits;
 	private final List<ActiveActorDestructible> userProjectiles;
 	private final List<ActiveActorDestructible> enemyProjectiles;
 
-	private final LevelView levelView;
-
 	public enum GameStatus{
 		VICTORY,
 		DEFEAT
 	}
 
-	public LevelParent(String backgroundImageName, double screenHeight, double screenWidth, int playerInitialHealth) {
+	public LevelParent(String backgroundImageName, double screenHeight, double screenWidth, int playerInitialHealth, int killsToAdvance) {
 		this.root = new Group();
 		this.scene = new Scene(root, screenWidth, screenHeight);
 		this.timeline = new Timeline();
@@ -72,6 +72,7 @@ public abstract class LevelParent {
 		this.levelView = instantiateLevelView();
         initializeTimeline();
 		friendlyUnits.add(user);
+		this.KILLS_TO_ADVANCE = killsToAdvance;
 	}
 
 	public Scene initializeScene() {
@@ -230,6 +231,7 @@ public abstract class LevelParent {
 
 	private void updateLevelView() {
 		levelView.displayHeartRemaining(user.getHealth());
+		levelView.updateKillCounter(user.getNumberOfKills(), KILLS_TO_ADVANCE);
 	}
 
 	protected void goToNextLevel(String levelName) {
@@ -298,10 +300,6 @@ public abstract class LevelParent {
 		return root;
 	}
 
-	public LevelView getLevelView() {
-		return levelView;
-	}
-
 	protected int getCurrentNumberOfEnemies() {
 		return enemyUnits.size();
 	}
@@ -318,6 +316,11 @@ public abstract class LevelParent {
 		return user.isDestroyed();
 	}
 
+	protected boolean userHasReachedKillTarget() {
+		return getUser().getNumberOfKills() >= KILLS_TO_ADVANCE;
+	}
+
+	//debug purposes
 	private void displayHitboxes() {
 		displayHitboxesForActors(friendlyUnits);
 		displayHitboxesForActors(enemyUnits);

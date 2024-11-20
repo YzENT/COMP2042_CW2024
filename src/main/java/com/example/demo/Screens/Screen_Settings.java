@@ -1,13 +1,13 @@
 package com.example.demo.Screens;
 
-import com.example.demo.Screens.Settings.Controls;
-import com.example.demo.Screens.Settings.Volume;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import com.example.demo.Screens.Settings.Controls;
+import com.example.demo.Screens.Settings.Volume;
 
 public class Screen_Settings extends BaseScreen {
 

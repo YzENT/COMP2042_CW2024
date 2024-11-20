@@ -1,12 +1,12 @@
 package com.example.demo.ActorsLogic;
 
-import com.example.demo.Actor.Plane_User;
-import com.example.demo.Initialize.Main;
+import java.util.*;
+import java.util.Map;
 import javafx.scene.Group;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
-import java.util.*;
-import java.util.Map;
+import com.example.demo.Initialize.Main;
+import com.example.demo.Actor.Plane_User;
 
 public class UserControls {
 

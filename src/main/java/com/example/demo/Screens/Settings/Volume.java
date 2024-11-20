@@ -1,7 +1,6 @@
 package com.example.demo.Screens.Settings;
 
-import com.example.demo.Initialize.Controller;
-import com.example.demo.Screens.Screen_Settings;
+import java.util.function.Consumer;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -11,8 +10,8 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
-
-import java.util.function.Consumer;
+import com.example.demo.Initialize.Controller;
+import com.example.demo.Screens.Screen_Settings;
 
 public class Volume extends Screen_Settings {
 

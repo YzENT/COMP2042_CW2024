@@ -1,17 +1,18 @@
 package com.example.demo.Levels;
 
-import com.example.demo.ImageEntities.HeartDisplay;
-import com.example.demo.Initialize.Main;
+import javafx.util.Duration;
 import javafx.animation.FadeTransition;
 import javafx.scene.Group;
 import javafx.scene.control.Label;
-import javafx.util.Duration;
+import com.example.demo.ImageEntities.HeartDisplay;
+import com.example.demo.Initialize.Main;
 import static com.example.demo.Screens.BaseScreen.fontName;
 
 public class LevelView {
 	
 	private static final double HEART_DISPLAY_X_POSITION = 5;
 	private static final double HEART_DISPLAY_Y_POSITION = 25;
+
 	private final Group root;
 	private final HeartDisplay heartDisplay;
 	private Label killCounterLabel;
