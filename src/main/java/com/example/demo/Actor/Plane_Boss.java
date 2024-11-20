@@ -96,7 +96,7 @@ public class Plane_Boss extends Plane {
 	}
 
 	private void updateShield() {
-		shieldImage.updateShieldPosition(Boss_XCoordinate(), Boss_YCoordinate() + shieldImage.getFitHeight()/4);
+		shieldImage.updateShieldPosition(Boss_XCoordinate() - IMAGE_HEIGHT*2, Boss_YCoordinate() - IMAGE_HEIGHT/2);
 
 		if (isShielded) {
 			framesWithShieldActivated++;
@@ -137,14 +137,12 @@ public class Plane_Boss extends Plane {
 		ProgressBar healthBar = new ProgressBar();
 		healthBar.setPrefWidth(200);
 		healthBar.setStyle("-fx-accent: red; -fx-background-color: lightgray;");
-		healthBar.setLayoutX(Boss_XCoordinate());
-		healthBar.setLayoutY(Boss_YCoordinate());
 		return healthBar;
 	}
 
 	private void updateHealthBar() {
-		healthBar.setLayoutX(Boss_XCoordinate());
-		healthBar.setLayoutY(Boss_YCoordinate());
+		healthBar.setLayoutX(Boss_XCoordinate() + 50);
+		healthBar.setLayoutY(Boss_YCoordinate() - 50);
 		healthBar.setProgress((double) getHealth() / HEALTH); //expects a value between 0.0 and 1.0 only
 	}
 
