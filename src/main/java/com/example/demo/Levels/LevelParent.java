@@ -195,7 +195,9 @@ public abstract class LevelParent {
 	}
 
 	private void handleEnemyProjectileCollisions() {
-		handleCollisions(enemyProjectiles, friendlyUnits, () -> {});
+		handleCollisions(enemyProjectiles, friendlyUnits, () -> {
+			shakeScreen();
+		});
 	}
 
 	private void handleEnemyPenetration() {
@@ -265,6 +267,15 @@ public abstract class LevelParent {
 
 	private void resumeGame() {
 		timeline.play();
+	}
+
+	private void shakeScreen() {
+		TranslateTransition translateTransition = new TranslateTransition(Duration.millis(50), root);
+		translateTransition.setFromX(-5);
+		translateTransition.setToX(5);
+		translateTransition.setCycleCount(4);
+		translateTransition.setAutoReverse(true);
+		translateTransition.play();
 	}
 
 	private boolean enemyHasPenetratedDefenses(ActiveActorDestructible enemy) {
