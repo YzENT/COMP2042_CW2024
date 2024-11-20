@@ -1,9 +1,12 @@
 package com.example.demo.Levels;
 
 import com.example.demo.ImageEntities.HeartDisplay;
+import com.example.demo.Initialize.Main;
 import javafx.animation.FadeTransition;
 import javafx.scene.Group;
+import javafx.scene.control.Label;
 import javafx.util.Duration;
+import static com.example.demo.Screens.BaseScreen.fontName;
 
 public class LevelView {
 	
@@ -11,6 +14,7 @@ public class LevelView {
 	private static final double HEART_DISPLAY_Y_POSITION = 25;
 	private final Group root;
 	private final HeartDisplay heartDisplay;
+	private Label killCounterLabel;
 	
 	public LevelView(Group root, int heartsToDisplay) {
 		this.root = root;
@@ -26,6 +30,20 @@ public class LevelView {
 		for (int i = 0; i < currentNumberOfHearts - heartsRemaining; i++) {
 			heartDisplay.removeHeart();
 		}
+	}
+
+	public void initializeKillCounter() {
+		killCounterLabel = new Label("Kills:");
+		killCounterLabel.setLayoutX(Main.getScreenWidth() - 300);
+		killCounterLabel.setLayoutY(10);
+		killCounterLabel.setStyle("-fx-font-family: '" + fontName + "'; " +
+				"-fx-font-size: 20px; " +
+				"-fx-text-fill: black;");
+		root.getChildren().add(killCounterLabel);
+	}
+
+	public void updateKillCounter(int kills, int killRequired) {
+		killCounterLabel.setText("Kills :" + kills + "/" + killRequired);
 	}
 
 	public void screenFade(double transition_Time, Runnable afterFadeEvent) {

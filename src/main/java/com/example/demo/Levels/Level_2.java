@@ -25,6 +25,7 @@ public class Level_2 extends LevelParent{
         else if (userHasReachedKillTarget()) {
             goToNextLevel(NEXT_LEVEL);
         }
+        updateKillCounter();
     }
 
     @Override
@@ -45,6 +46,10 @@ public class Level_2 extends LevelParent{
     @Override
     protected LevelView instantiateLevelView() {
         return new LevelView(getRoot(), PLAYER_INITIAL_HEALTH);
+    }
+
+    private void updateKillCounter() {
+        getLevelView().updateKillCounter(getUser().getNumberOfKills(), KILLS_TO_ADVANCE);
     }
 
     private boolean userHasReachedKillTarget() {

@@ -43,7 +43,7 @@ public abstract class LevelParent {
 	private final List<ActiveActorDestructible> userProjectiles;
 	private final List<ActiveActorDestructible> enemyProjectiles;
 
-    private final LevelView levelView;
+	private final LevelView levelView;
 
 	public enum GameStatus{
 		VICTORY,
@@ -75,6 +75,7 @@ public abstract class LevelParent {
 		initializeBackground();
 		initializeFriendlyUnits();
 		levelView.showHeartDisplay();
+		levelView.initializeKillCounter();
 		sendPauseMenuRunbacks();
 		controller.playBGM(BGM_PATH);
 		return scene;
@@ -276,6 +277,10 @@ public abstract class LevelParent {
 
 	protected Group getRoot() {
 		return root;
+	}
+
+	public LevelView getLevelView() {
+		return levelView;
 	}
 
 	protected int getCurrentNumberOfEnemies() {

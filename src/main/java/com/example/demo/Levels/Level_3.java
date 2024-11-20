@@ -23,6 +23,7 @@ public class Level_3 extends LevelParent {
 		else if (planeBoss.isDestroyed()) {
 			gameStatus(GameStatus.VICTORY);
 		}
+		updateKillCounter();
 	}
 
 	@Override
@@ -36,6 +37,10 @@ public class Level_3 extends LevelParent {
 	@Override
 	protected LevelView instantiateLevelView() {
 		return new LevelView(getRoot(), PLAYER_INITIAL_HEALTH);
+	}
+
+	private void updateKillCounter() {
+		getLevelView().updateKillCounter(getUser().getNumberOfKills(), 1);
 	}
 
 	private Plane_Boss createBoss() {
