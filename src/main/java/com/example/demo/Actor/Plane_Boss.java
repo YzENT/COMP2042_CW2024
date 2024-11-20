@@ -33,6 +33,7 @@ public class Plane_Boss extends Plane {
 	private final List<Integer> movePattern;
 	private final ShieldImage shieldImage;
 	private final ProgressBar healthBar;
+	private Runnable removeHealthBar;
 
 	private boolean isShielded;
 
@@ -74,6 +75,9 @@ public class Plane_Boss extends Plane {
 	public void takeDamage() {
 		if (!isShielded) {
 			super.takeDamage();
+		}
+		if (getHealth() <= 0) {
+			removeHealthBar.run();
 		}
 	}
 
@@ -134,12 +138,20 @@ public class Plane_Boss extends Plane {
 		healthBar.setProgress((double) getHealth() / HEALTH); //expects a value between 0.0 and 1.0 only
 	}
 
-	private boolean bossFiresInCurrentFrame() {
-		return Math.random() < BOSS_FIRE_RATE;
+	private void activateShield() {
+		isShielded = true;
+		framesWithShieldDeactivated = 0;
+		shieldImage.showShield();
 	}
 
-	private double getProjectileInitialPosition() {
-		return getLayoutY() + getTranslateY() + PROJECTILE_Y_POSITION_OFFSET;
+	private void deactivateShield() {
+		isShielded = false;
+		framesWithShieldActivated = 0;
+		shieldImage.hideShield();
+	}
+
+	public void setRemoveHealthBar(Runnable action) {
+		removeHealthBar = action;
 	}
 
 	private boolean shieldShouldBeActivated() {
@@ -158,16 +170,12 @@ public class Plane_Boss extends Plane {
 		return getLayoutY() + getTranslateY();
 	}
 
-	private void activateShield() {
-		isShielded = true;
-		framesWithShieldDeactivated = 0;
-		shieldImage.showShield();
+	private boolean bossFiresInCurrentFrame() {
+		return Math.random() < BOSS_FIRE_RATE;
 	}
 
-	private void deactivateShield() {
-		isShielded = false;
-		framesWithShieldActivated = 0;
-		shieldImage.hideShield();
+	private double getProjectileInitialPosition() {
+		return getLayoutY() + getTranslateY() + PROJECTILE_Y_POSITION_OFFSET;
 	}
 
 	public ShieldImage getShieldImage() {

@@ -29,15 +29,21 @@ public class Level_2 extends LevelParent {
 	protected void spawnEnemyUnits() {
 		if (spawnCooldown > 0) spawnCooldown--;
 		if (getCurrentNumberOfEnemies() == 0 && spawnCooldown <= 0) {
-			planeBoss = new Plane_Boss();
-			addEnemyUnit(planeBoss);
-			getRoot().getChildren().addAll(planeBoss.getShieldImage(), planeBoss.getHealthBar());
+			addEnemyUnit(createBoss());
 		}
 	}
 
 	@Override
 	protected LevelView instantiateLevelView() {
 		return new LevelView(getRoot(), PLAYER_INITIAL_HEALTH);
+	}
+
+	private Plane_Boss createBoss() {
+		planeBoss = new Plane_Boss();
+		getRoot().getChildren().addAll(planeBoss.getShieldImage(),
+				planeBoss.getHealthBar());
+		planeBoss.setRemoveHealthBar(() -> getRoot().getChildren().remove(planeBoss.getHealthBar()));
+		return planeBoss;
 	}
 
 }
