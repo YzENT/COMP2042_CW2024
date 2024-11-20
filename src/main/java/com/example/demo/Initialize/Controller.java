@@ -99,4 +99,8 @@ public class Controller {
 		return sfxVolume;
 	}
 
+	public static MediaPlayer getMediaPlayer() {
+		return mediaPlayer;
+	}
+
 }

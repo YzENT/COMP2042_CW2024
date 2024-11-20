@@ -30,6 +30,7 @@ public abstract class LevelParent {
 	//https://pixabay.com/music/main-title-cinematic-epic-237173/
 	private static final String BGM_PATH = "/com/example/demo/audio/bgm/cinematic-epic-237173.mp3";
 
+	//https://www.youtube.com/watch?v=f8mL0_4GeV0
 	private static final String METAL_PIPE = "/com/example/demo/audio/sfx/metal pipe falling.mp3";
 
 	private final Group root;
@@ -182,7 +183,7 @@ public abstract class LevelParent {
 	}
 
 	private void handlePlaneCollisions() {
-		handleCollisions(friendlyUnits, enemyUnits, () -> {});
+		handleCollisions(friendlyUnits, enemyUnits, this::shakeScreen);
 	}
 
 	private void handleUserProjectileCollisions() {
@@ -197,9 +198,7 @@ public abstract class LevelParent {
 	}
 
 	private void handleEnemyProjectileCollisions() {
-		handleCollisions(enemyProjectiles, friendlyUnits, () -> {
-			shakeScreen();
-		});
+		handleCollisions(enemyProjectiles, friendlyUnits, this::shakeScreen);
 	}
 
 	private void handleEnemyPenetration() {
@@ -251,6 +250,12 @@ public abstract class LevelParent {
 			fadeTransition.setFromValue(0);
 			fadeTransition.setToValue(1.0);
 			fadeTransition.play();
+
+			Timeline volumeFade = new Timeline(
+					new KeyFrame(Duration.ZERO, new KeyValue(Controller.getMediaPlayer().volumeProperty(), Controller.getMusicVolume())),
+					new KeyFrame(Duration.seconds(2), new KeyValue(Controller.getMediaPlayer().volumeProperty(), 0))
+			);
+			volumeFade.play();
 
 			fadeTransition.setOnFinished(event -> {
 				controller.stopBGM();
