@@ -1,4 +1,4 @@
-package com.example.demo;
+package com.example.demo.ActorsLogic;
 
 public abstract class ActiveActorDestructible extends ActiveActor implements Destructible {
 
@@ -19,11 +19,7 @@ public abstract class ActiveActorDestructible extends ActiveActor implements Des
 
 	@Override
 	public void destroy() {
-		setDestroyed(true);
-	}
-
-	protected void setDestroyed(boolean isDestroyed) {
-		this.isDestroyed = isDestroyed;
+		this.isDestroyed = true;
 	}
 
 	public boolean isDestroyed() {
