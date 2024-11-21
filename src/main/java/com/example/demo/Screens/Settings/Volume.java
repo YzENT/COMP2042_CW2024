@@ -55,7 +55,7 @@ public class Volume extends Screen_Settings {
         return vbox;
     }
 
-    private HBox createSlider(String labelText, double initialValue, Consumer<Double> valueUpdater) {
+    protected HBox createSlider(String labelText, double initialValue, Consumer<Double> valueUpdater) {
         HBox sliderContainer = new HBox(20);
         sliderContainer.setAlignment(Pos.CENTER);
         sliderContainer.setMaxSize(400, 400);
