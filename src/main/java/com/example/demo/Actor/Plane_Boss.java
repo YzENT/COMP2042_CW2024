@@ -200,4 +200,8 @@ public class Plane_Boss extends Plane {
 		return explosionImage;
 	}
 
+	public void setShielded(boolean shielded) {
+		isShielded = shielded;
+	}
+
 }
