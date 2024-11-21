@@ -58,4 +58,12 @@ public class LevelView {
 		fadeTransition.play();
 	}
 
+	public HeartDisplay getHeartDisplay() {
+		return heartDisplay;
+	}
+
+	public Label getKillCounterLabel() {
+		return killCounterLabel;
+	}
+
 }
