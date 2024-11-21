@@ -1,28 +1,24 @@
 package com.example.demo.Levels;
 
+import com.example.demo.JavaFXBaseTesting;
 import javafx.application.Platform;
 import javafx.stage.Stage;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 
 import java.util.concurrent.CountDownLatch;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+@ExtendWith(JavaFXBaseTesting.class)
 class LevelTest {
 
     private Level_1 level1;
     private Level_2 level2;
     private Level_3 level3;
     private Stage stage;
-
-    @BeforeAll
-    static void initJavaFX() throws InterruptedException {
-        CountDownLatch latch = new CountDownLatch(1);
-        Platform.startup(latch::countDown); // Initializes JavaFX runtime
-        latch.await();
-    }
 
     @BeforeEach
     void setUp() throws InterruptedException {

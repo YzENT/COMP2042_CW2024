@@ -1,5 +1,6 @@
 package com.example.demo.Screens;
 
+import com.example.demo.JavaFXBaseTesting;
 import javafx.application.Platform;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -10,22 +11,17 @@ import javafx.stage.Stage;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 
 import java.util.concurrent.CountDownLatch;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+@ExtendWith(JavaFXBaseTesting.class)
 class Screen_MainMenuTest {
 
     private Screen_MainMenu mainMenu;
     private Stage stage;
-
-    @BeforeAll
-    static void initJavaFX() throws InterruptedException {
-        CountDownLatch latch = new CountDownLatch(1);
-        Platform.startup(latch::countDown); // Initializes JavaFX runtime
-        latch.await();
-    }
 
     @BeforeEach
     void setUp() {

@@ -4,19 +4,17 @@ import javafx.application.Platform;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import com.example.demo.JavaFXBaseTesting;
 
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+@ExtendWith(JavaFXBaseTesting.class)
 class ProjectileTest {
 
     private Projectile proj1;
     private Projectile proj2;
-
-    @BeforeAll
-    static void initJavaFX() {
-        Platform.startup(() -> {}); // Initializes JavaFX runtime
-    }
 
     @BeforeEach
     void setUp() {

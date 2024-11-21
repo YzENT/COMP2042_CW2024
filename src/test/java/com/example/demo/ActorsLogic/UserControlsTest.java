@@ -1,6 +1,7 @@
 package com.example.demo.ActorsLogic;
 
 import com.example.demo.Actor.Plane_User;
+import com.example.demo.JavaFXBaseTesting;
 import javafx.application.Platform;
 import javafx.scene.Group;
 import javafx.scene.input.KeyCode;
@@ -8,6 +9,7 @@ import javafx.scene.input.KeyEvent;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,17 +17,13 @@ import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+@ExtendWith(JavaFXBaseTesting.class)
 class UserControlsTest {
 
     private Plane_User userPlane;
     private UserControls userControls;
     private Group root;
     private List<ActiveActorDestructible> projectiles;
-
-    @BeforeAll
-    static void initJavaFX() {
-        Platform.startup(() -> {}); // Initializes JavaFX runtime
-    }
 
     @BeforeEach
     public void setUp() {

@@ -1,24 +1,22 @@
 package com.example.demo.Initialize;
 
+import com.example.demo.JavaFXBaseTesting;
 import javafx.application.Platform;
 import javafx.scene.media.MediaPlayer;
 import javafx.stage.Stage;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+@ExtendWith(JavaFXBaseTesting.class)
 class ControllerTest {
 
     private Controller controller;
     private Stage stage;
     private static final int MILLISECOND_DELAY = 50; //this needs a delay as mediaPlayer can't execute immediately, natural delay
-
-    @BeforeAll
-    static void initJavaFX() {
-        Platform.startup(() -> {}); // Initializes JavaFX runtime
-    }
 
     @BeforeEach
     void setUp() {

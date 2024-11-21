@@ -1,6 +1,7 @@
 package com.example.demo.Screens.Settings;
 
 import com.example.demo.Initialize.Controller;
+import com.example.demo.JavaFXBaseTesting;
 import javafx.application.Platform;
 import javafx.scene.control.Slider;
 import javafx.scene.layout.HBox;
@@ -8,22 +9,17 @@ import javafx.stage.Stage;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 
 import java.util.concurrent.CountDownLatch;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+@ExtendWith(JavaFXBaseTesting.class)
 class VolumeTest {
 
     private Volume volume;
     private Stage stage;
-
-    @BeforeAll
-    static void initJavaFX() throws InterruptedException {
-        CountDownLatch latch = new CountDownLatch(1);
-        Platform.startup(latch::countDown);
-        latch.await();
-    }
 
     @BeforeEach
     void setUp() throws InterruptedException {

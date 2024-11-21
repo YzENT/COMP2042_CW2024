@@ -1,11 +1,13 @@
 package com.example.demo.Levels;
 
+import com.example.demo.JavaFXBaseTesting;
 import javafx.application.Platform;
 import javafx.scene.Group;
 import javafx.scene.control.Label;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 
 import java.util.Timer;
 import java.util.TimerTask;
@@ -14,17 +16,11 @@ import java.util.concurrent.atomic.AtomicBoolean;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+@ExtendWith(JavaFXBaseTesting.class)
 class LevelViewTest {
 
     private LevelView levelView;
     private Group root;
-
-    @BeforeAll
-    static void initJavaFX() throws InterruptedException {
-        CountDownLatch latch = new CountDownLatch(1);
-        Platform.startup(latch::countDown); // Initializes JavaFX runtime
-        latch.await();
-    }
 
     @BeforeEach
     void setUp() throws InterruptedException {
