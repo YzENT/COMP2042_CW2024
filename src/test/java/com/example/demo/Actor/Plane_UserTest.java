@@ -24,13 +24,13 @@ class Plane_UserTest {
     @Test
     void takeDamage() {
         user.takeDamage();
-        assertEquals(4, user.getHealth());
+        assertEquals(4, user.getHealth(), "User's health should reduce by 1 after taking damage");
     }
 
     @Test
     void killCount() {
         user.incrementKillCount();
-        assertEquals(1, user.getNumberOfKills());
+        assertEquals(1, user.getNumberOfKills(), "User's kill count should increase by 1 after killing an enemy");
     }
 
 }

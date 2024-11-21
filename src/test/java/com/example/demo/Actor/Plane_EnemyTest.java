@@ -25,8 +25,8 @@ class Plane_EnemyTest {
     void takeDamage() {
         assertEquals(1, enemy.getHealth());
         enemy.takeDamage();
-        assertEquals(0, enemy.getHealth());
-        assertTrue(enemy.isDestroyed());
+        assertEquals(0, enemy.getHealth(), "Enemy's health should be 0 after taking damage");
+        assertTrue(enemy.isDestroyed(), "Enemy's should be destroyed when health is 0");
     }
 
 }

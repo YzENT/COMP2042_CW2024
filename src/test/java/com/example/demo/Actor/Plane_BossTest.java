@@ -26,10 +26,10 @@ class Plane_BossTest {
 
         boss.setShielded(false);
         boss.takeDamage();
-        assertEquals(49, boss.getHealth());
+        assertEquals(49, boss.getHealth(), "Boss' health should reduce by 1");
 
         boss.setShielded(true);
         boss.takeDamage();
-        assertEquals(49, boss.getHealth());
+        assertEquals(49, boss.getHealth(), "Boss' health should not reduce as shield is active");
     }
 }
