@@ -4,7 +4,6 @@ import com.example.demo.JavaFXBaseTesting;
 import javafx.application.Platform;
 import javafx.scene.Group;
 import javafx.scene.control.Label;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
