@@ -22,12 +22,12 @@ public class Main extends Application {
 
 	@Override
 	public void start(Stage stage) throws SecurityException, IllegalArgumentException{
+		Main.stage = stage;
 		stage.setTitle(TITLE);
 		stage.setResizable(false);
 		stage.setHeight(SCREEN_HEIGHT);
 		stage.setWidth(SCREEN_WIDTH);
 		stage.show(); //this is to show the application window
-		Main.stage = stage;
 
 		ensureConfigFileExists();
 		setKeyBindings();
@@ -40,7 +40,7 @@ public class Main extends Application {
 		launch();
 	}
 
-	private void ensureConfigFileExists() {
+	public void ensureConfigFileExists() {
 		File configFile = new File(CONFIG_PATH);
 		if (configFile.exists() && configFile.length() > 0) return;
 
@@ -73,7 +73,7 @@ public class Main extends Application {
 		}
 	}
 
-	private void setKeyBindings() {
+	public void setKeyBindings() {
 		Properties properties = new Properties();
 
 		try (InputStream inputStream = new FileInputStream(CONFIG_PATH)) {
