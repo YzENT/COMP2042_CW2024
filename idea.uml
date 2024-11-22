@@ -1,0 +1,245 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Diagram>
+  <ID>JAVA</ID>
+  <OriginalElement>C:/Nottingham/Year 2/SEM_1/COMP2042 Developing Maintainable Software/!!!Coursework/src/main/java/com/example/demo/ActorsLogic</OriginalElement>
+  <nodes>
+    <node x="993.261424412094" y="501.69855319148934">com.example.demo.ImageEntities.ShieldImage</node>
+    <node x="112.486875699888" y="226.0">com.example.demo.Screens.Settings.Volume</node>
+    <node x="743.5" y="66.0">com.example.demo.Screens.BaseScreen</node>
+    <node x="1584.0" y="406.0">com.example.demo.ActorsLogic.WeaponProjectiles.Projectile_Enemy</node>
+    <node x="1592.0" y="306.0">com.example.demo.ActorsLogic.WeaponProjectiles.Projectile_User</node>
+    <node x="2227.9322508398654" y="234.42642777155658">com.example.demo.ActorsLogic.ActiveActorDestructible</node>
+    <node x="925.0" y="340.555117581187">com.example.demo.Actor.Plane_Boss</node>
+    <node x="1390.5" y="66.0">com.example.demo.Levels.LevelView</node>
+    <node x="459.5" y="26.0">com.example.demo.Screens.Screen_MainMenu</node>
+    <node x="429.0" y="186.0">com.example.demo.Screens.Screen_LoadingAnimation</node>
+    <node x="443.5" y="106.0">com.example.demo.Screens.Screen_LevelSelection</node>
+    <node x="-26.526248600224022" y="226.0">com.example.demo.Screens.Settings.Controls</node>
+    <node x="2580.206943784994" y="234.42642777155655">com.example.demo.ActorsLogic.Destructible</node>
+    <node x="785.0294109742439" y="501.6985531914894">com.example.demo.ImageEntities.ExplosionImage</node>
+    <node x="1599.5" y="66.0">com.example.demo.ImageEntities.HeartDisplay</node>
+    <node x="1265.6763762597984" y="111.6">com.example.demo.ActorsLogic.UserControls</node>
+    <node x="425.58069697648386" y="277.7568501679731">com.example.demo.Levels.Level_2</node>
+    <node x="240.5" y="333.555117581187">com.example.demo.Levels.Level_3</node>
+    <node x="2046.4324199776033" y="241.42642777155658">com.example.demo.Actor.Plane</node>
+    <node x="996.5119722284435" y="-58.28413563269878">com.example.demo.Initialize.Controller</node>
+    <node x="1790.5" y="356.0">com.example.demo.ActorsLogic.WeaponProjectiles.Projectile_Boss</node>
+    <node x="2274.4322508398654" y="417.22508398656214">com.example.demo.ActorsLogic.ActiveActor</node>
+    <node x="241.5" y="226.0">com.example.demo.Levels.Level_1</node>
+    <node x="22.15222844344902" y="66.0">com.example.demo.Initialize.Main</node>
+    <node x="192.5" y="-14.0">com.example.demo.Screens.Screen_GameEnded</node>
+    <node x="38.60761478163505" y="146.0">com.example.demo.Screens.Screen_Settings</node>
+    <node x="924.0" y="106.0">com.example.demo.Levels.LevelParent</node>
+    <node x="195.0" y="66.0">com.example.demo.Screens.Screen_PauseMenu</node>
+    <node x="1613.5" y="206.0">com.example.demo.Actor.Plane_User</node>
+    <node x="1777.0682418812992" y="206.0">com.example.demo.Actor.Plane_Enemy</node>
+    <node x="2033.5" y="356.0">com.example.demo.ActorsLogic.WeaponProjectiles.Projectile</node>
+  </nodes>
+  <notes />
+  <edges>
+    <edge source="com.example.demo.Levels.LevelView" target="com.example.demo.ImageEntities.HeartDisplay" relationship="TO_ONE">
+      <point x="63.5" y="-0.0" />
+      <point x="-74.5" y="-0.0" />
+    </edge>
+    <edge source="com.example.demo.Screens.Screen_LoadingAnimation" target="com.example.demo.Screens.BaseScreen" relationship="GENERALIZATION">
+      <point x="125.0" y="-0.0" />
+      <point x="714.0" y="200.0" />
+      <point x="714.0" y="80.0" />
+      <point x="-70.5" y="-0.0" />
+    </edge>
+    <edge source="com.example.demo.Actor.Plane_User" target="com.example.demo.Actor.Plane" relationship="GENERALIZATION">
+      <point x="67.5" y="-0.0" />
+      <point x="1681.0" y="220.0" />
+      <point x="1681.0" y="255.42642777155655" />
+      <point x="1974.0" y="255.42642777155655" />
+      <point x="1974.0" y="255.42642777155658" />
+      <point x="-46.0" y="-0.0" />
+    </edge>
+    <edge source="com.example.demo.Levels.LevelParent" target="com.example.demo.ActorsLogic.ActiveActorDestructible" relationship="TO_MANY">
+      <point x="70.0" y="-5.600000000000023" />
+      <point x="1114.0" y="114.39999999999998" />
+      <point x="1114.0" y="40.0" />
+      <point x="2432.904560806271" y="40.0" />
+      <point x="2432.904560806271" y="241.42642777155658" />
+      <point x="-116.5" y="-7.0" />
+    </edge>
+    <edge source="com.example.demo.Screens.Screen_GameEnded" target="com.example.demo.Screens.BaseScreen" relationship="GENERALIZATION">
+      <point x="101.5" y="-0.0" />
+      <point x="714.0" y="0.0" />
+      <point x="714.0" y="80.0" />
+      <point x="-70.5" y="-0.0" />
+    </edge>
+    <edge source="com.example.demo.ActorsLogic.WeaponProjectiles.Projectile_Enemy" target="com.example.demo.ActorsLogic.WeaponProjectiles.Projectile" relationship="GENERALIZATION">
+      <point x="90.0" y="-0.0" />
+      <point x="1974.0" y="420.0" />
+      <point x="1974.0" y="370.0" />
+      <point x="-60.5" y="-0.0" />
+    </edge>
+    <edge source="com.example.demo.Screens.Screen_Settings" target="com.example.demo.Screens.BaseScreen" relationship="GENERALIZATION">
+      <point x="87.0" y="-0.0" />
+      <point x="714.0" y="160.0" />
+      <point x="714.0" y="80.0" />
+      <point x="-70.5" y="-0.0" />
+    </edge>
+    <edge source="com.example.demo.Screens.Screen_LevelSelection" target="com.example.demo.Screens.BaseScreen" relationship="GENERALIZATION">
+      <point x="110.5" y="-0.0" />
+      <point x="714.0" y="120.0" />
+      <point x="714.0" y="80.0" />
+      <point x="-70.5" y="-0.0" />
+    </edge>
+    <edge source="com.example.demo.Actor.Plane_Boss" target="com.example.demo.Actor.Plane" relationship="GENERALIZATION">
+      <point x="69.0" y="9.333333333333343" />
+      <point x="995.5294109742439" y="363.8884509145204" />
+      <point x="995.5294109742439" y="255.42642777155658" />
+      <point x="-46.0" y="-0.0" />
+    </edge>
+    <edge source="com.example.demo.Actor.Plane_Enemy" target="com.example.demo.Actor.Plane" relationship="GENERALIZATION">
+      <point x="75.5" y="-0.0" />
+      <point x="1852.5682418812992" y="220.0" />
+      <point x="1852.5682418812992" y="255.42642777155658" />
+      <point x="-46.0" y="-0.0" />
+    </edge>
+    <edge source="com.example.demo.Levels.LevelParent" target="com.example.demo.Initialize.Controller" relationship="TO_ONE">
+      <point x="70.0" y="-11.2" />
+      <point x="1094.0" y="108.8" />
+      <point x="1094.0" y="-44.28413563269878" />
+      <point x="-63.5" y="-0.0" />
+    </edge>
+    <edge source="com.example.demo.ActorsLogic.UserControls" target="com.example.demo.ActorsLogic.ActiveActorDestructible" relationship="TO_MANY">
+      <point x="76.5" y="-7.0" />
+      <point x="1374.0" y="118.6" />
+      <point x="1374.0" y="120.0" />
+      <point x="2239.9630441209406" y="120.0" />
+      <point x="2239.9630441209406" y="241.42642777155658" />
+      <point x="-116.5" y="-7.0" />
+    </edge>
+    <edge source="com.example.demo.Screens.Screen_PauseMenu" target="com.example.demo.Screens.BaseScreen" relationship="GENERALIZATION">
+      <point x="99.0" y="-0.0" />
+      <point x="-70.5" y="-0.0" />
+    </edge>
+    <edge source="com.example.demo.ActorsLogic.WeaponProjectiles.Projectile_User" target="com.example.demo.ActorsLogic.WeaponProjectiles.Projectile" relationship="GENERALIZATION">
+      <point x="82.0" y="-0.0" />
+      <point x="1974.0" y="320.0" />
+      <point x="1974.0" y="370.0" />
+      <point x="-60.5" y="-0.0" />
+    </edge>
+    <edge source="com.example.demo.Levels.LevelParent" target="com.example.demo.ActorsLogic.UserControls" relationship="TO_ONE">
+      <point x="70.0" y="5.599999999999998" />
+      <point x="-76.5" y="-0.0" />
+    </edge>
+    <edge source="com.example.demo.Screens.Screen_MainMenu" target="com.example.demo.Screens.BaseScreen" relationship="GENERALIZATION">
+      <point x="94.5" y="-0.0" />
+      <point x="714.0" y="40.0" />
+      <point x="714.0" y="80.0" />
+      <point x="-70.5" y="-0.0" />
+    </edge>
+    <edge source="com.example.demo.Levels.Level_2" target="com.example.demo.Levels.LevelParent" relationship="GENERALIZATION">
+      <point x="53.5" y="-0.0" />
+      <point x="734.0" y="291.7568501679731" />
+      <point x="734.0" y="120.0" />
+      <point x="-70.0" y="-0.0" />
+    </edge>
+    <edge source="com.example.demo.Levels.Level_1" target="com.example.demo.Levels.LevelParent" relationship="GENERALIZATION">
+      <point x="52.5" y="-0.0" />
+      <point x="634.0" y="240.0" />
+      <point x="634.0" y="291.7568501679731" />
+      <point x="734.0" y="291.7568501679731" />
+      <point x="734.0" y="120.0" />
+      <point x="-70.0" y="-0.0" />
+    </edge>
+    <edge source="com.example.demo.Actor.Plane_Boss" target="com.example.demo.ImageEntities.ShieldImage" relationship="TO_ONE">
+      <point x="69.0" y="-0.0" />
+      <point x="1052.76640537514" y="354.555117581187" />
+      <point x="1052.76640537514" y="515.6985531914893" />
+      <point x="-71.5" y="-0.0" />
+    </edge>
+    <edge source="com.example.demo.ActorsLogic.ActiveActorDestructible" target="com.example.demo.ActorsLogic.Destructible" relationship="REALIZATION">
+      <point x="116.54951742341564" y="-0.14218743113107735" />
+      <point x="2520.5943560241376" y="248.2842403404255" />
+      <point x="2520.5943560241376" y="248.42642777155655" />
+      <point x="-71.5" y="-0.0" />
+    </edge>
+    <edge source="com.example.demo.Screens.Settings.Volume" target="com.example.demo.Screens.Screen_Settings" relationship="GENERALIZATION">
+      <point x="53.5" y="-0.0" />
+      <point x="151.70374020156783" y="240.0" />
+      <point x="151.70374020156783" y="160.0" />
+      <point x="-87.0" y="-0.0" />
+    </edge>
+    <edge source="com.example.demo.Levels.Level_3" target="com.example.demo.Actor.Plane_Boss" relationship="TO_ONE">
+      <point x="53.5" y="7.0" />
+      <point x="-69.0" y="-0.0" />
+    </edge>
+    <edge source="com.example.demo.ActorsLogic.UserControls" target="com.example.demo.Actor.Plane_User" relationship="TO_ONE">
+      <point x="76.5" y="7.0" />
+      <point x="1354.0" y="132.6" />
+      <point x="1354.0" y="160.0" />
+      <point x="1681.0" y="160.0" />
+      <point x="1681.0" y="220.0" />
+      <point x="-67.5" y="-0.0" />
+    </edge>
+    <edge source="com.example.demo.Screens.BaseScreen" target="com.example.demo.Initialize.Controller" relationship="TO_ONE">
+      <point x="70.5" y="-0.0" />
+      <point x="1015.6209988801792" y="80.0" />
+      <point x="1015.6209988801792" y="-44.28413563269878" />
+      <point x="-63.5" y="-0.0" />
+    </edge>
+    <edge source="com.example.demo.Levels.Level_3" target="com.example.demo.Levels.LevelParent" relationship="GENERALIZATION">
+      <point x="53.5" y="-7.0" />
+      <point x="634.0" y="340.555117581187" />
+      <point x="634.0" y="291.7568501679731" />
+      <point x="734.0" y="291.7568501679731" />
+      <point x="734.0" y="120.0" />
+      <point x="-70.0" y="-0.0" />
+    </edge>
+    <edge source="com.example.demo.Levels.LevelParent" target="com.example.demo.Actor.Plane_User" relationship="TO_ONE">
+      <point x="70.0" y="11.199999999999989" />
+      <point x="1094.0" y="131.2" />
+      <point x="1094.0" y="220.0" />
+      <point x="-67.5" y="-0.0" />
+    </edge>
+    <edge source="com.example.demo.Screens.Settings.Controls" target="com.example.demo.Screens.Screen_Settings" relationship="GENERALIZATION">
+      <point x="58.5" y="-0.0" />
+      <point x="58.41732362821949" y="240.0" />
+      <point x="58.41732362821949" y="160.0" />
+      <point x="-87.0" y="-0.0" />
+    </edge>
+    <edge source="com.example.demo.Actor.Plane" target="com.example.demo.ActorsLogic.ActiveActorDestructible" relationship="GENERALIZATION">
+      <point x="46.0" y="-0.0" />
+      <point x="-116.5" y="7.0" />
+    </edge>
+    <edge source="com.example.demo.ActorsLogic.WeaponProjectiles.Projectile" target="com.example.demo.ActorsLogic.ActiveActorDestructible" relationship="GENERALIZATION">
+      <point x="60.5" y="-0.0" />
+      <point x="2215.2786741321393" y="370.0" />
+      <point x="2215.2786741321393" y="255.42642777155658" />
+      <point x="-116.5" y="7.0" />
+    </edge>
+    <edge source="com.example.demo.Actor.Plane_Boss" target="com.example.demo.ImageEntities.ExplosionImage" relationship="TO_ONE">
+      <point x="69.0" y="-9.333333333333332" />
+      <point x="927.4446226203808" y="345.2217842478537" />
+      <point x="927.4446226203808" y="515.6985531914894" />
+      <point x="-86.0" y="-0.0" />
+    </edge>
+    <edge source="com.example.demo.ActorsLogic.WeaponProjectiles.Projectile_Boss" target="com.example.demo.ActorsLogic.WeaponProjectiles.Projectile" relationship="GENERALIZATION">
+      <point x="83.5" y="-0.0" />
+      <point x="-60.5" y="-0.0" />
+    </edge>
+    <edge source="com.example.demo.ActorsLogic.ActiveActorDestructible" target="com.example.demo.ActorsLogic.ActiveActor" relationship="GENERALIZATION">
+      <point x="116.5" y="7.0" />
+      <point x="2344.4322508398654" y="255.42642777155658" />
+      <point x="2344.4322508398654" y="431.22508398656214" />
+      <point x="-70.0" y="-0.0" />
+    </edge>
+    <edge source="com.example.demo.Levels.LevelParent" target="com.example.demo.Levels.LevelView" relationship="TO_ONE">
+      <point x="70.0" y="-1.7763568394002505E-15" />
+      <point x="1134.0" y="120.0" />
+      <point x="1134.0" y="80.0" />
+      <point x="-63.5" y="-0.0" />
+    </edge>
+  </edges>
+  <settings layout="Hierarchic Compact" zoom="1.0451779026217236" showDependencies="true" x="1416.7334376564345" y="308.80580307278683" />
+  <SelectedNodes />
+  <Categories />
+  <SCOPE>All</SCOPE>
+  <VISIBILITY>private</VISIBILITY>
+</Diagram>
+
