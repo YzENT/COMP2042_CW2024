@@ -75,9 +75,10 @@ public class Controller {
 	}
 
 	public void stopSFX() {
-		if (audioClip != null) {
-			audioClip.stop();
-		}
+		if (audioClip == null) return;
+
+		audioClip.stop();
+		audioClip = null;
 	}
 
 	public static void setMusicVolume(double volume) {
@@ -101,6 +102,10 @@ public class Controller {
 
 	public static MediaPlayer getMediaPlayer() {
 		return mediaPlayer;
+	}
+
+	public AudioClip getAudioClip() {
+		return audioClip;
 	}
 
 }

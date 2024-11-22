@@ -95,4 +95,12 @@ public class Plane_User extends Plane {
 		numberOfKills++;
 	}
 
+	public int getVerticalVelocityMultiplier() {
+		return verticalVelocityMultiplier;
+	}
+
+	public int getHorizontalVelocityMultiplier() {
+		return horizontalVelocityMultiplier;
+	}
+
 }

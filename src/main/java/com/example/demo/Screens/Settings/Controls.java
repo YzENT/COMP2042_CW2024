@@ -156,7 +156,7 @@ public class Controls extends Screen_Settings {
         return instructionsText;
     }
 
-    private void startKeyCapture(TextField keyField, String action) {
+    protected void startKeyCapture(TextField keyField, String action) {
         Scene scene = stage.getScene();
         stage.getScene().getRoot().requestFocus();
         styleKeys_Editing(keyField);
@@ -250,7 +250,7 @@ public class Controls extends Screen_Settings {
         addEffect(node);
     }
 
-    private void resetKeybinds() {
+    protected void resetKeybinds() {
         tempKeyBindings.clear();
         tempKeyBindings.put("Fire", KeyCode.SPACE);
         tempKeyBindings.put("Move_DOWN", KeyCode.S);

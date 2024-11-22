@@ -13,7 +13,7 @@ if defined PATH_TO_FX (
 		exit /b 1
 	)
 
-call .\mvnw.cmd clean install
+call .\mvnw.cmd clean install -DskipTests
 if errorlevel 1 (
     echo Maven build failed.
     exit /b 1

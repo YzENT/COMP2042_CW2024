@@ -52,4 +52,8 @@ public class UserControls {
     public static void loadKeyBindings() {
         keyBindings = Main.getKeyBindings();
     }
+
+    public static void setKeyBindings(Map<String, KeyCode> keyBindings) {
+        UserControls.keyBindings = keyBindings;
+    }
 }
