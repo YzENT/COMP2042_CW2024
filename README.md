@@ -161,3 +161,106 @@ KeyFrame gameLoop = new KeyFrame(Duration.millis(MILLISECOND_DELAY), e -> update
 
 `UserProjectile.java` -> `Projectile_User.java`
 
+# Deleted Java Classes
+
+`LevelViewLevelTwo.java` -> merged into `LevelView.java` due to similar logic
+
+`GameOverImage.java` & `WinImage.java` -> assets not used
+
+# Modified Java Classes
+
+## `com.example.demo.Actor`
+- All images that belongs to this package has been resized and modified to improve hitbox dimensions.
+
+### `Plane_Boss.java`
+- Increased fire rate and movement rate to increase difficulty.
+- Introduced cooldown before spawning when user first enters to level (user is exiting transition).
+- Introduced minimum frames boss should have shield deactivated.
+- Modified `takeDamage()` to show explosion and remove health bar when `health == 0`. 
+- Modified `showShield()` to show shieldImage when it is created in `Plane_Boss.java`.
+- Modified `hideShield()` to hide shieldImage.
+- Modified `updateShield()` to sync position of shield with boss.
+- Created `updateExplosion()` to sync position of explosion with boss.
+  -  If not done so, the position of boss will be (0,0) when it is destroyed (null).
+- Created `createHealthBar()` to create health bar showing boss' health.
+- Created `updateHealthBar()` to update boss' health when it takes damage. Also updates position of health bar based on coordinates of boss.
+- Created `triggerExplosion()` to show explosion when boss is defeated.
+- Created `Boss_XCoordinate()` and `Boss_YCoordinate()` to obtain coordinate of the boss.
+
+### `Plane_User.java`
+- Modified `updatePosition()` to introduce bounds on X-coordinate.
+- Modified `isMoving()` to also check for horizontalVelocity.
+- Created `moveForward()` and `moveBackward()` for user to move horizontally.
+- Created `stopHorizontalMovement()` to stop user's horizontal movement.
+
+### `Projectile.java`
+- Modified default constructor to accept arguments `(int) health, (int) horizontalVelocity`
+  - `health` is passed here, so it can check and destroy if it's 0.
+  - `horizontalVelocity` is passed here so abstract method `updatePosition()` can be undeclared and refactored.
+- Modified `takeDamage()` to check if health is at 0. If it is then `destroy`.
+- Undeclared `updatePosition()` from abstract method as all subclasses share the same code.
+- Created `updateActor()` so it gets called every frame.
+  - It checks if `projectile` is out of bounds, if true then destroy.
+  - Also calls `updatePosition()` in this method.
+
+### `Projectile_Boss.java`, `Projectile_Enemy.java`, `Projectile_User.java`
+- Now passes health and horizontalVelocity to superclass `Projectile.java`.
+- Moved both `updatePosition()` and `updateActor()` to superclass.
+
+### `HeartDisplay.java`
+- Created variable `Image HEART_IMAGE` to read from `String HEART_IMAGE_NAME`
+- Modified `initializeHearts()` so that it doesn't have to initialize a new `HEART_IMAGE` everytime when it's called, just use static variable.
+
+### `ShieldImage.java`
+- Created `updateShieldPosition()` to update the shield's position based on boss' coordinates.
+
+### `Controller.java`
+- Removed `observer`.
+- Most modifications made here are for elements that are behind the scenes.
+- Modified `goToLevel()` to now have a transition when going to next level.
+- Created `playBGM()`, `stopBGM()`, `pauseBGM()`, `resumeBGM()`, which are for `MediaPlayer` to play music.
+- Created `playSFX()`, `stopSFX()`, which are for `AudioClip` to play short audios.
+- Created getter and setter for `sfxVolume` and `musicVolume`.
+
+### `Main.java`
+- Introduced `keyBindings` variable to store key binds for user controls.
+- Modified `start()` to now show `Screen_MainMenu` instead of going through `controller` and going to level directly.
+- Created `ensureConfigFileExists()`, `createParentDirectory()`, `writeDefaultConfig()`, `setKeyBindings()` to store and write configs.
+
+### `Level_1.java`
+- `(int)KILLS_TO_ADVANCE` is now passed to superclass for logic check.
+- `initializeFriendlyUnits()` is now moved to superclass due to code duplication.
+- `userHasReachedKillTarget()` is now moved to superclass due to code duplication.
+- Introduced spawn cooldown to since user will be exiting transition when stage is set.
+  - Enemies are only spawned when the cooldown has reached 0.
+
+### `Level_2.java`
+- Same changes as `Level_1.java`, just increased difficulty.
+
+### `Level_3.java` (the old LevelTwo.java)
+- Similar changes to previous levels.
+- Created `createBoss()` for easier readability
+  - shieldImage, HealthBar, explosionImage are added to root through this method (boss was initiated at default constructor of this class back then)
+
+### `LevelParent.java`
+- Relationship with `UserControls.java` to pass keys/user logic in this class to that class.
+  - Moved `fireProjectile()`
+  - Moved key press/release actions
+- Modified default constructor to accept `(int)KILLS_TO_ADVANCE`.
+  - `userHasReachedKillTarget()` in subclasses has been moved to here.
+- Undeclared `initializeFriendlyUnits()` from abstract due to code duplication.
+- Modified `initializeScene()` to send `Runnable` actions to `Screen_PauseMenu`, as well as initializing other elements (`song, kill count`).
+- Modified `initializeBackground()` to handle key press/release in another function.
+- Modified `updateLevelView()` to update kill count too.
+- Removed `updateKillCount()` and placed it under `handleUserProjectileCollisions()` so kill count only increases if user's projectile hit enemy, provided enemy is destroyed.
+- Merged `winGame()` and `loseGame()` to `gameStatus()` to handle game's status.
+- Modified `goToNextLevel()` as it's now not an observer under `controller` anymore.
+- Modified `handleCollisions()` to accept `Runnable` as a argument, so code that meets the requirements can be executed afterward. (Shake Screen, Play SFX, etc...).
+- Created `pauseGame()` and `resumeGame()` to handle pause logic.
+- Created `shakeScreen()` when user collides with enemy projectile.
+- Created `handleKeyPressed()` and `handleKeyReleased()` to handle key actions.
+
+### `LevelView.java`
+- Removed logics/creations related to WinImage and GameOverImage.
+- Created `initializeKillCounter()` and `updateKillCounter()` to display kill count of user at top right of screen.
+- Created `screenFade()` for transition visual's.
