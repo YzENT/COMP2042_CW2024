@@ -141,3 +141,23 @@ KeyFrame gameLoop = new KeyFrame(Duration.millis(MILLISECOND_DELAY), e -> update
 | `Volume.java`                  | Screen used to display and modify the game's volume (SFX, Music)                                 | [com.example.demo.Screens.Settings](src/main/java/com/example/demo/Screens/Settings/Volume.java)   |
 
 
+# Renamed Java Classes
+
+### com.example.demo.Actor.Plane
+`FighterPlane.java` -> `Plane.java`
+
+`Boss.java` -> `Plane_Boss.java`
+
+`EnemyPlane.java` -> `Plane_Enemy.java`
+
+`UserPlane.java` -> `Plane_User.java`
+
+### com.example.demo.Actor.WeaponProjectiles
+`Projectile.java` -> `Projectile.java`
+
+`BossProjectile.java` -> `Projectile_Boss.java`
+
+`EnemyProjectile.java` -> `Projectile_Enemy.java`
+
+`UserProjectile.java` -> `Projectile_User.java`
+
