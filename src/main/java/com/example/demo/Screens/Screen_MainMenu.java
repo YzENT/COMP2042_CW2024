@@ -7,6 +7,9 @@ import javafx.scene.layout.*;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
+/**
+ * Class representing the main menu screen.
+ */
 public class Screen_MainMenu extends BaseScreen {
 
     private static final String TITLE_TEXT = "Sky Battle";
@@ -14,10 +17,20 @@ public class Screen_MainMenu extends BaseScreen {
     //https://pixabay.com/music/upbeat-intense-electro-trailer-music-243987/
     private static final String BGM_PATH = "/com/example/demo/audio/bgm/intense-electro-trailer-music-243987.mp3";
 
+    /**
+     * Constructor to initialize the Screen_MainMenu.
+     *
+     * @param stage the stage for the screen
+     * @param SCREEN_WIDTH the width of the screen
+     * @param SCREEN_HEIGHT the height of the screen
+     */
     public Screen_MainMenu(Stage stage, int SCREEN_WIDTH, int SCREEN_HEIGHT) {
         super(stage, SCREEN_WIDTH, SCREEN_HEIGHT);
     }
 
+    /**
+     * Displays the main menu screen.
+     */
     @Override
     public void show() {
         Text title = initializeTitle(TITLE_TEXT, TITLE_SIZE);
@@ -34,6 +47,11 @@ public class Screen_MainMenu extends BaseScreen {
         disableMouseInput(scene);
     }
 
+    /**
+     * Initializes the buttons for the main menu screen.
+     *
+     * @return an array of initialized buttons
+     */
     @Override
     protected Button[] initializeButtons() {
         Button startButton = createButton("Play Game", this::goScreen_LevelSelection);
@@ -42,11 +60,17 @@ public class Screen_MainMenu extends BaseScreen {
         return new Button[]{startButton, settingsButton, quitButton};
     }
 
+    /**
+     * Navigates to the level selection screen.
+     */
     private void goScreen_LevelSelection() {
         Screen_LevelSelection.setPrevScreen(this.getClass().getName());
         goScreen(Screen_LevelSelection.class);
     }
 
+    /**
+     * Navigates to the settings screen.
+     */
     private void goScreen_Settings() {
         Screen_Settings.setPrevScreen(this.getClass().getName());
         goScreen(Screen_Settings.class);

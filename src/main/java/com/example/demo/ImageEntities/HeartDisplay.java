@@ -5,17 +5,26 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 
+/**
+ * Class representing a display of heart images in the game.
+ */
 public class HeartDisplay {
-	
+
 	private static final String HEART_IMAGE_NAME = "/com/example/demo/images/misc/heart.png";
 	private static final Image HEART_IMAGE = new Image(Objects.requireNonNull(HeartDisplay.class.getResource(HEART_IMAGE_NAME)).toExternalForm());
 	private static final int HEART_HEIGHT = 50;
-	private static final int INDEX_OF_FIRST_ITEM = 0;
 	private HBox container;
 	private final double containerXPosition;
 	private final double containerYPosition;
 	private final int numberOfHeartsToDisplay;
-	
+
+	/**
+	 * Constructor to initialize a HeartDisplay object.
+	 *
+	 * @param xPosition the X position of the heart display container
+	 * @param yPosition the Y position of the heart display container
+	 * @param heartsToDisplay the number of hearts to display
+	 */
 	public HeartDisplay(double xPosition, double yPosition, int heartsToDisplay) {
 		this.containerXPosition = xPosition;
 		this.containerYPosition = yPosition;
@@ -23,13 +32,19 @@ public class HeartDisplay {
 		initializeContainer();
 		initializeHearts();
 	}
-	
+
+	/**
+	 * Initializes the container for the heart display.
+	 */
 	private void initializeContainer() {
 		container = new HBox();
 		container.setLayoutX(containerXPosition);
-		container.setLayoutY(containerYPosition);		
+		container.setLayoutY(containerYPosition);
 	}
-	
+
+	/**
+	 * Initializes the hearts to be displayed in the container.
+	 */
 	private void initializeHearts() {
 		for (int i = 0; i < numberOfHeartsToDisplay; i++) {
 			ImageView heart = new ImageView(HEART_IMAGE);
@@ -38,12 +53,20 @@ public class HeartDisplay {
 			container.getChildren().add(heart);
 		}
 	}
-	
+
+	/**
+	 * Removes a heart from the display.
+	 */
 	public void removeHeart() {
 		if (!container.getChildren().isEmpty())
-			container.getChildren().remove(INDEX_OF_FIRST_ITEM);
+			container.getChildren().removeFirst();
 	}
-	
+
+	/**
+	 * Gets the container holding the heart images.
+	 *
+	 * @return the container holding the heart images
+	 */
 	public HBox getContainer() {
 		return container;
 	}

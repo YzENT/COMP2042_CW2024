@@ -10,16 +10,29 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
-public class Screen_LoadingAnimation extends BaseScreen{
+/**
+ * Class representing the loading animation screen.
+ */
+public class Screen_LoadingAnimation extends BaseScreen {
 
     private static final String TITLE_TEXT = "Loading";
     private static final double TITLE_SIZE = 50;
     private static String gameLevel;
 
+    /**
+     * Constructor to initialize the Screen_LoadingAnimation.
+     *
+     * @param stage the stage for the screen
+     * @param SCREEN_WIDTH the width of the screen
+     * @param SCREEN_HEIGHT the height of the screen
+     */
     public Screen_LoadingAnimation(Stage stage, int SCREEN_WIDTH, int SCREEN_HEIGHT) {
         super(stage, SCREEN_WIDTH, SCREEN_HEIGHT);
     }
 
+    /**
+     * Displays the loading animation screen.
+     */
     @Override
     public void show() {
         Text loadingText = new Text(TITLE_TEXT);
@@ -30,7 +43,7 @@ public class Screen_LoadingAnimation extends BaseScreen{
         Scene loadingScene = new Scene(loadingPane, SCREEN_WIDTH, SCREEN_HEIGHT);
         stage.setScene(loadingScene);
 
-        //add dots to loading text
+        // Add dots to loading text
         StringBuilder dots = new StringBuilder();
         Timeline loadingAnimation = new Timeline(new KeyFrame(Duration.seconds(0.3), event -> {
             if (dots.length() < 3) {
@@ -43,22 +56,31 @@ public class Screen_LoadingAnimation extends BaseScreen{
         loadingAnimation.setCycleCount(Timeline.INDEFINITE);
         loadingAnimation.play();
 
-        //pause so the text "loading" is displayed
+        // Pause so the text "loading" is displayed
         PauseTransition pause = new PauseTransition(Duration.seconds(2));
         pause.setOnFinished(actionEvent -> {
             startLevel(gameLevel);
-            gameLevel = null; //just precaution in case it's somehow called again
+            gameLevel = null; // Just precaution in case it's somehow called again
         });
         pause.play();
     }
 
+    /**
+     * Initializes the buttons for the loading animation screen.
+     *
+     * @return an array of initialized buttons (null)
+     */
     @Override
     protected Button[] initializeButtons() {
         return null;
     }
 
+    /**
+     * Sets the game level to be loaded.
+     *
+     * @param levelToGo the class name of the level to load
+     */
     public static void setGameLevel(String levelToGo) {
         gameLevel = levelToGo;
     }
-
 }
