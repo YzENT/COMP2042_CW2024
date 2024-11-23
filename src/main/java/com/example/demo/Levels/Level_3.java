@@ -1,22 +1,35 @@
 package com.example.demo.Levels;
 
-import com.example.demo.Actor.Plane_Boss;
+import com.example.demo.Actor.Plane.Plane_Boss;
 
+/**
+ * Class representing the third level of the game.
+ */
 public class Level_3 extends LevelParent {
 
 	private static final String BACKGROUND_IMAGE_NAME = "/com/example/demo/images/backgrounds/level3.png";
 	private static final int PLAYER_INITIAL_HEALTH = 5;
 	private Plane_Boss planeBoss;
-
 	private static double spawnCooldown = 30;
 
+	/**
+	 * Constructor to initialize Level_3.
+	 *
+	 * @param screenHeight the height of the screen
+	 * @param screenWidth the width of the screen
+	 */
 	public Level_3(double screenHeight, double screenWidth) {
 		super(BACKGROUND_IMAGE_NAME, screenHeight, screenWidth, PLAYER_INITIAL_HEALTH, 1);
 	}
 
+	/**
+	 * Checks if the game is over by evaluating the player's and boss's status.
+	 * If the player is destroyed, the game status is set to defeat.
+	 * If the boss is destroyed, the game status is set to victory.
+	 */
 	@Override
 	protected void checkIfGameOver() {
-		if (spawnCooldown > 0) return; //prevent error if planeBoss = null
+		if (spawnCooldown > 0) return; // prevent error if planeBoss = null
 		if (userIsDestroyed()) {
 			gameStatus(GameStatus.DEFEAT);
 			return;
@@ -24,9 +37,13 @@ public class Level_3 extends LevelParent {
 		if (planeBoss.isDestroyed()) {
 			gameStatus(GameStatus.VICTORY);
 		}
-
 	}
 
+	/**
+	 * Spawns enemy units based on the spawn cooldown.
+	 * If the cooldown is greater than zero, it is decremented.
+	 * If there are no current enemies and the cooldown is zero or less, a boss is spawned.
+	 */
 	@Override
 	protected void spawnEnemyUnits() {
 		if (spawnCooldown > 0) spawnCooldown--;
@@ -35,11 +52,21 @@ public class Level_3 extends LevelParent {
 		}
 	}
 
+	/**
+	 * Instantiates the view for the level.
+	 *
+	 * @return the level view
+	 */
 	@Override
 	protected LevelView instantiateLevelView() {
 		return new LevelView(getRoot(), PLAYER_INITIAL_HEALTH);
 	}
 
+	/**
+	 * Creates and initializes the boss plane.
+	 *
+	 * @return the boss plane
+	 */
 	private Plane_Boss createBoss() {
 		planeBoss = new Plane_Boss();
 		getRoot().getChildren().addAll(planeBoss.getShieldImage(),
@@ -48,5 +75,4 @@ public class Level_3 extends LevelParent {
 		planeBoss.setRemoveHealthBar(() -> getRoot().getChildren().remove(planeBoss.getHealthBar()));
 		return planeBoss;
 	}
-
 }

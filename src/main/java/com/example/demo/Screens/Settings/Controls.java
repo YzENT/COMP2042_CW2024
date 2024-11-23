@@ -25,6 +25,9 @@ import javafx.stage.Stage;
 import com.example.demo.Initialize.Main;
 import com.example.demo.Screens.Screen_Settings;
 
+/**
+ * Class representing the controls settings screen.
+ */
 public class Controls extends Screen_Settings {
 
     private static final String TITLE_TEXT = "Control Settings";
@@ -33,7 +36,7 @@ public class Controls extends Screen_Settings {
     private EventHandler<KeyEvent> activeKeyListener = null;
     private final Map<String, KeyCode> tempKeyBindings = new HashMap<>(Main.getKeyBindings());
 
-    //keys that need to go through modifier (Shift + 1 = !), are ignored.
+    // Keys that need to go through modifier (Shift + 1 = !), are ignored.
     private static final Map<KeyCode, String> SYMBOL_MAP = Map.ofEntries(
             Map.entry(KeyCode.BACK_QUOTE, ""),
             Map.entry(KeyCode.MINUS, "-"),
@@ -52,10 +55,20 @@ public class Controls extends Screen_Settings {
             Map.entry(KeyCode.DOWN, "↓")
     );
 
+    /**
+     * Constructor to initialize the Controls screen.
+     *
+     * @param stage the stage for the screen
+     * @param SCREEN_WIDTH the width of the screen
+     * @param SCREEN_HEIGHT the height of the screen
+     */
     public Controls(Stage stage, int SCREEN_WIDTH, int SCREEN_HEIGHT) {
         super(stage, SCREEN_WIDTH, SCREEN_HEIGHT);
     }
 
+    /**
+     * Displays the controls settings screen.
+     */
     @Override
     public void show() {
         Text title = initializeTitle(TITLE_TEXT, TITLE_SIZE);
@@ -92,6 +105,11 @@ public class Controls extends Screen_Settings {
         });
     }
 
+    /**
+     * Initializes the buttons for the controls settings screen.
+     *
+     * @return an array of initialized buttons
+     */
     @Override
     protected Button[] initializeButtons() {
         Button saveButton = createButton("Save", this::saveKeyBindings);
@@ -99,13 +117,18 @@ public class Controls extends Screen_Settings {
         return new Button[]{saveButton, backButton};
     }
 
+    /**
+     * Initializes the key binding section.
+     *
+     * @return a VBox containing the key binding section
+     */
     private VBox initializeBindingSection() {
         VBox keyBindingArea = new VBox();
         keyBindingArea.setAlignment(Pos.CENTER);
         keyBindingArea.setMaxWidth(400);
         keyBindingArea.setMaxHeight(400);
 
-        //reads from main
+        // Reads from main
         Main.getKeyBindings().entrySet().stream().sorted(Map.Entry.comparingByKey()).forEach(entry -> {
             String action = entry.getKey();
             KeyCode key = entry.getValue();
@@ -113,17 +136,17 @@ public class Controls extends Screen_Settings {
             HBox keyBindingRow = new HBox(20);
             keyBindingRow.setAlignment(Pos.CENTER);
 
-            //moveUp, moveDown, etc..
+            // Action label (e.g., moveUp, moveDown, etc.)
             Label actionLabel = new Label(action);
             actionLabel.setStyle("-fx-font-family: '" + fontName + "'; " +
                     "-fx-font-size: 20px; " +
                     "-fx-text-fill: yellow;");
             actionLabel.setAlignment(Pos.CENTER_LEFT);
 
-            //value of keys
+            // Value of keys
             TextField keyField = new TextField(SYMBOL_MAP.getOrDefault(key, key.getName()).toUpperCase());
             keyField.setPrefWidth(100);
-            keyField.setEditable(false); //user cannot manually edit
+            keyField.setEditable(false); // User cannot manually edit
             styleKeys_Normal(keyField);
             keyField.setFocusTraversable(true);
             keyField.setAlignment(Pos.CENTER_RIGHT);
@@ -147,6 +170,11 @@ public class Controls extends Screen_Settings {
         return keyBindingArea;
     }
 
+    /**
+     * Initializes the instructions text.
+     *
+     * @return a Text object containing the instructions
+     */
     private Text initializeInstructions() {
         Text instructionsText = new Text("TAB to Navigate\nENTER to Edit\nR to Restore Defaults");
         instructionsText.setFill(Color.WHITE);
@@ -156,12 +184,18 @@ public class Controls extends Screen_Settings {
         return instructionsText;
     }
 
+    /**
+     * Starts capturing a key press for a specific action.
+     *
+     * @param keyField the TextField to update with the new key
+     * @param action the action to bind the new key to
+     */
     protected void startKeyCapture(TextField keyField, String action) {
         Scene scene = stage.getScene();
         stage.getScene().getRoot().requestFocus();
         styleKeys_Editing(keyField);
 
-        //if current one is active then remove to prevent double capture
+        // If current one is active then remove to prevent double capture
         if (activeKeyListener != null) {
             scene.removeEventHandler(KeyEvent.KEY_PRESSED, activeKeyListener);
         }
@@ -172,12 +206,12 @@ public class Controls extends Screen_Settings {
 
                 KeyCode newKey = event.getCode();
 
-                //ignore enter
+                // Ignore enter
                 if (newKey == KeyCode.ENTER) {
                     return;
                 }
 
-                //keycode: 255(only found 1 atm)
+                // Keycode: 255 (only found 1 atm)
                 if (newKey == KeyCode.UNDEFINED) {
                     Alert alert = new Alert(Alert.AlertType.ERROR);
                     alert.setContentText("Invalid key: Please choose another key.");
@@ -185,12 +219,12 @@ public class Controls extends Screen_Settings {
                     return;
                 }
 
-                //handle certain special symbols
+                // Handle certain special symbols
                 String displayText = SYMBOL_MAP.getOrDefault(newKey, newKey.getName().toUpperCase());
                 keyField.setText(displayText);
                 tempKeyBindings.put(action, newKey);
 
-                //reset status
+                // Reset status
                 styleKeys_Normal(keyField);
                 removeEffect(keyField);
                 scene.removeEventHandler(KeyEvent.KEY_PRESSED, this);
@@ -201,8 +235,11 @@ public class Controls extends Screen_Settings {
         scene.addEventHandler(KeyEvent.KEY_PRESSED, activeKeyListener);
     }
 
+    /**
+     * Saves the key bindings to a file and updates the main key bindings.
+     */
     private void saveKeyBindings() {
-        //only put to main if saved is clicked
+        // Only put to main if saved is clicked
         Main.getKeyBindings().clear();
         Main.getKeyBindings().putAll(tempKeyBindings);
 
@@ -222,17 +259,30 @@ public class Controls extends Screen_Settings {
         }
     }
 
+    /**
+     * Navigates to the previous screen.
+     */
     private void goScreen_PreviousScreen() {
-        //revert content if it's not saved
+        // Revert content if it's not saved
         tempKeyBindings.clear();
         tempKeyBindings.putAll(Main.getKeyBindings());
         goScreenPrevious(prevScreen);
     }
 
+    /**
+     * Sets the previous screen class name.
+     *
+     * @param previousClassSimplifiedName the class name of the previous screen
+     */
     public static void setPrevScreen(String previousClassSimplifiedName) {
         prevScreen = previousClassSimplifiedName;
     }
 
+    /**
+     * Styles the key field to normal state.
+     *
+     * @param node the node to style
+     */
     private void styleKeys_Normal(Node node) {
         node.setStyle("-fx-font-family: '" + fontName + "'; " +
                 "-fx-font-size: 20px; " +
@@ -241,6 +291,11 @@ public class Controls extends Screen_Settings {
                 "-fx-border-width: 0;");
     }
 
+    /**
+     * Styles the key field to editing state.
+     *
+     * @param node the node to style
+     */
     private void styleKeys_Editing(Node node) {
         node.setStyle("-fx-font-family: '" + fontName + "'; " +
                 "-fx-font-size: 20px; " +
@@ -250,6 +305,9 @@ public class Controls extends Screen_Settings {
         addEffect(node);
     }
 
+    /**
+     * Resets the key bindings to default values.
+     */
     protected void resetKeybinds() {
         tempKeyBindings.clear();
         tempKeyBindings.put("Fire", KeyCode.SPACE);

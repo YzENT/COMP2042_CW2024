@@ -19,13 +19,16 @@ import javafx.scene.text.Text;
 import javafx.util.Duration;
 import com.example.demo.Initialize.Controller;
 
+/**
+ * Abstract class representing a base screen in the game.
+ */
 public abstract class BaseScreen {
 
     protected final Stage stage;
     protected final int SCREEN_WIDTH;
     protected final int SCREEN_HEIGHT;
 
-    //https://www.fontspace.com/press-start-2p-font-f11591
+    // Font for the arcade style
     protected static final Font arcadeFont = Font.loadFont(BaseScreen.class.getResourceAsStream("/com/example/demo/fonts/PressStart2P-vaV7.ttf"), 0);
     public static final String fontName = arcadeFont.getName();
     private static final double BUTTON_SCALE_NEW = 1.2;
@@ -38,6 +41,13 @@ public abstract class BaseScreen {
 
     private static final Map<Class<?>, BaseScreen> screenCache = new HashMap<>();
 
+    /**
+     * Constructor to initialize a BaseScreen object.
+     *
+     * @param stage the stage for the screen
+     * @param SCREEN_WIDTH the width of the screen
+     * @param SCREEN_HEIGHT the height of the screen
+     */
     public BaseScreen(Stage stage, int SCREEN_WIDTH, int SCREEN_HEIGHT) {
         this.stage = stage;
         this.SCREEN_WIDTH = SCREEN_WIDTH;
@@ -46,14 +56,24 @@ public abstract class BaseScreen {
         this.controller = new Controller(stage);
     }
 
+    /**
+     * Abstract method to show the screen.
+     */
     protected abstract void show();
 
+    /**
+     * Initializes the title text with a color transition.
+     *
+     * @param TITLE_TEXT the text of the title
+     * @param TITLE_SIZE the size of the title text
+     * @return the initialized title text
+     */
     protected Text initializeTitle(String TITLE_TEXT, double TITLE_SIZE) {
         Text title = new Text(TITLE_TEXT);
         title.setFont(arcadeFont);
         title.setStyle("-fx-font-size: " + TITLE_SIZE + "px;");
 
-        //colour transition
+        // Color transition
         FillTransition fillTransition = new FillTransition(Duration.seconds(1), title);
         fillTransition.setFromValue(Color.RED);
         fillTransition.setToValue(Color.MEDIUMVIOLETRED);
@@ -64,8 +84,20 @@ public abstract class BaseScreen {
         return title;
     }
 
+    /**
+     * Abstract method to initialize buttons.
+     *
+     * @return an array of initialized buttons
+     */
     protected abstract Button[] initializeButtons();
 
+    /**
+     * Creates a button with the specified text and action.
+     *
+     * @param text the text of the button
+     * @param action the action to perform when the button is clicked
+     * @return the created button
+     */
     protected Button createButton(String text, Runnable action) {
         Button button = new Button(text);
         button.setStyle(
@@ -84,6 +116,11 @@ public abstract class BaseScreen {
         return button;
     }
 
+    /**
+     * Sets up a focus listener for the specified node.
+     *
+     * @param node the node to set up the focus listener for
+     */
     protected void setupFocusListener(Node node) {
         node.focusedProperty().addListener((focusProperty, wasFocused, isFocused) -> {
             if (isFocused) {
@@ -94,6 +131,11 @@ public abstract class BaseScreen {
         });
     }
 
+    /**
+     * Adds a scaling effect to the specified node.
+     *
+     * @param node the node to add the effect to
+     */
     protected void addEffect(Node node) {
         ScaleTransition st = new ScaleTransition(Duration.seconds(TRANSITION_DURATION), node);
         st.setToX(BUTTON_SCALE_NEW);
@@ -106,6 +148,11 @@ public abstract class BaseScreen {
         node.setUserData(st);
     }
 
+    /**
+     * Removes the scaling effect from the specified node.
+     *
+     * @param node the node to remove the effect from
+     */
     protected void removeEffect(Node node) {
         ScaleTransition st = (ScaleTransition) node.getUserData();
         if (st != null) {
@@ -114,33 +161,60 @@ public abstract class BaseScreen {
         node.setScaleX(BUTTON_SCALE_OLD);
         node.setScaleY(BUTTON_SCALE_OLD);
         node.setEffect(null);
-        node.setUserData(null); //clear user data to avoid leaks
+        node.setUserData(null); // Clear user data to avoid leaks
     }
 
+    /**
+     * Plays background music.
+     *
+     * @param musicPath the path to the music file
+     */
     protected void playBGM(String musicPath) {
         controller.playBGM(musicPath);
     }
 
+    /**
+     * Stops the background music.
+     */
     protected void stopBGM() {
         controller.stopBGM();
     }
 
+    /**
+     * Pauses the background music.
+     */
     protected void pauseBGM() {
         controller.pauseBGM();
     }
 
+    /**
+     * Resumes the background music.
+     */
     protected void resumeBGM() {
         controller.resumeBGM();
     }
 
+    /**
+     * Plays a sound effect.
+     *
+     * @param sfxPath the path to the sound effect file
+     */
     protected void playSFX(String sfxPath) {
         controller.playSFX(sfxPath);
     }
 
+    /**
+     * Stops the sound effect.
+     */
     protected void stopSFX() {
         controller.stopSFX();
     }
 
+    /**
+     * Navigates to the specified screen.
+     *
+     * @param screenClass the class of the screen to navigate to
+     */
     protected void goScreen(Class<?> screenClass) {
         try {
             BaseScreen screen = screenCache.get(screenClass);
@@ -157,6 +231,11 @@ public abstract class BaseScreen {
         }
     }
 
+    /**
+     * Navigates to the previous screen.
+     *
+     * @param previousClass the class name of the previous screen
+     */
     protected void goScreenPrevious(String previousClass) {
         try {
             Class<?> goPrevious = Class.forName(previousClass);
@@ -168,6 +247,11 @@ public abstract class BaseScreen {
         }
     }
 
+    /**
+     * Starts the specified level.
+     *
+     * @param levelClassName the class name of the level to start
+     */
     protected void startLevel(String levelClassName) {
         try {
             controller.goToLevel(levelClassName);
@@ -178,6 +262,11 @@ public abstract class BaseScreen {
         }
     }
 
+    /**
+     * Creates a drop shadow effect for buttons.
+     *
+     * @return the created drop shadow effect
+     */
     protected DropShadow createButtonShadow() {
         DropShadow shadow = new DropShadow();
         shadow.setColor(Color.WHITE);
@@ -185,6 +274,11 @@ public abstract class BaseScreen {
         return shadow;
     }
 
+    /**
+     * Disables mouse input for the specified scene.
+     *
+     * @param scene the scene to disable mouse input for
+     */
     protected void disableMouseInput(Scene scene) {
         scene.addEventFilter(MouseEvent.ANY, Event::consume);
     }

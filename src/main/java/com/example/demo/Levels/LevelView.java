@@ -8,24 +8,41 @@ import com.example.demo.ImageEntities.HeartDisplay;
 import com.example.demo.Initialize.Main;
 import static com.example.demo.Screens.BaseScreen.fontName;
 
+/**
+ * Class representing the view for a level in the game.
+ */
 public class LevelView {
-	
+
 	private static final double HEART_DISPLAY_X_POSITION = 5;
 	private static final double HEART_DISPLAY_Y_POSITION = 25;
 
 	private final Group root;
 	private final HeartDisplay heartDisplay;
 	private Label killCounterLabel;
-	
+
+	/**
+	 * Constructor to initialize the LevelView.
+	 *
+	 * @param root the root group of the scene
+	 * @param heartsToDisplay the number of hearts to display
+	 */
 	public LevelView(Group root, int heartsToDisplay) {
 		this.root = root;
 		this.heartDisplay = new HeartDisplay(HEART_DISPLAY_X_POSITION, HEART_DISPLAY_Y_POSITION, heartsToDisplay);
 	}
-	
+
+	/**
+	 * Displays the heart display on the screen.
+	 */
 	public void showHeartDisplay() {
 		root.getChildren().add(heartDisplay.getContainer());
 	}
-	
+
+	/**
+	 * Updates the heart display to show the remaining hearts.
+	 *
+	 * @param heartsRemaining the number of hearts remaining
+	 */
 	public void displayHeartRemaining(int heartsRemaining) {
 		int currentNumberOfHearts = heartDisplay.getContainer().getChildren().size();
 		for (int i = 0; i < currentNumberOfHearts - heartsRemaining; i++) {
@@ -33,6 +50,9 @@ public class LevelView {
 		}
 	}
 
+	/**
+	 * Initializes the kill counter label.
+	 */
 	public void initializeKillCounter() {
 		killCounterLabel = new Label("Kills:");
 		killCounterLabel.setLayoutX(Main.getScreenWidth() - 300);
@@ -43,10 +63,22 @@ public class LevelView {
 		root.getChildren().add(killCounterLabel);
 	}
 
+	/**
+	 * Updates the kill counter label with the current number of kills.
+	 *
+	 * @param kills the current number of kills
+	 * @param killRequired the number of kills required to advance
+	 */
 	public void updateKillCounter(int kills, int killRequired) {
 		killCounterLabel.setText("Kills :" + kills + "/" + killRequired);
 	}
 
+	/**
+	 * Fades the screen and executes an event after the fade transition.
+	 *
+	 * @param transition_Time the duration of the fade transition
+	 * @param afterFadeEvent the event to execute after the fade transition
+	 */
 	public void screenFade(double transition_Time, Runnable afterFadeEvent) {
 		FadeTransition fadeTransition = new FadeTransition(Duration.seconds(transition_Time), root);
 		fadeTransition.setFromValue(1.0);
@@ -58,12 +90,21 @@ public class LevelView {
 		fadeTransition.play();
 	}
 
+	/**
+	 * Gets the heart display.
+	 *
+	 * @return the heart display
+	 */
 	public HeartDisplay getHeartDisplay() {
 		return heartDisplay;
 	}
 
+	/**
+	 * Gets the kill counter label.
+	 *
+	 * @return the kill counter label
+	 */
 	public Label getKillCounterLabel() {
 		return killCounterLabel;
 	}
-
 }

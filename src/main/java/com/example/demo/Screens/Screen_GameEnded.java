@@ -8,15 +8,28 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import com.example.demo.Levels.LevelParent;
 
-public class Screen_GameEnded extends BaseScreen{
+/**
+ * Class representing the screen displayed when the game ends.
+ */
+public class Screen_GameEnded extends BaseScreen {
 
     private static String TITLE_TEXT;
     private static String TITLE_COLOUR;
 
+    /**
+     * Constructor to initialize the Screen_GameEnded.
+     *
+     * @param stage the stage for the screen
+     * @param SCREEN_WIDTH the width of the screen
+     * @param SCREEN_HEIGHT the height of the screen
+     */
     public Screen_GameEnded(Stage stage, int SCREEN_WIDTH, int SCREEN_HEIGHT) {
         super(stage, SCREEN_WIDTH, SCREEN_HEIGHT);
     }
 
+    /**
+     * Displays the game end screen.
+     */
     @Override
     public void show() {
         Text title = initializeTitle(TITLE_TEXT, TITLE_COLOUR);
@@ -32,6 +45,13 @@ public class Screen_GameEnded extends BaseScreen{
         disableMouseInput(scene);
     }
 
+    /**
+     * Initializes the title text with the specified text and color.
+     *
+     * @param TITLE_TEXT the text of the title
+     * @param TITLE_COLOR the color of the title text
+     * @return the initialized title text
+     */
     private Text initializeTitle(String TITLE_TEXT, String TITLE_COLOR) {
         Text title = new Text(TITLE_TEXT);
         title.setFont(arcadeFont);
@@ -42,6 +62,11 @@ public class Screen_GameEnded extends BaseScreen{
         return title;
     }
 
+    /**
+     * Initializes the buttons for the game end screen.
+     *
+     * @return an array of initialized buttons
+     */
     @Override
     protected Button[] initializeButtons() {
         Button playAgainButton = createButton("Play Again", this::goScreen_LevelSelection);
@@ -49,16 +74,27 @@ public class Screen_GameEnded extends BaseScreen{
         return new Button[]{playAgainButton, homeButton};
     }
 
+    /**
+     * Navigates to the level selection screen.
+     */
     private void goScreen_LevelSelection() {
-        Screen_LevelSelection.setPrevScreen("com.example.demo.Screens.Screen_MainMenu"); //user doesn't need to return back to game end screen
+        Screen_LevelSelection.setPrevScreen("com.example.demo.Screens.Screen_MainMenu"); // user doesn't need to return back to game end screen
         goScreen(Screen_LevelSelection.class);
     }
 
+    /**
+     * Navigates to the main menu screen.
+     */
     private void goScreen_MainMenu() {
         stopBGM();
         goScreen(Screen_MainMenu.class);
     }
 
+    /**
+     * Sets the results of the game and updates the title text and color accordingly.
+     *
+     * @param result the game status (VICTORY or DEFEAT)
+     */
     public void setResults(LevelParent.GameStatus result) {
         switch (result) {
             case VICTORY:
