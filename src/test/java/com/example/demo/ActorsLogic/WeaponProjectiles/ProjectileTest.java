@@ -1,5 +1,6 @@
 package com.example.demo.ActorsLogic.WeaponProjectiles;
 
+import com.example.demo.Actor.WeaponProjectiles.Projectile;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

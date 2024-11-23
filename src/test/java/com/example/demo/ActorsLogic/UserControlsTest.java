@@ -1,6 +1,6 @@
 package com.example.demo.ActorsLogic;
 
-import com.example.demo.Actor.Plane_User;
+import com.example.demo.Actor.Plane.Plane_User;
 import com.example.demo.JavaFXBaseTesting;
 import javafx.scene.Group;
 import javafx.scene.input.KeyCode;

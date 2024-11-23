@@ -1,4 +1,4 @@
-package com.example.demo.ActorsLogic.WeaponProjectiles;
+package com.example.demo.Actor.WeaponProjectiles;
 
 import com.example.demo.Initialize.Main;
 import com.example.demo.ActorsLogic.ActiveActorDestructible;

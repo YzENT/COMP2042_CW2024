@@ -1,7 +1,7 @@
-package com.example.demo.Actor;
+package com.example.demo.Actor.Plane;
 
 import com.example.demo.ActorsLogic.ActiveActorDestructible;
-import com.example.demo.ActorsLogic.WeaponProjectiles.Projectile_Enemy;
+import com.example.demo.Actor.WeaponProjectiles.Projectile_Enemy;
 
 /**
  * Class representing an enemy plane in the game.

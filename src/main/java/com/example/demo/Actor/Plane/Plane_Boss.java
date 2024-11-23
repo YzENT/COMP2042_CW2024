@@ -1,9 +1,9 @@
-package com.example.demo.Actor;
+package com.example.demo.Actor.Plane;
 
 import java.util.*;
 import javafx.scene.control.ProgressBar;
 import com.example.demo.ActorsLogic.ActiveActorDestructible;
-import com.example.demo.ActorsLogic.WeaponProjectiles.Projectile_Boss;
+import com.example.demo.Actor.WeaponProjectiles.Projectile_Boss;
 import com.example.demo.ImageEntities.ExplosionImage;
 import com.example.demo.ImageEntities.ShieldImage;
 

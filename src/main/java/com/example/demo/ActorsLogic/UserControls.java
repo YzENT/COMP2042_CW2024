@@ -6,7 +6,7 @@ import javafx.scene.Group;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import com.example.demo.Initialize.Main;
-import com.example.demo.Actor.Plane_User;
+import com.example.demo.Actor.Plane.Plane_User;
 
 /**
  * Class to handle user controls for the game.

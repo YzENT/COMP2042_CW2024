@@ -1,6 +1,6 @@
 package com.example.demo.Levels;
 
-import com.example.demo.Actor.Plane_Boss;
+import com.example.demo.Actor.Plane.Plane_Boss;
 
 /**
  * Class representing the third level of the game.

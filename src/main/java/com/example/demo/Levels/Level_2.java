@@ -1,6 +1,6 @@
 package com.example.demo.Levels;
 
-import com.example.demo.Actor.Plane_Enemy;
+import com.example.demo.Actor.Plane.Plane_Enemy;
 import com.example.demo.ActorsLogic.ActiveActorDestructible;
 
 /**

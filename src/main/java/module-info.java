@@ -8,8 +8,8 @@ module com.example.demo {
     exports com.example.demo.Initialize;
     opens com.example.demo.Levels to javafx.fxml;
     opens com.example.demo.ActorsLogic to javafx.fxml;
-    opens com.example.demo.ActorsLogic.WeaponProjectiles to javafx.fxml;
-    opens com.example.demo.Actor to javafx.fxml;
+    opens com.example.demo.Actor.Plane to javafx.fxml;
+    opens com.example.demo.Actor.WeaponProjectiles to javafx.fxml;
     opens com.example.demo.ImageEntities to javafx.fxml;
     opens com.example.demo.Screens to javafx.fxml;
 }

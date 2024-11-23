@@ -1,7 +1,7 @@
-package com.example.demo.Actor;
+package com.example.demo.Actor.Plane;
 
 import com.example.demo.ActorsLogic.ActiveActorDestructible;
-import com.example.demo.ActorsLogic.WeaponProjectiles.Projectile_User;
+import com.example.demo.Actor.WeaponProjectiles.Projectile_User;
 
 /**
  * Class representing the user-controlled plane in the game.

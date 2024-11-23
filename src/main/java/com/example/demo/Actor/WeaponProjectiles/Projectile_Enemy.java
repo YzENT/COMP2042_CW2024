@@ -1,4 +1,4 @@
-package com.example.demo.ActorsLogic.WeaponProjectiles;
+package com.example.demo.Actor.WeaponProjectiles;
 
 /**
  * Class representing an enemy projectile in the game.

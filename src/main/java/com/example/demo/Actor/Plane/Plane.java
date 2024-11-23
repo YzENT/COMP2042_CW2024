@@ -1,4 +1,4 @@
-package com.example.demo.Actor;
+package com.example.demo.Actor.Plane;
 
 import com.example.demo.ActorsLogic.ActiveActorDestructible;
 
