@@ -72,7 +72,7 @@ To only compile the jar file and not run the tests,
 - Users now can only navigate the application using keyboard, <b>ALL</b> mouse events are disabled.
 
 ### Transition and Animations
-- Transition and animations have been added to the game to aid the user's visual experience. Such transitions are used in changing game screen, finishing the game, etc..
+- Transition and animations have been added to the game to aid the user's visual experience. Such transitions are used in changing game screen, finishing the game, etc…
 - Boss now has a visual effect when defeated.
 
 ### Information in-game
@@ -117,10 +117,27 @@ To only compile the jar file and not run the tests,
 ```
 KeyFrame gameLoop = new KeyFrame(Duration.millis(MILLISECOND_DELAY), e -> updateScene());
 ```
-- Theoratically, this gives us 1000/50 `MILLISECOND_DELAY` ≈ 20FPS
+- Theoretically, this gives us 1000/50 `MILLISECOND_DELAY` ≈ 20FPS
 - By decreasing the value of `MILLISECOND_DELAY`, we should be able to boost the FPS
 - However, when decreasing this value, the entire game speeds up as other logic variables are set/modified based on this value
 - This means that the variable values are all hardcoded and the frame rate cannot be changed as is, a lot of the values have to be modified which just makes it improper to maintain if done
 - V-sync was thought of to slow down the game while maintaining the speed of the game as is, unfortunately JavaFX doesn't seem to even support V-sync, and the idea was later dropped.
 
 # New Java Classes
+
+| New Classes                    | Description                                                                                      | Package                                                                                            |
+|--------------------------------|--------------------------------------------------------------------------------------------------|----------------------------------------------------------------------------------------------------|
+| `UserControls.java`            | This class controls the user's action, mapping's are obtained from `Main.java`.                  | [com.example.demo.ActorsLogic](src/main/java/com/example/demo/ActorsLogic/UserControls.java)       |
+| `ExplosionImage.java`          | This class initializes the explosion effect used for Plane_Boss.java when it's defeated.         | [com.example.demo.ImageEntities](src/main/java/com/example/demo/ImageEntities/ExplosionImage.java) |
+| `Level_3.java`                 | The third level of the game. It is still the boss enemy as original, because level 2 was remade. | [com.example.demo.Levels](src/main/java/com/example/demo/Levels/Level_3.java)                      |
+| `BaseScreen.java`              | Abstract class for other screens used in the application.                                        | [com.example.demo.Screens](src/main/java/com/example/demo/Screens/BaseScreen.java)                 |
+| `Screen_GameEnded.java`        | Screen used to display results of the game (VICTORY, DEFEAT).                                    | [com.example.demo.Screens](src/main/java/com/example/demo/Screens/Screen_GameEnded.java)           |
+| `Screen_LevelSelection.java`   | Screen used to select the level user wants to navigate to.                                       | [com.example.demo.Screens](src/main/java/com/example/demo/Screens/Screen_LevelSelection.java)      |
+| `Screen_LoadingAnimation.java` | Screen used for loading animation between levels.                                                | [com.example.demo.Screens](src/main/java/com/example/demo/Screens/Screen_LoadingAnimation.java)    |
+| `Screen_MainMenu.java`         | Screen used to display the Main Menu for user to navigate to different screens.                  | [com.example.demo.Screens](src/main/java/com/example/demo/Screens/Screen_MainMenu.java)            |
+| `Screen_PauseMenu.java`        | Screen displayed when user pauses the game in middle of game.                                    | [com.example.demo.Screens](src/main/java/com/example/demo/Screens/Screen_PauseMenu.java)           |
+| `Screen_Settings.java`         | Screen used to display the settings user can navigate to (Controls, Volume).                     | [com.example.demo.Screens](src/main/java/com/example/demo/Screens/Screen_Settings.java)            |
+| `Controls.java`                | Screen used to display and modify the user's controls.                                           | [com.example.demo.Screens.Settings](src/main/java/com/example/demo/Screens/Settings/Controls.java) |
+| `Volume.java`                  | Screen used to display and modify the game's volume (SFX, Music)                                 | [com.example.demo.Screens.Settings](src/main/java/com/example/demo/Screens/Settings/Volume.java)   |
+
+
