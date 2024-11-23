@@ -255,7 +255,7 @@ KeyFrame gameLoop = new KeyFrame(Duration.millis(MILLISECOND_DELAY), e -> update
 - Removed `updateKillCount()` and placed it under `handleUserProjectileCollisions()` so kill count only increases if user's projectile hit enemy, provided enemy is destroyed.
 - Merged `winGame()` and `loseGame()` to `gameStatus()` to handle game's status.
 - Modified `goToNextLevel()` as it's now not an observer under `controller` anymore.
-- Modified `handleCollisions()` to accept `Runnable` as a argument, so code that meets the requirements can be executed afterward. (Shake Screen, Play SFX, etc...).
+- Modified `handleCollisions()` to accept `Runnable` as an argument, so code that meets the requirements can be executed afterward. (Shake Screen, Play SFX, etc...).
 - Created `pauseGame()` and `resumeGame()` to handle pause logic.
 - Created `shakeScreen()` when user collides with enemy projectile.
 - Created `handleKeyPressed()` and `handleKeyReleased()` to handle key actions.
@@ -264,3 +264,35 @@ KeyFrame gameLoop = new KeyFrame(Duration.millis(MILLISECOND_DELAY), e -> update
 - Removed logics/creations related to WinImage and GameOverImage.
 - Created `initializeKillCounter()` and `updateKillCounter()` to display kill count of user at top right of screen.
 - Created `screenFade()` for transition visual's.
+
+# Unexpected Problems
+1. When first forking and running the project, the game crashes when it tries to go to the next level. After further debugging, the issues were:
+ - Incorrect shield image extension. It was "../shield.jpg" in the source code, while the actual file extension was "shield.png".
+ - The timeline of the level wasn't being stopped properly, as advancing to the next level triggered neither `winGame()` or `loseGame()` to execute `timeline.stop()`. This code was then added to `checkIfGameOver()` afterward and switching levels got smooth.
+
+2. Weird kill count logic
+ - While refactoring the code, it was discovered that the kill count was increasing based on how many enemy units were disappearing.
+ - This meant that if enemy unit penetrates the boundary, the kill count will still increase, because the enemy has disappeared.
+ - It was then modified so that the kill count would only be increased if user's projectile collide with an enemy unit.
+
+3. Shield Image not showing
+ - After connecting `ShieldImage.java` and `Plane_Boss.java` together, the shield image was not showing still.
+ - Messages at the console indicated that the shield was activated, but nothing appeared on screen.
+ - The background was then hidden to test if the shield was being rendered behind, and it indeed was.
+ - The shield image was then only initialized if when it's toggled, provided it's not found at the root.
+
+4. Weird Hitbox dimensions
+ - The images originally had a lot of whitespace, which caused this weird hitbox issue. The images may not seem to be overlapping, but it was then detected as a collision.
+ - Bounding boxes were drawn around the actors, and it was found that it had a lot of whitespace.
+ - The whitespaces were then removed and proper scaling was applied to the code to accept these changes.
+
+5. Pause Menu closes the entire application when using `stage.hide()` or `stage.close()`
+ - Due to the way `Screen_PauseMenu` is set-up, originally it was supposed to be closed with `stage.hide()` or `stage.close()`, but that led to closing the entire application.
+ - After further research, it was due to the menu being the main stage of the screen, so if that closes then it closes the entire application.
+ - To further solidify the issue, a new stage was created when pause menu was initialized, and it opened a new window. When using `stage.hide()`, there were no problems at all and the game kept running.
+ - The solution to this was to pass the entire gameScene to pauseMenu, then after the user clicks on the resume button, pauseMenu has to set the scene back to gameScene.
+
+6. Script (start.bat) not able to accept .json properly
+ - `.json` file was supposed to be the default format to store the keyBindings for the game, and `jackson-core` was used.
+ - It worked properly launching through the IDE, but when launching through `start.bat`, the application wouldn't work properly as it couldn't detect one of the dependencies, nor could it install it.
+ - It was then decided to use `.properties` file instead to store the key bindings.
