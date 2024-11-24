@@ -17,10 +17,10 @@ public class Plane_Boss extends Plane {
 	private static final double INITIAL_X_POSITION = 1000;
 	private static final double INITIAL_Y_POSITION = 400;
 	private static final double PROJECTILE_Y_POSITION_OFFSET = 50;
-	private static final double BOSS_FIRE_RATE = .3;
+	private static final double BOSS_FIRE_RATE = .2;
 	private static final double BOSS_SHIELD_PROBABILITY = .05;
 	private static final int IMAGE_HEIGHT = 70;
-	private static final int VERTICAL_VELOCITY = 12;
+	private static final int VERTICAL_VELOCITY = 14;
 	private static final int HEALTH = 50;
 	private static final int MOVE_FREQUENCY_PER_CYCLE = 100;
 	private static final int MAX_FRAMES_WITH_SAME_MOVE = 5;

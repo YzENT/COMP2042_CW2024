@@ -11,9 +11,9 @@ public class Level_2 extends LevelParent {
     private static final String BACKGROUND_IMAGE_NAME = "/com/example/demo/images/backgrounds/level2.png";
     private static final String NEXT_LEVEL = "com.example.demo.Levels.Level_3";
     private static final int KILLS_TO_ADVANCE = 20;
-    private static final double ENEMY_SPAWN_PROBABILITY = .5;
+    private static final double ENEMY_SPAWN_PROBABILITY = .45;
     private static final int PLAYER_INITIAL_HEALTH = 5;
-    private static final double ENEMY_FIRE_RATE = .05;
+    private static final double ENEMY_FIRE_RATE = .04;
     private double spawnCooldown = 30;
 
     /**
