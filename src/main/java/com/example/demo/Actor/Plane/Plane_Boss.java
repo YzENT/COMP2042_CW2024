@@ -143,7 +143,7 @@ public class Plane_Boss extends Plane {
 	 */
 	private void updateExplosion() {
 		//has to updated every frame because it will be (0,0) when boss is destroyed
-		explosionImage.setExplostionPosition(Boss_XCoordinate(), Boss_YCoordinate() - IMAGE_HEIGHT*2);
+		explosionImage.setExplosionPosition(Boss_XCoordinate(), Boss_YCoordinate() - IMAGE_HEIGHT*2);
 	}
 
 	/**
