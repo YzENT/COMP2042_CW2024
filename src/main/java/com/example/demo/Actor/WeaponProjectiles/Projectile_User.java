@@ -5,9 +5,24 @@ package com.example.demo.Actor.WeaponProjectiles;
  */
 public class Projectile_User extends Projectile {
 
+	/**
+	 * The image name for the user projectile.
+	 */
 	private static final String IMAGE_NAME = "/com/example/demo/images/weapons/userfire.png";
+
+	/**
+	 * The height of the user projectile image.
+	 */
 	private static final int IMAGE_HEIGHT = 100;
+
+	/**
+	 * The horizontal velocity of the user projectile.
+	 */
 	private static final int HORIZONTAL_VELOCITY = 15;
+
+	/**
+	 * The health of the user projectile.
+	 */
 	private static final int HEALTH = 1;
 
 	/**

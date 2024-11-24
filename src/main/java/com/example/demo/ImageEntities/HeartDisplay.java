@@ -10,12 +10,39 @@ import javafx.scene.layout.HBox;
  */
 public class HeartDisplay {
 
+	/**
+	 * The name of the heart image file.
+	 */
 	private static final String HEART_IMAGE_NAME = "/com/example/demo/images/misc/heart.png";
+
+	/**
+	 * The heart image object.
+	 */
 	private static final Image HEART_IMAGE = new Image(Objects.requireNonNull(HeartDisplay.class.getResource(HEART_IMAGE_NAME)).toExternalForm());
+
+	/**
+	 * The height of the heart image.
+	 */
 	private static final int HEART_HEIGHT = 50;
+
+	/**
+	 * The container for the heart images.
+	 */
 	private HBox container;
+
+	/**
+	 * The X position of the heart display container.
+	 */
 	private final double containerXPosition;
+
+	/**
+	 * The Y position of the heart display container.
+	 */
 	private final double containerYPosition;
+
+	/**
+	 * The number of hearts to display.
+	 */
 	private final int numberOfHeartsToDisplay;
 
 	/**

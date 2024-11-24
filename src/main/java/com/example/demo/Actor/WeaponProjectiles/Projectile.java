@@ -8,7 +8,14 @@ import com.example.demo.ActorsLogic.ActiveActorDestructible;
  */
 public abstract class Projectile extends ActiveActorDestructible {
 
+	/**
+	 * The health of the projectile.
+	 */
 	private int health;
+
+	/**
+	 * The horizontal velocity of the projectile.
+	 */
 	private final int horizontalVelocity;
 
 	/**

@@ -13,11 +13,29 @@ import static com.example.demo.Screens.BaseScreen.fontName;
  */
 public class LevelView {
 
+	/**
+	 * X position for the heart display
+	 */
 	private static final double HEART_DISPLAY_X_POSITION = 5;
+
+	/**
+	 * Y position for the heart display
+	 */
 	private static final double HEART_DISPLAY_Y_POSITION = 25;
 
+	/**
+	 * Root group of the scene
+	 */
 	private final Group root;
+
+	/**
+	 * Heart display object
+	 */
 	private final HeartDisplay heartDisplay;
+
+	/**
+	 * Label to display the kill counter
+	 */
 	private Label killCounterLabel;
 
 	/**

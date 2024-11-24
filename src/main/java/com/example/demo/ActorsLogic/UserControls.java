@@ -20,18 +20,55 @@ import com.example.demo.Levels.LevelParent;
  */
 public class UserControls {
 
+    /**
+     * The user-controlled plane.
+     */
     private final Plane_User user;
+
+    /**
+     * The root group of the scene.
+     */
     private final Group root;
+
+    /**
+     * The list of user projectiles.
+     */
     private final List<ActiveActorDestructible> userProjectiles;
+
+    /**
+     * Runnable to pause the game.
+     */
     private static Runnable pauseGame;
+
+    /**
+     * Map of key bindings.
+     */
     private static Map<String, KeyCode> keyBindings;
+
+    /**
+     * Set of active keys.
+     */
     private final Set<KeyCode> activeKeys = new HashSet<>();
+
+    /**
+     * The controller for the game.
+     */
     private final Controller controller;
 
+    /**
+     * Indicates whether the user can fire a projectile.
+     */
     private static boolean canFire = true;
+
+    /**
+     * The rate at which the user can fire projectiles.
+     */
     private static final Duration FIRE_RATE = Duration.millis(100);
 
-    //https://pixabay.com/sound-effects/072807-heavy-machine-gun-50-caliber-39765/
+    /**
+     * The sound effect for the user firing a projectile.
+     * Source: <a href="https://pixabay.com/sound-effects/072807-heavy-machine-gun-50-caliber-39765/">Link to Shooting SFX</a>
+     */
     private static final String USER_FIRE_SOUND = "/com/example/demo/audio/sfx/072807_heavy-machine-gun-50-caliber-39765.mp3";
 
     /**
@@ -40,6 +77,7 @@ public class UserControls {
      * @param user the user-controlled plane
      * @param root the root group of the scene
      * @param userProjectiles the list of user projectiles
+     * @param stage the game's stage
      */
     public UserControls(Plane_User user, Group root, List<ActiveActorDestructible> userProjectiles, Stage stage) {
         this.user = user;

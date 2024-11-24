@@ -7,9 +7,25 @@ import com.example.demo.Actor.Plane.Plane_Boss;
  */
 public class Level_3 extends LevelParent {
 
+	/**
+	 * The name of the background image for level 3.
+	 * Source: <a href="https://craftpix.net/freebies/free-futuristic-city-pixel-art-backgrounds/">Link to background</a>
+	 */
 	private static final String BACKGROUND_IMAGE_NAME = "/com/example/demo/images/backgrounds/level3.png";
+
+	/**
+	 * The initial health of the player.
+	 */
 	private static final int PLAYER_INITIAL_HEALTH = 5;
+
+	/**
+	 * The boss plane for this level.
+	 */
 	private Plane_Boss planeBoss;
+
+	/**
+	 * The cooldown period for spawning enemies.
+	 */
 	private static double spawnCooldown = 30;
 
 	/**

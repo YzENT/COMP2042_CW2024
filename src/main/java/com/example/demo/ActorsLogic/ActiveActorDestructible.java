@@ -5,6 +5,9 @@ package com.example.demo.ActorsLogic;
  */
 public abstract class ActiveActorDestructible extends ActiveActor implements Destructible {
 
+	/**
+	 * Indicates whether the actor is destroyed.
+	 */
 	private boolean isDestroyed;
 
 	/**

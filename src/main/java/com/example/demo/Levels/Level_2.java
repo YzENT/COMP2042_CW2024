@@ -8,12 +8,40 @@ import com.example.demo.ActorsLogic.ActiveActorDestructible;
  */
 public class Level_2 extends LevelParent {
 
+    /**
+     * The name of the background image for level 2.
+     * Source: <a href="https://craftpix.net/freebies/free-futuristic-city-pixel-art-backgrounds/">Link to background</a>
+     */
     private static final String BACKGROUND_IMAGE_NAME = "/com/example/demo/images/backgrounds/level2.png";
+
+    /**
+     * The class name of the next level.
+     */
     private static final String NEXT_LEVEL = "com.example.demo.Levels.Level_3";
+
+    /**
+     * The number of kills required to advance to the next level.
+     */
     private static final int KILLS_TO_ADVANCE = 20;
+
+    /**
+     * The probability of an enemy spawning.
+     */
     private static final double ENEMY_SPAWN_PROBABILITY = .45;
+
+    /**
+     * The initial health of the player.
+     */
     private static final int PLAYER_INITIAL_HEALTH = 5;
+
+    /**
+     * The fire rate of the enemy.
+     */
     private static final double ENEMY_FIRE_RATE = .04;
+
+    /**
+     * The cooldown period for spawning enemies.
+     */
     private double spawnCooldown = 30;
 
     /**

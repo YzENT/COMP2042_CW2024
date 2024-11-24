@@ -8,21 +8,79 @@ import com.example.demo.Actor.WeaponProjectiles.Projectile_User;
  */
 public class Plane_User extends Plane {
 
+	/**
+	 * The image name for the user plane.
+	 */
 	private static final String IMAGE_NAME = "/com/example/demo/images/actors/userplane.png";
+
+	/**
+	 * The upper bound for the Y position of the user plane.
+	 */
 	private static final double Y_UPPER_BOUND = 0;
+
+	/**
+	 * The lower bound for the Y position of the user plane.
+	 */
 	private static final double Y_LOWER_BOUND = 660;
+
+	/**
+	 * The upper bound for the X position of the user plane.
+	 */
 	private static final double X_UPPER_BOUND = 0;
+
+	/**
+	 * The lower bound for the X position of the user plane.
+	 */
 	private static final double X_LOWER_BOUND = 1100;
+
+	/**
+	 * The initial X position of the user plane.
+	 */
 	private static final double INITIAL_X_POSITION = 5;
+
+	/**
+	 * The initial Y position of the user plane.
+	 */
 	private static final double INITIAL_Y_POSITION = 300;
+
+	/**
+	 * The height of the user plane image.
+	 */
 	private static final int IMAGE_HEIGHT = 50;
+
+	/**
+	 * The vertical velocity of the user plane.
+	 */
 	private static final int VERTICAL_VELOCITY = 8;
+
+	/**
+	 * The horizontal velocity of the user plane.
+	 */
 	private static final int HORIZONTAL_VELOCITY = 8;
+
+	/**
+	 * The X position offset for the projectile.
+	 */
 	private static final int PROJECTILE_X_POSITION_OFFSET = 140;
+
+	/**
+	 * The Y position offset for the projectile.
+	 */
 	private static final int PROJECTILE_Y_POSITION_OFFSET = -15;
 
+	/**
+	 * The vertical velocity multiplier of the user plane.
+	 */
 	private int verticalVelocityMultiplier = 0;
+
+	/**
+	 * The horizontal velocity multiplier of the user plane.
+	 */
 	private int horizontalVelocityMultiplier = 0;
+
+	/**
+	 * The number of kills made by the user plane.
+	 */
 	private int numberOfKills = 0;
 
 	/**

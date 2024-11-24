@@ -25,31 +25,106 @@ import com.example.demo.Screens.Screen_PauseMenu;
  */
 public abstract class LevelParent {
 
+	/**
+	 * The screen height adjustment value.
+	 */
 	private static final double SCREEN_HEIGHT_ADJUSTMENT = 150;
-	private static final int MILLISECOND_DELAY = 50;
-	private final double screenHeight;
-	private final double screenWidth;
-	private final double enemyMaximumYPosition;
-	private final int KILLS_TO_ADVANCE;
 
-	//https://pixabay.com/music/main-title-cinematic-epic-237173/
+	/**
+	 * The delay in milliseconds for the game loop.
+	 */
+	private static final int MILLISECOND_DELAY = 50;
+
+	/**
+	 * The path to the background music file.
+	 * Source: <a href="https://pixabay.com/music/main-title-cinematic-epic-237173/">Link to epic music</a>
+	 */
 	private static final String BGM_PATH = "/com/example/demo/audio/bgm/cinematic-epic-237173.mp3";
 
-	//https://www.youtube.com/watch?v=f8mL0_4GeV0
+	/**
+     * The path to the metal pipe sound effect file.
+     * Source: <a href="https://www.youtube.com/watch?v=f8mL0_4GeV0">Link to metal pipe falling sfx</a>
+     */
 	private static final String METAL_PIPE = "/com/example/demo/audio/sfx/metal pipe falling.mp3";
 
+	/**
+	 * The height of the screen.
+	 */
+	private final double screenHeight;
+
+	/**
+	 * The width of the screen.
+	 */
+	private final double screenWidth;
+
+	/**
+	 * The maximum Y position for enemies.
+	 */
+	private final double enemyMaximumYPosition;
+
+	/**
+	 * The number of kills required to advance to the next level.
+	 */
+	private final int KILLS_TO_ADVANCE;
+
+	/**
+	 * The root group for the scene.
+	 */
 	private final Group root;
+
+	/**
+	 * The timeline for the game loop.
+	 */
 	private final Timeline timeline;
+
+	/**
+	 * The user plane.
+	 */
 	private final Plane_User user;
+
+	/**
+	 * The scene for the level.
+	 */
 	private final Scene scene;
+
+	/**
+	 * The background image view.
+	 */
 	private final ImageView background;
+
+	/**
+	 * The user controls for the game.
+	 */
 	private final UserControls userControls;
+
+	/**
+	 * The controller for the game.
+	 */
 	private final Controller controller;
+
+	/**
+	 * The level view.
+	 */
 	private final LevelView levelView;
 
+	/**
+	 * The list of friendly units.
+	 */
 	private final List<ActiveActorDestructible> friendlyUnits;
+
+	/**
+	 * The list of enemy units.
+	 */
 	private final List<ActiveActorDestructible> enemyUnits;
+
+	/**
+	 * The list of user projectiles.
+	 */
 	private final List<ActiveActorDestructible> userProjectiles;
+
+	/**
+	 * The list of enemy projectiles.
+	 */
 	private final List<ActiveActorDestructible> enemyProjectiles;
 
 	/**

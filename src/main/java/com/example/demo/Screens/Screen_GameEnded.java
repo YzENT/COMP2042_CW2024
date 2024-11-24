@@ -13,7 +13,14 @@ import com.example.demo.Levels.LevelParent;
  */
 public class Screen_GameEnded extends BaseScreen {
 
+    /**
+     * The text of the title.
+     */
     private static String TITLE_TEXT;
+
+    /**
+     * The color of the title text.
+     */
     private static String TITLE_COLOUR;
 
     /**

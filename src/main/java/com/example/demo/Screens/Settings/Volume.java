@@ -18,8 +18,19 @@ import com.example.demo.Screens.Screen_Settings;
  */
 public class Volume extends Screen_Settings {
 
+    /**
+     * The text of the title.
+     */
     private static final String TITLE_TEXT = "Volume";
+
+    /**
+     * The size of the title text.
+     */
     private static final double TITLE_SIZE = 50;
+
+    /**
+     * The class name of the previous screen.
+     */
     private static String prevScreen;
 
     /**

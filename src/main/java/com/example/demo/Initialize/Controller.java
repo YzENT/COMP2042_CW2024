@@ -17,11 +17,29 @@ import com.example.demo.Levels.LevelParent;
  */
 public class Controller {
 
+	/**
+	 * The primary stage for this application.
+	 */
 	private final Stage stage;
 
+	/**
+	 * The media player for background music.
+	 */
 	private static MediaPlayer mediaPlayer;
+
+	/**
+	 * The audio clip for sound effects.
+	 */
 	private AudioClip audioClip;
+
+	/**
+	 * The volume level for background music (value should be between 0.0 to 1.0).
+	 */
 	private static double musicVolume = 0.5;
+
+	/**
+	 * The volume level for sound effects (value should be between 0.0 to 1.0).
+	 */
 	private static double sfxVolume = 0.5;
 
 	/**

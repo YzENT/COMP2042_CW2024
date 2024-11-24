@@ -15,8 +15,19 @@ import javafx.util.Duration;
  */
 public class Screen_LoadingAnimation extends BaseScreen {
 
+    /**
+     * The text of the title.
+     */
     private static final String TITLE_TEXT = "Loading";
+
+    /**
+     * The size of the title text.
+     */
     private static final double TITLE_SIZE = 50;
+
+    /**
+     * The class name of the game level to be loaded.
+     */
     private static String gameLevel;
 
     /**

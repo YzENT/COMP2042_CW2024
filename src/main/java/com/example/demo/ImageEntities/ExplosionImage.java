@@ -12,9 +12,25 @@ import javafx.util.Duration;
  */
 public class ExplosionImage extends ImageView {
 
+    /**
+     * The name of the explosion image file.
+     * Source: <a href="https://www.rawpixel.com/search/explosion%20png/">Link to Explosion Image</a>
+     */
     private static final String IMAGE_NAME = "/com/example/demo/images/misc/explosion.png";
+
+    /**
+     * The size of the explosion image.
+     */
     private static final int IMAGE_SIZE = 300;
+
+    /**
+     * The explosion image object.
+     */
     private static final Image EXPLOSION_IMAGE = new Image(Objects.requireNonNull(ShieldImage.class.getResource(IMAGE_NAME)).toExternalForm());
+
+    /**
+     * The duration of the transition effect for the explosion.
+     */
     private static final int TRANSITION_DURATION = 5;
 
     /**

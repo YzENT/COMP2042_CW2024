@@ -12,36 +12,139 @@ import com.example.demo.ImageEntities.ShieldImage;
  */
 public class Plane_Boss extends Plane {
 
+	/**
+	 * The image name for the boss plane.
+	 */
 	private static final String IMAGE_NAME = "/com/example/demo/images/actors/bossplane.png";
 
+	/**
+	 * The initial X position of the boss plane.
+	 */
 	private static final double INITIAL_X_POSITION = 1000;
+
+	/**
+	 * The initial Y position of the boss plane.
+	 */
 	private static final double INITIAL_Y_POSITION = 400;
+
+	/**
+	 * The Y position offset for the projectile.
+	 */
 	private static final double PROJECTILE_Y_POSITION_OFFSET = 50;
+
+	/**
+	 * The fire rate of the boss plane.
+	 */
 	private static final double BOSS_FIRE_RATE = .2;
+
+	/**
+	 * The probability of the boss plane activating its shield.
+	 */
 	private static final double BOSS_SHIELD_PROBABILITY = .05;
+
+	/**
+	 * The height of the boss plane image.
+	 */
 	private static final int IMAGE_HEIGHT = 70;
+
+	/**
+	 * The vertical velocity of the boss plane.
+	 */
 	private static final int VERTICAL_VELOCITY = 14;
+
+	/**
+	 * The initial health of the boss plane.
+	 */
 	private static final int HEALTH = 50;
+
+	/**
+	 * The frequency of moves per cycle for the boss plane.
+	 */
 	private static final int MOVE_FREQUENCY_PER_CYCLE = 100;
+
+	/**
+	 * The maximum number of frames the boss plane can move in the same direction.
+	 */
 	private static final int MAX_FRAMES_WITH_SAME_MOVE = 5;
+
+	/**
+	 * The upper bound for the Y position of the boss plane.
+	 */
 	private static final int Y_POSITION_UPPER_BOUND = 20;
+
+	/**
+	 * The lower bound for the Y position of the boss plane.
+	 */
 	private static final int Y_POSITION_LOWER_BOUND = 600;
+
+	/**
+	 * The maximum number of frames the shield can be activated.
+	 */
 	private static final int MAX_FRAMES_WITH_SHIELD = 50;
+
+	/**
+	 * The minimum number of frames the shield must be deactivated.
+	 */
 	private static final int MIN_FRAMES_WITHOUT_SHIELD = 50;
+
+	/**
+	 * The width of the health bar.
+	 */
 	private static final int HEALTH_BAR_WIDTH = 200;
+
+	/**
+	 * The color of the health bar.
+	 */
 	private static final String HEALTH_BAR_COLOUR = "RED";
 
+	/**
+	 * The number of consecutive moves in the same direction.
+	 */
 	private int consecutiveMovesInSameDirection = 0;
+
+	/**
+	 * The index of the current move in the move pattern.
+	 */
 	private int indexOfCurrentMove = 0;
+
+	/**
+	 * The number of frames the shield has been activated.
+	 */
 	private int framesWithShieldActivated = 0;
+
+	/**
+	 * The number of frames the shield has been deactivated.
+	 */
 	private int framesWithShieldDeactivated = 0;
 
+	/**
+	 * The move pattern for the boss plane.
+	 */
 	private final List<Integer> movePattern;
+
+	/**
+	 * The shield image for the boss plane.
+	 */
 	private final ShieldImage shieldImage;
+
+	/**
+	 * The health bar for the boss plane.
+	 */
 	private final ProgressBar healthBar;
+
+	/**
+	 * The explosion image for the boss plane.
+	 */
 	private final ExplosionImage explosionImage;
+
+	/**
+	 * The action to remove the health bar.
+	 */
 	private Runnable removeHealthBar;
 
+	/**
+	 * The shielded state of the boss plane.
+	 */
 	private boolean isShielded = false;
 
 	/**

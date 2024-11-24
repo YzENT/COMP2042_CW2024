@@ -12,8 +12,19 @@ import javafx.stage.Stage;
  */
 public class Screen_LevelSelection extends BaseScreen {
 
+    /**
+     * The text of the title.
+     */
     private static final String TITLE_TEXT = "Select Level";
+
+    /**
+     * The size of the title text.
+     */
     private static final double TITLE_SIZE = 50;
+
+    /**
+     * The class name of the previous screen.
+     */
     private static String prevScreen;
 
     /**

@@ -15,12 +15,34 @@ import com.example.demo.Screens.Screen_MainMenu;
  */
 public class Main extends Application {
 
+	/**
+	 * The width of the screen.
+	 */
 	private static final int SCREEN_WIDTH = 1300;
+
+	/**
+	 * The height of the screen.
+	 */
 	private static final int SCREEN_HEIGHT = 750;
+
+	/**
+	 * The title of the application window.
+	 */
 	private static final String TITLE = "Sky Battle";
+
+	/**
+	 * The primary stage for this application.
+	 */
 	private static Stage stage;
 
+	/**
+	 * The key bindings for the application.
+	 */
 	private static Map<String, KeyCode> keyBindings;
+
+	/**
+	 * The path to the configuration file for key bindings.
+	 */
 	private static final String CONFIG_PATH = System.getProperty("user.home") + "/Documents/SkyBattle_20617094/keyConfigs.properties";
 
 	/**

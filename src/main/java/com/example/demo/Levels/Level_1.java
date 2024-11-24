@@ -8,13 +8,45 @@ import com.example.demo.Actor.Plane.Plane_Enemy;
  */
 public class Level_1 extends LevelParent {
 
+	/**
+     * The name of the background image for level 1.
+     * Source: <a href="https://craftpix.net/freebies/free-futuristic-city-pixel-art-backgrounds/">Link to background</a>
+     */
 	private static final String BACKGROUND_IMAGE_NAME = "/com/example/demo/images/backgrounds/level1.png";
+
+	/**
+	 * The class name of the next level.
+	 */
 	private static final String NEXT_LEVEL = "com.example.demo.Levels.Level_2";
+
+	/**
+	 * The total number of enemies in level 1.
+	 */
 	private static final int TOTAL_ENEMIES = 5;
+
+	/**
+	 * The number of kills required to advance to the next level.
+	 */
 	private static final int KILLS_TO_ADVANCE = 5;
+
+	/**
+	 * The probability of an enemy spawning.
+	 */
 	private static final double ENEMY_SPAWN_PROBABILITY = .20;
+
+	/**
+	 * The initial health of the player.
+	 */
 	private static final int PLAYER_INITIAL_HEALTH = 5;
+
+	/**
+	 * The fire rate of the enemy.
+	 */
 	private static final double ENEMY_FIRE_RATE = .01;
+
+	/**
+	 * The cooldown period for spawning enemies.
+	 */
 	private double spawnCooldown = 30;
 
 	/**

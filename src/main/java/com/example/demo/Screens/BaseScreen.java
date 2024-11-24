@@ -26,21 +26,70 @@ import com.example.demo.Initialize.Controller;
  */
 public abstract class BaseScreen {
 
+    /**
+     * The stage for the screen.
+     */
     protected final Stage stage;
+
+    /**
+     * The width of the screen.
+     */
     protected final int SCREEN_WIDTH;
+
+    /**
+     * The height of the screen.
+     */
     protected final int SCREEN_HEIGHT;
 
-    // Font for the arcade style
+    /**
+     * Font for the arcade style.
+     * Source: <a href="https://www.fontspace.com/press-start-2p-font-f11591">Link for arcade font</a>
+     */
     protected static final Font arcadeFont = Font.loadFont(BaseScreen.class.getResourceAsStream("/com/example/demo/fonts/PressStart2P-vaV7.ttf"), 0);
+
+    /**
+     * The name of the font.
+     */
     public static final String fontName = arcadeFont.getName();
+
+    /**
+     * The new scale for buttons when hovered.
+     */
     private static final double BUTTON_SCALE_NEW = 1.2;
+
+    /**
+     * The old scale for buttons when not hovered.
+     */
     private static final double BUTTON_SCALE_OLD = 1.0;
+
+    /**
+     * The duration of the transition effect.
+     */
     private static final double TRANSITION_DURATION = 0.5;
+
+    /**
+     * The font size for buttons.
+     */
     private static final double BUTTON_FONT_SIZE = 30;
+
+    /**
+     * The radius of the drop shadow effect for buttons.
+     */
     private static final double SHADOW_RADIUS = 10;
+
+    /**
+     * The drop shadow effect for buttons.
+     */
     private final DropShadow buttonShadow;
+
+    /**
+     * The controller for managing the screen.
+     */
     private final Controller controller;
 
+    /**
+     * Cache for storing instances of screens.
+     */
     private static final Map<Class<?>, BaseScreen> screenCache = new HashMap<>();
 
     /**
