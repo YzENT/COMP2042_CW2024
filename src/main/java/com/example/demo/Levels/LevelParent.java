@@ -297,6 +297,7 @@ public abstract class LevelParent {
 			if (enemyHasPenetratedDefenses(enemy)) {
 				user.takeDamage();
 				enemy.destroy();
+				shakeScreen();
 			}
 		}
 	}
