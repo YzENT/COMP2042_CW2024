@@ -482,33 +482,4 @@ public abstract class LevelParent {
 	protected boolean userHasReachedKillTarget() {
 		return getUser().getNumberOfKills() >= KILLS_TO_ADVANCE;
 	}
-
-	/**
-	 * Displays hitboxes for debugging purposes.
-	 */
-	private void displayHitboxes() {
-		displayHitboxesForActors(friendlyUnits);
-		displayHitboxesForActors(enemyUnits);
-		displayHitboxesForActors(userProjectiles);
-		displayHitboxesForActors(enemyProjectiles);
-	}
-
-	/**
-	 * Displays hitboxes for a list of actors.
-	 *
-	 * @param actors the list of actors
-	 */
-	private void displayHitboxesForActors(List<ActiveActorDestructible> actors) {
-		for (ActiveActorDestructible actor : actors) {
-			Rectangle hitbox = new Rectangle(
-					actor.getBoundsInParent().getMinX(),
-					actor.getBoundsInParent().getMinY(),
-					actor.getBoundsInParent().getWidth(),
-					actor.getBoundsInParent().getHeight()
-			);
-			hitbox.setStroke(Color.RED);
-			hitbox.setFill(Color.TRANSPARENT);
-			root.getChildren().add(hitbox);
-		}
-	}
 }
