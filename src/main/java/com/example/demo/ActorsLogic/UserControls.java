@@ -2,7 +2,8 @@ package com.example.demo.ActorsLogic;
 
 import java.util.*;
 import java.util.Map;
-
+import javafx.util.Duration;
+import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.scene.Group;
@@ -10,7 +11,7 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import com.example.demo.Initialize.Main;
 import com.example.demo.Actor.Plane.Plane_User;
-import javafx.util.Duration;
+import com.example.demo.Levels.LevelParent;
 
 /**
  * Class to handle user controls for the game.
@@ -22,6 +23,7 @@ public class UserControls {
     private final List<ActiveActorDestructible> userProjectiles;
     private static Runnable pauseGame;
     private static Map<String, KeyCode> keyBindings;
+    private final Set<KeyCode> activeKeys = new HashSet<>();
     private static boolean canFire = true;
     private static final Duration FIRE_RATE = Duration.millis(300);
 
@@ -37,6 +39,7 @@ public class UserControls {
         this.root = root;
         this.userProjectiles = userProjectiles;
         loadKeyBindings();
+        checkActiveKey();
     }
 
     /**
@@ -46,11 +49,7 @@ public class UserControls {
      */
     public void handleKeyPressed(KeyEvent e) {
         KeyCode kc = e.getCode();
-        if (kc == keyBindings.get("Move_UP")) user.moveUp();
-        if (kc == keyBindings.get("Move_DOWN")) user.moveDown();
-        if (kc == keyBindings.get("Move_RIGHT")) user.moveForward();
-        if (kc == keyBindings.get("Move_LEFT")) user.moveBackward();
-        if (kc == keyBindings.get("Fire")) fireProjectile();
+        activeKeys.add(kc);
         if (kc == keyBindings.get("Pause") && pauseGame != null) pauseGame.run();
     }
 
@@ -61,8 +60,7 @@ public class UserControls {
      */
     public void handleKeyReleased(KeyEvent e) {
         KeyCode kc = e.getCode();
-        if (kc == keyBindings.get("Move_UP") || kc == keyBindings.get("Move_DOWN")) user.stopVerticalMovement();
-        if (kc == keyBindings.get("Move_LEFT") || kc == keyBindings.get("Move_RIGHT")) user.stopHorizontalMovement();
+        activeKeys.remove(kc);
     }
 
     /**
@@ -82,6 +80,36 @@ public class UserControls {
         );
         cooldown.setCycleCount(1);
         cooldown.play();
+    }
+
+    /**
+     * Checks the active keys and performs actions based on the keys pressed.
+     */
+    private void checkActiveKey() {
+        Timeline keyCheck = new Timeline(new KeyFrame(Duration.millis(LevelParent.getProgramDelay()), e -> {
+
+            // Firing
+            if (activeKeys.contains(keyBindings.get("Fire"))) {
+                fireProjectile();
+            }
+
+            // Movement
+            if (activeKeys.contains(keyBindings.get("Move_UP"))) user.moveUp();
+            if (activeKeys.contains(keyBindings.get("Move_DOWN"))) user.moveDown();
+            if (activeKeys.contains(keyBindings.get("Move_RIGHT"))) user.moveForward();
+            if (activeKeys.contains(keyBindings.get("Move_LEFT"))) user.moveBackward();
+
+            // Stop movement if keys are no longer pressed
+            if (!activeKeys.contains(keyBindings.get("Move_UP")) && !activeKeys.contains(keyBindings.get("Move_DOWN"))) {
+                user.stopVerticalMovement();
+            }
+            if (!activeKeys.contains(keyBindings.get("Move_LEFT")) && !activeKeys.contains(keyBindings.get("Move_RIGHT"))) {
+                user.stopHorizontalMovement();
+            }
+
+        }));
+        keyCheck.setCycleCount(Animation.INDEFINITE);
+        keyCheck.play();
     }
 
     /**

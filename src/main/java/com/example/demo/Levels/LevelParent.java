@@ -189,7 +189,7 @@ public abstract class LevelParent {
 	 * Updates the scene for each frame.
 	 */
 	private void updateScene() {
-		spawnEnemyUnits();
+//		spawnEnemyUnits();
 		updateActors();
 		generateEnemyFire();
 		handleEnemyPenetration();
@@ -481,5 +481,14 @@ public abstract class LevelParent {
 	 */
 	protected boolean userHasReachedKillTarget() {
 		return getUser().getNumberOfKills() >= KILLS_TO_ADVANCE;
+	}
+
+	/**
+	 * Gets the MILLISECOND_DELAY value for this class.
+	 *
+	 * @return the MILLISECOND_DELAY value for this class.
+	 */
+	public static double getProgramDelay() {
+		return MILLISECOND_DELAY;
 	}
 }
