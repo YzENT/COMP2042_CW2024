@@ -69,7 +69,7 @@ To only compile the jar file and not run the tests,
 ## Implemented and Working Properly
 
 ### Keyboard Events Only
-- Users now can only navigate the application using keyboard, <b>ALL</b> mouse events are disabled.
+- Users now can only navigate the application using keyboard, <b>ALL</b> mouse events are disabled. WASD keys mimics arrow keys to navigate through buttons.
 
 ### Transition and Animations
 - Transition and animations have been added to the game to aid the user's visual experience. Such transitions are used in changing game screen, finishing the game, etc…
