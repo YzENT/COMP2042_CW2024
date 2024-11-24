@@ -2,6 +2,7 @@ package com.example.demo.ActorsLogic;
 
 import java.util.*;
 import java.util.Map;
+import javafx.stage.Stage;
 import javafx.util.Duration;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
@@ -10,6 +11,7 @@ import javafx.scene.Group;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import com.example.demo.Initialize.Main;
+import com.example.demo.Initialize.Controller;
 import com.example.demo.Actor.Plane.Plane_User;
 import com.example.demo.Levels.LevelParent;
 
@@ -24,8 +26,13 @@ public class UserControls {
     private static Runnable pauseGame;
     private static Map<String, KeyCode> keyBindings;
     private final Set<KeyCode> activeKeys = new HashSet<>();
+    private final Controller controller;
+
     private static boolean canFire = true;
-    private static final Duration FIRE_RATE = Duration.millis(300);
+    private static final Duration FIRE_RATE = Duration.millis(100);
+
+    //https://pixabay.com/sound-effects/072807-heavy-machine-gun-50-caliber-39765/
+    private static final String USER_FIRE_SOUND = "/com/example/demo/audio/sfx/072807_heavy-machine-gun-50-caliber-39765.mp3";
 
     /**
      * Constructor to initialize UserControls.
@@ -34,12 +41,13 @@ public class UserControls {
      * @param root the root group of the scene
      * @param userProjectiles the list of user projectiles
      */
-    public UserControls(Plane_User user, Group root, List<ActiveActorDestructible> userProjectiles) {
+    public UserControls(Plane_User user, Group root, List<ActiveActorDestructible> userProjectiles, Stage stage) {
         this.user = user;
         this.root = root;
         this.userProjectiles = userProjectiles;
         loadKeyBindings();
         checkActiveKey();
+        controller = new Controller(stage);
     }
 
     /**
@@ -72,6 +80,7 @@ public class UserControls {
         ActiveActorDestructible projectile = user.fireProjectile();
         root.getChildren().add(projectile);
         userProjectiles.add(projectile);
+        controller.playSFX(USER_FIRE_SOUND);
 
         // Cooldown
         canFire = false;

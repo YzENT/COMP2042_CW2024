@@ -1,6 +1,7 @@
 package com.example.demo.Levels;
 
 import java.util.*;
+import javafx.stage.Stage;
 import javafx.animation.*;
 import javafx.scene.Group;
 import javafx.scene.Scene;
@@ -79,7 +80,7 @@ public abstract class LevelParent {
 		this.enemyProjectiles = new ArrayList<>();
 
 		this.background = new ImageView(new Image(Objects.requireNonNull(getClass().getResource(backgroundImageName)).toExternalForm()));
-		this.userControls = new UserControls(user, root, userProjectiles);
+		this.userControls = new UserControls(user, root, userProjectiles, (Stage) scene.getWindow());
 		this.controller = new Controller(Main.getStage());
 		this.screenHeight = screenHeight;
 		this.screenWidth = screenWidth;
@@ -189,7 +190,7 @@ public abstract class LevelParent {
 	 * Updates the scene for each frame.
 	 */
 	private void updateScene() {
-//		spawnEnemyUnits();
+		spawnEnemyUnits();
 		updateActors();
 		generateEnemyFire();
 		handleEnemyPenetration();
