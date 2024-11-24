@@ -2,11 +2,15 @@ package com.example.demo.ActorsLogic;
 
 import java.util.*;
 import java.util.Map;
+
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.scene.Group;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import com.example.demo.Initialize.Main;
 import com.example.demo.Actor.Plane.Plane_User;
+import javafx.util.Duration;
 
 /**
  * Class to handle user controls for the game.
@@ -18,6 +22,8 @@ public class UserControls {
     private final List<ActiveActorDestructible> userProjectiles;
     private static Runnable pauseGame;
     private static Map<String, KeyCode> keyBindings;
+    private static boolean canFire = true;
+    private static final Duration FIRE_RATE = Duration.millis(300);
 
     /**
      * Constructor to initialize UserControls.
@@ -60,12 +66,22 @@ public class UserControls {
     }
 
     /**
-     * Fires a projectile from the user-controlled plane.
+     * Fires a projectile from the user-controlled plane with a 300-millisecond delay between each projectile.
      */
     private void fireProjectile() {
+        if (!canFire) return;
+
         ActiveActorDestructible projectile = user.fireProjectile();
         root.getChildren().add(projectile);
         userProjectiles.add(projectile);
+
+        // Cooldown
+        canFire = false;
+        Timeline cooldown = new Timeline(
+                new KeyFrame(FIRE_RATE, e -> canFire = true)
+        );
+        cooldown.setCycleCount(1);
+        cooldown.play();
     }
 
     /**
