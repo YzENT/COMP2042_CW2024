@@ -50,6 +50,7 @@ public class Volume extends Screen_Settings {
         Scene scene = new Scene(vbox, SCREEN_WIDTH, SCREEN_HEIGHT);
         stage.setScene(scene);
         disableMouseInput(scene);
+        enableWASDNavigation(scene);
     }
 
     /**

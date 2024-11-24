@@ -16,6 +16,8 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import javafx.scene.text.Text;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.util.Duration;
 import com.example.demo.Initialize.Controller;
 
@@ -281,5 +283,46 @@ public abstract class BaseScreen {
      */
     protected void disableMouseInput(Scene scene) {
         scene.addEventFilter(MouseEvent.ANY, Event::consume);
+    }
+
+    /**
+     * Configures scene to allow WASD keys to mimic arrow keys globally.
+     *
+     * @param scene the Scene to configure
+     */
+    public void enableWASDNavigation(Scene scene) {
+        scene.addEventFilter(KeyEvent.KEY_PRESSED, event -> {
+            KeyCode code = event.getCode();
+            KeyEvent newEvent = null;
+
+            switch (code) {
+                case W -> newEvent = new KeyEvent(
+                        event.getEventType(), event.getCharacter(), event.getText(), KeyCode.UP,
+                        event.isShiftDown(), event.isControlDown(), event.isAltDown(), event.isMetaDown()
+                );
+                case A -> newEvent = new KeyEvent(
+                        event.getEventType(), event.getCharacter(), event.getText(), KeyCode.LEFT,
+                        event.isShiftDown(), event.isControlDown(), event.isAltDown(), event.isMetaDown()
+                );
+                case S -> newEvent = new KeyEvent(
+                        event.getEventType(), event.getCharacter(), event.getText(), KeyCode.DOWN,
+                        event.isShiftDown(), event.isControlDown(), event.isAltDown(), event.isMetaDown()
+                );
+                case D -> newEvent = new KeyEvent(
+                        event.getEventType(), event.getCharacter(), event.getText(), KeyCode.RIGHT,
+                        event.isShiftDown(), event.isControlDown(), event.isAltDown(), event.isMetaDown()
+                );
+            }
+
+            if (newEvent != null) {
+                event.consume(); // Consume the original WASD key press
+
+                // Send the new event to the currently focused node
+                if (scene.getFocusOwner() != null) {
+                    scene.getFocusOwner().fireEvent(newEvent);
+                }
+            }
+
+        });
     }
 }

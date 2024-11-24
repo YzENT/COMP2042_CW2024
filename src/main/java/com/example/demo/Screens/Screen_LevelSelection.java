@@ -43,6 +43,7 @@ public class Screen_LevelSelection extends BaseScreen {
         Scene scene = new Scene(vbox, SCREEN_WIDTH, SCREEN_HEIGHT);
         stage.setScene(scene);
         disableMouseInput(scene);
+        enableWASDNavigation(scene);
     }
 
     /**
