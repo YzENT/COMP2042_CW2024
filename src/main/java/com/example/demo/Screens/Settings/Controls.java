@@ -176,7 +176,7 @@ public class Controls extends Screen_Settings {
      * @return a Text object containing the instructions
      */
     private Text initializeInstructions() {
-        Text instructionsText = new Text("TAB to Navigate\nENTER to Edit\nR to Restore Defaults");
+        Text instructionsText = new Text("ESC To Discard\nTAB to Navigate\nENTER to Edit\nR to Restore Defaults");
         instructionsText.setFill(Color.WHITE);
         instructionsText.setFont(arcadeFont);
         instructionsText.setStyle("-fx-font-size: 15px; ");
