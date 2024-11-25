@@ -180,12 +180,14 @@ KeyFrame gameLoop = new KeyFrame(Duration.millis(MILLISECOND_DELAY), e -> update
 - Modified `showShield()` to show shieldImage when it is created in `Plane_Boss.java`.
 - Modified `hideShield()` to hide shieldImage.
 - Modified `updateShield()` to sync position of shield with boss.
-- Created `updateExplosion()` to sync position of explosion with boss.
+- Modified `shieldShouldBeActivated()` to check if minimum frames without shield is achieved too.
+- Removed `getProjectileInitialPosition()` as code duplication from superclass.
+- Created `updateExplosionCoordinates()` to sync position of explosion with boss.
   -  If not done so, the position of boss will be (0,0) when it is destroyed (null).
 - Created `createHealthBar()` to create health bar showing boss' health.
 - Created `updateHealthBar()` to update boss' health when it takes damage. Also updates position of health bar based on coordinates of boss.
 - Created `triggerExplosion()` to show explosion when boss is defeated.
-- Created `Boss_XCoordinate()` and `Boss_YCoordinate()` to obtain coordinate of the boss.
+- Created `getBossXCoordinate()` and `getBossYCoordinate()` to obtain coordinate of the boss.
 
 ### `Plane_User.java`
 - Modified `updatePosition()` to introduce bounds on X-coordinate.

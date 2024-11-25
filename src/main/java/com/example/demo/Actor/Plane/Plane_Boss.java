@@ -138,11 +138,6 @@ public class Plane_Boss extends Plane {
 	private final ExplosionImage explosionImage;
 
 	/**
-	 * The action to remove the health bar.
-	 */
-	private Runnable removeHealthBar;
-
-	/**
 	 * The shielded state of the boss plane.
 	 */
 	private boolean isShielded = false;
@@ -180,7 +175,7 @@ public class Plane_Boss extends Plane {
 		updatePosition();
 		updateShield();
 		updateHealthBar();
-		updateExplosion();
+		updateExplosionCoordinates();
 	}
 
 	/**
@@ -190,7 +185,10 @@ public class Plane_Boss extends Plane {
 	 */
 	@Override
 	public ActiveActorDestructible fireProjectile() {
-		return bossFiresInCurrentFrame() ? new Projectile_Boss(getProjectileInitialPosition()) : null;
+		if (bossFiresInCurrentFrame()) {
+			return new Projectile_Boss(getProjectileYPosition(PROJECTILE_Y_POSITION_OFFSET));
+		}
+		return null;
 	}
 
 	/**
@@ -203,7 +201,6 @@ public class Plane_Boss extends Plane {
 			super.takeDamage();
 		}
 		if (getHealth() <= 0) {
-			removeHealthBar.run();
 			triggerExplosion();
 		}
 	}
@@ -224,7 +221,7 @@ public class Plane_Boss extends Plane {
 	 * Updates the shield state and position.
 	 */
 	private void updateShield() {
-		shieldImage.updateShieldPosition(Boss_XCoordinate() - IMAGE_HEIGHT * 2, Boss_YCoordinate() - (double) IMAGE_HEIGHT / 2);
+		shieldImage.updateShieldPosition(getBossXCoordinate() - IMAGE_HEIGHT * 2, getBossYCoordinate() - (double) IMAGE_HEIGHT / 2);
 
 		if (isShielded) {
 			framesWithShieldActivated++;
@@ -244,9 +241,9 @@ public class Plane_Boss extends Plane {
 	/**
 	 * Updates the explosion's image based on boss' current position.
 	 */
-	private void updateExplosion() {
+	private void updateExplosionCoordinates() {
 		//has to updated every frame because it will be (0,0) when boss is destroyed
-		explosionImage.setExplosionPosition(Boss_XCoordinate(), Boss_YCoordinate() - IMAGE_HEIGHT*2);
+		explosionImage.setExplosionPosition(getBossXCoordinate(), getBossYCoordinate() - IMAGE_HEIGHT*2);
 	}
 
 	/**
@@ -284,8 +281,8 @@ public class Plane_Boss extends Plane {
 	 * Updates the health bar position and progress.
 	 */
 	private void updateHealthBar() {
-		healthBar.setLayoutX(Boss_XCoordinate() + 50);
-		healthBar.setLayoutY(Boss_YCoordinate() - 50);
+		healthBar.setLayoutX(getBossXCoordinate() + 50);
+		healthBar.setLayoutY(getBossYCoordinate() - 50);
 		healthBar.setProgress((double) getHealth() / HEALTH); // expects a value between 0.0 and 1.0 only
 	}
 
@@ -308,19 +305,11 @@ public class Plane_Boss extends Plane {
 	}
 
 	/**
-	 * Sets the action to remove the health bar from root.
-	 *
-	 * @param action the action to remove the health bar
-	 */
-	public void setRemoveHealthBar(Runnable action) {
-		removeHealthBar = action;
-	}
-
-	/**
 	 * Triggers the explosion effect for the boss plane.
 	 */
 	private void triggerExplosion() {
 		explosionImage.showExplosion();
+		healthBar.setVisible(false);
 	}
 
 	/**
@@ -346,7 +335,7 @@ public class Plane_Boss extends Plane {
 	 *
 	 * @return the X coordinate
 	 */
-	private double Boss_XCoordinate() {
+	private double getBossXCoordinate() {
 		return getLayoutX() + getTranslateX();
 	}
 
@@ -355,7 +344,7 @@ public class Plane_Boss extends Plane {
 	 *
 	 * @return the Y coordinate
 	 */
-	private double Boss_YCoordinate() {
+	private double getBossYCoordinate() {
 		return getLayoutY() + getTranslateY();
 	}
 
@@ -366,15 +355,6 @@ public class Plane_Boss extends Plane {
 	 */
 	private boolean bossFiresInCurrentFrame() {
 		return Math.random() < BOSS_FIRE_RATE;
-	}
-
-	/**
-	 * Gets the initial position for the projectile.
-	 *
-	 * @return the initial Y position for the projectile
-	 */
-	private double getProjectileInitialPosition() {
-		return getLayoutY() + getTranslateY() + PROJECTILE_Y_POSITION_OFFSET;
 	}
 
 	/**
