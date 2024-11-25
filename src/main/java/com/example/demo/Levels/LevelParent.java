@@ -1,12 +1,12 @@
 package com.example.demo.Levels;
 
 import java.util.*;
-
 import javafx.animation.*;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.image.*;
 import javafx.scene.input.*;
+import javafx.stage.Stage;
 import javafx.util.Duration;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
@@ -423,7 +423,7 @@ public abstract class LevelParent {
 		timeline.stop();
 		levelView.screenFade(2, () -> {
 			Screen_LoadingAnimation.setGameLevel(levelName);
-			Screen_LoadingAnimation loadingAnimation = new Screen_LoadingAnimation(Main.getStage(), Main.getScreenWidth(), Main.getScreenHeight());
+			Screen_LoadingAnimation loadingAnimation = new Screen_LoadingAnimation((Stage) scene.getWindow(), Main.getScreenWidth(), Main.getScreenHeight());
 			loadingAnimation.show();
 		});
 	}
@@ -451,7 +451,7 @@ public abstract class LevelParent {
 
 			fadeTransition.setOnFinished(event -> {
 				audioController.stopBGM();
-				Screen_GameEnded end = new Screen_GameEnded(Main.getStage(), Main.getScreenWidth(), Main.getScreenHeight());
+				Screen_GameEnded end = new Screen_GameEnded((Stage) scene.getWindow(), Main.getScreenWidth(), Main.getScreenHeight());
 				end.setResults(result);
 				end.show();
 			});
@@ -463,7 +463,7 @@ public abstract class LevelParent {
 	 */
 	private void pauseGame() {
 		timeline.pause();
-		Screen_PauseMenu pauseMenu = new Screen_PauseMenu(Main.getStage(), Main.getScreenWidth(), Main.getScreenHeight());
+		Screen_PauseMenu pauseMenu = new Screen_PauseMenu((Stage) scene.getWindow(), Main.getScreenWidth(), Main.getScreenHeight());
 		pauseMenu.show();
 	}
 

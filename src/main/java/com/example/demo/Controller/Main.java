@@ -31,11 +31,6 @@ public class Main extends Application {
 	private static final String TITLE = "Sky Battle";
 
 	/**
-	 * The primary stage for this application.
-	 */
-	private static Stage stage;
-
-	/**
 	 * The key bindings for the application.
 	 */
 	private static Map<String, KeyCode> keyBindings;
@@ -54,7 +49,6 @@ public class Main extends Application {
 	 */
 	@Override
 	public void start(Stage stage) throws SecurityException, IllegalArgumentException {
-		Main.stage = stage;
 		stage.setTitle(TITLE);
 		stage.setResizable(false);
 		stage.setHeight(SCREEN_HEIGHT);
@@ -165,15 +159,6 @@ public class Main extends Application {
 	 */
 	public static int getScreenHeight() {
 		return SCREEN_HEIGHT;
-	}
-
-	/**
-	 * Gets the primary stage.
-	 *
-	 * @return the primary stage
-	 */
-	public static Stage getStage() {
-		return stage;
 	}
 
 	/**
