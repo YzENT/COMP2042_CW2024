@@ -1,6 +1,6 @@
 package com.example.demo.Screens.Settings;
 
-import com.example.demo.Initialize.Controller;
+import com.example.demo.Initialize.AudioController;
 import com.example.demo.JavaFXBaseTesting;
 import javafx.application.Platform;
 import javafx.scene.control.Slider;
@@ -36,13 +36,13 @@ class VolumeTest {
         CountDownLatch latch = new CountDownLatch(1);
 
         Platform.runLater(() -> {
-            HBox sliderBox = volume.createSlider("Music", 0.5, Controller::setMusicVolume);
+            HBox sliderBox = volume.createSlider("Music", 0.5, AudioController::setMusicVolume);
 
             Slider slider = (Slider) sliderBox.getChildren().get(1);
             slider.setValue(0.8);
 
             assertEquals(0.8, slider.getValue(), 0.01, "Slider value should be 0.8");
-            assertEquals(0.8, Controller.getMusicVolume(), 0.01, "Music volume should be 0.8");
+            assertEquals(0.8, AudioController.getMusicVolume(), 0.01, "Music volume should be 0.8");
             latch.countDown();
         });
         latch.await();

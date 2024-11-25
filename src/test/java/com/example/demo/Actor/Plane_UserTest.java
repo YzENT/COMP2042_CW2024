@@ -13,11 +13,10 @@ import static org.junit.jupiter.api.Assertions.*;
 class Plane_UserTest{
 
     private Plane_User user;
-    private Stage stage;
 
     @BeforeEach
     void setUp() {
-        user = new Plane_User(5, stage);
+        user = new Plane_User(5);
     }
 
     @Test

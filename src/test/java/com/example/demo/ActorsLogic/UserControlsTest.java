@@ -23,12 +23,11 @@ class UserControlsTest {
     private UserControls userControls;
     private Group root;
     private List<ActiveActorDestructible> projectiles;
-    private Stage stage;
 
     @BeforeEach
     public void setUp() {
         // Initialize test objects
-        userPlane = new Plane_User(100, stage); // Plane with initial health of 100
+        userPlane = new Plane_User(100); // Plane with initial health of 100
         root = new Group();
         projectiles = new ArrayList<>();
         userControls = new UserControls(userPlane, root, projectiles);

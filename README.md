@@ -138,7 +138,9 @@ KeyFrame gameLoop = new KeyFrame(Duration.millis(MILLISECOND_DELAY), e -> update
 | `Screen_PauseMenu.java`        | Screen displayed when user pauses the game in middle of game.                                    | [com.example.demo.Screens](src/main/java/com/example/demo/Screens/Screen_PauseMenu.java)           |
 | `Screen_Settings.java`         | Screen used to display the settings user can navigate to (Controls, Volume).                     | [com.example.demo.Screens](src/main/java/com/example/demo/Screens/Screen_Settings.java)            |
 | `Controls.java`                | Screen used to display and modify the user's controls.                                           | [com.example.demo.Screens.Settings](src/main/java/com/example/demo/Screens/Settings/Controls.java) |
-| `Volume.java`                  | Screen used to display and modify the game's volume (SFX, Music)                                 | [com.example.demo.Screens.Settings](src/main/java/com/example/demo/Screens/Settings/Volume.java)   |
+| `Volume.java`                  | Screen used to display and modify the game's volume (SFX, Music).                                | [com.example.demo.Screens.Settings](src/main/java/com/example/demo/Screens/Settings/Volume.java)   |
+| `LevelController.java`         | Controller used to transition to the next level.                                                 | [com.example.demo.Initialize](src/main/java/com/example/demo/Initialize/LevelController.java)      |
+| `AudioController.java`         | Controller used to control the audios.                                                           | [com.example.demo.Initialize](src/main/java/com/example/demo/Initialize/AudioController.java)      |
 
 
 # Renamed Java Classes
@@ -166,6 +168,8 @@ KeyFrame gameLoop = new KeyFrame(Duration.millis(MILLISECOND_DELAY), e -> update
 `LevelViewLevelTwo.java` -> merged into `LevelView.java` due to similar logic
 
 `GameOverImage.java` & `WinImage.java` -> assets not used
+
+`Controller.java` -> detached to `AudioController.java` and `LevelController.java`
 
 # Modified Java Classes
 
@@ -217,14 +221,6 @@ KeyFrame gameLoop = new KeyFrame(Duration.millis(MILLISECOND_DELAY), e -> update
 
 ### `ShieldImage.java`
 - Created `updateShieldPosition()` to update the shield's position based on boss' coordinates.
-
-### `Controller.java`
-- Removed `observer`.
-- Most modifications made here are for elements that are behind the scenes.
-- Modified `goToLevel()` to now have a transition when going to next level.
-- Created `playBGM()`, `stopBGM()`, `pauseBGM()`, `resumeBGM()`, which are for `MediaPlayer` to play music.
-- Created `playSFX()`, `stopSFX()`, which are for `AudioClip` to play short audios.
-- Created getter and setter for `sfxVolume` and `musicVolume`.
 
 ### `Main.java`
 - Introduced `keyBindings` variable to store key binds for user controls.

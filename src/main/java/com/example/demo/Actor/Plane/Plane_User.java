@@ -1,9 +1,8 @@
 package com.example.demo.Actor.Plane;
 
-import javafx.stage.Stage;
 import com.example.demo.ActorsLogic.ActiveActorDestructible;
 import com.example.demo.Actor.WeaponProjectiles.Projectile_User;
-import com.example.demo.Initialize.Controller;
+import com.example.demo.Initialize.AudioController;
 
 /**
  * Class representing the user-controlled plane in the game.
@@ -88,7 +87,7 @@ public class Plane_User extends Plane {
 	/**
 	 * The controller for the game.
 	 */
-	private final Controller controller;
+	private final AudioController audioController;
 
 	/**
 	 * The sound effect for the user firing a projectile.
@@ -100,11 +99,10 @@ public class Plane_User extends Plane {
 	 * Constructor to initialize the Plane_User object with initial health.
 	 *
 	 * @param initialHealth the initial health of the user plane
-	 * @param stage the game's stage
 	 */
-	public Plane_User(int initialHealth, Stage stage) {
+	public Plane_User(int initialHealth) {
 		super(IMAGE_NAME, IMAGE_HEIGHT, INITIAL_X_POSITION, INITIAL_Y_POSITION, initialHealth);
-		controller = new Controller(stage);
+		audioController = new AudioController();
 	}
 
 	/**
@@ -148,7 +146,7 @@ public class Plane_User extends Plane {
 	 */
 	@Override
 	public ActiveActorDestructible fireProjectile() {
-		controller.playSFX(USER_FIRE_SOUND);
+		audioController.playSFX(USER_FIRE_SOUND);
 		return new Projectile_User(getProjectileXPosition(PROJECTILE_X_POSITION_OFFSET), getProjectileYPosition(PROJECTILE_Y_POSITION_OFFSET));
 	}
 

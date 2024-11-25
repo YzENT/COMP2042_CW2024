@@ -10,7 +10,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
-import com.example.demo.Initialize.Controller;
+import com.example.demo.Initialize.AudioController;
 import com.example.demo.Screens.Screen_Settings;
 
 /**
@@ -81,8 +81,8 @@ public class Volume extends Screen_Settings {
      * @return a VBox containing the volume sliders
      */
     private VBox initializeVolumeSlider() {
-        HBox musicSlider = createSlider("Music", Controller.getMusicVolume(), Controller::setMusicVolume);
-        HBox sfxSlider = createSlider("SFX", Controller.getSfxVolume(), Controller::setSfxVolume);
+        HBox musicSlider = createSlider("Music", AudioController.getMusicVolume(), AudioController::setMusicVolume);
+        HBox sfxSlider = createSlider("SFX", AudioController.getSfxVolume(), AudioController::setSfxVolume);
 
         VBox vbox = new VBox(40, musicSlider, sfxSlider);
         vbox.setAlignment(Pos.CENTER);

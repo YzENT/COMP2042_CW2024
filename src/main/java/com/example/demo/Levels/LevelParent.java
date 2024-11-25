@@ -14,7 +14,7 @@ import com.example.demo.ActorsLogic.ActiveActorDestructible;
 import com.example.demo.Actor.Plane.Plane;
 import com.example.demo.Actor.Plane.Plane_User;
 import com.example.demo.ActorsLogic.UserControls;
-import com.example.demo.Initialize.Controller;
+import com.example.demo.Initialize.AudioController;
 import com.example.demo.Initialize.Main;
 import com.example.demo.Screens.Screen_GameEnded;
 import com.example.demo.Screens.Screen_LoadingAnimation;
@@ -100,7 +100,7 @@ public abstract class LevelParent {
 	/**
 	 * The controller for the game.
 	 */
-	private final Controller controller;
+	private final AudioController audioController;
 
 	/**
 	 * The level view.
@@ -148,7 +148,7 @@ public abstract class LevelParent {
 		this.root = new Group();
 		this.scene = new Scene(root, screenWidth, screenHeight);
 		this.timeline = new Timeline();
-		this.user = new Plane_User(playerInitialHealth, (Stage) scene.getWindow());
+		this.user = new Plane_User(playerInitialHealth);
 		this.friendlyUnits = new ArrayList<>();
 		this.enemyUnits = new ArrayList<>();
 		this.userProjectiles = new ArrayList<>();
@@ -156,7 +156,7 @@ public abstract class LevelParent {
 
 		this.background = new ImageView(new Image(Objects.requireNonNull(getClass().getResource(backgroundImageName)).toExternalForm()));
 		this.userControls = new UserControls(user, root, userProjectiles);
-		this.controller = new Controller(Main.getStage());
+		this.audioController = new AudioController();
 		this.screenHeight = screenHeight;
 		this.screenWidth = screenWidth;
 		this.enemyMaximumYPosition = screenHeight - SCREEN_HEIGHT_ADJUSTMENT;
@@ -177,7 +177,7 @@ public abstract class LevelParent {
 		levelView.showHeartDisplay();
 		levelView.initializeKillCounter();
 		sendPauseMenuRunbacks();
-		controller.playBGM(BGM_PATH);
+		audioController.playBGM(BGM_PATH);
 		return scene;
 	}
 
@@ -444,13 +444,13 @@ public abstract class LevelParent {
 			fadeTransition.play();
 
 			Timeline volumeFade = new Timeline(
-					new KeyFrame(Duration.ZERO, new KeyValue(Controller.getMediaPlayer().volumeProperty(), Controller.getMusicVolume())),
-					new KeyFrame(Duration.seconds(2), new KeyValue(Controller.getMediaPlayer().volumeProperty(), 0))
+					new KeyFrame(Duration.ZERO, new KeyValue(AudioController.getMediaPlayer().volumeProperty(), AudioController.getMusicVolume())),
+					new KeyFrame(Duration.seconds(2), new KeyValue(AudioController.getMediaPlayer().volumeProperty(), 0))
 			);
 			volumeFade.play();
 
 			fadeTransition.setOnFinished(event -> {
-				controller.stopBGM();
+				audioController.stopBGM();
 				Screen_GameEnded end = new Screen_GameEnded(Main.getStage(), Main.getScreenWidth(), Main.getScreenHeight());
 				end.setResults(result);
 				end.show();
@@ -484,7 +484,7 @@ public abstract class LevelParent {
 		translateTransition.setCycleCount(4);
 		translateTransition.setAutoReverse(true);
 		translateTransition.play();
-		controller.playSFX(METAL_PIPE);
+		audioController.playSFX(METAL_PIPE);
 	}
 
 	/**

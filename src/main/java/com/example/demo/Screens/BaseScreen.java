@@ -2,6 +2,8 @@ package com.example.demo.Screens;
 
 import java.util.HashMap;
 import java.util.Map;
+
+import com.example.demo.Initialize.LevelController;
 import javafx.animation.FillTransition;
 import javafx.animation.ScaleTransition;
 import javafx.animation.Timeline;
@@ -19,7 +21,7 @@ import javafx.scene.text.Text;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.util.Duration;
-import com.example.demo.Initialize.Controller;
+import com.example.demo.Initialize.AudioController;
 
 /**
  * Abstract class representing a base screen in the game.
@@ -83,9 +85,14 @@ public abstract class BaseScreen {
     private final DropShadow buttonShadow;
 
     /**
-     * The controller for managing the screen.
+     * The controller for managing the audios.
      */
-    private final Controller controller;
+    private final AudioController audioController;
+
+    /**
+     * The controller for managing the levels.
+     */
+    private final LevelController levelController;
 
     /**
      * Cache for storing instances of screens.
@@ -104,7 +111,8 @@ public abstract class BaseScreen {
         this.SCREEN_WIDTH = SCREEN_WIDTH;
         this.SCREEN_HEIGHT = SCREEN_HEIGHT;
         this.buttonShadow = createButtonShadow();
-        this.controller = new Controller(stage);
+        this.audioController = new AudioController();
+        this.levelController = new LevelController(stage);
     }
 
     /**
@@ -221,28 +229,28 @@ public abstract class BaseScreen {
      * @param musicPath the path to the music file
      */
     protected void playBGM(String musicPath) {
-        controller.playBGM(musicPath);
+        audioController.playBGM(musicPath);
     }
 
     /**
      * Stops the background music.
      */
     protected void stopBGM() {
-        controller.stopBGM();
+        audioController.stopBGM();
     }
 
     /**
      * Pauses the background music.
      */
     protected void pauseBGM() {
-        controller.pauseBGM();
+        audioController.pauseBGM();
     }
 
     /**
      * Resumes the background music.
      */
     protected void resumeBGM() {
-        controller.resumeBGM();
+        audioController.resumeBGM();
     }
 
     /**
@@ -251,14 +259,14 @@ public abstract class BaseScreen {
      * @param sfxPath the path to the sound effect file
      */
     protected void playSFX(String sfxPath) {
-        controller.playSFX(sfxPath);
+        audioController.playSFX(sfxPath);
     }
 
     /**
      * Stops the sound effect.
      */
     protected void stopSFX() {
-        controller.stopSFX();
+        audioController.stopSFX();
     }
 
     /**
@@ -305,7 +313,7 @@ public abstract class BaseScreen {
      */
     protected void startLevel(String levelClassName) {
         try {
-            controller.goToLevel(levelClassName);
+            levelController.goToLevel(levelClassName);
         } catch (Exception e) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setContentText(e.getClass().toString());
