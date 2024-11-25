@@ -8,6 +8,9 @@ import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import com.example.demo.Levels.LevelParent;
 
+/**
+ * Controller class to start/move on the game's level.
+ */
 public class LevelController {
 
     /**
