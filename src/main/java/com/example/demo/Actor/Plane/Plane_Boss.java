@@ -243,7 +243,7 @@ public class Plane_Boss extends Plane {
 	 */
 	private void updateExplosionCoordinates() {
 		//has to updated every frame because it will be (0,0) when boss is destroyed
-		explosionImage.setExplosionPosition(getBossXCoordinate(), getBossYCoordinate() - IMAGE_HEIGHT*2);
+		explosionImage.setExplosionCoordinates(getBossXCoordinate(), getBossYCoordinate() - IMAGE_HEIGHT*2);
 	}
 
 	/**

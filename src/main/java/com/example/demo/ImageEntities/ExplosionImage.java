@@ -64,7 +64,7 @@ public class ExplosionImage extends ImageView {
      * @param x the X coordinate
      * @param y the Y coordinate
      */
-    public void setExplosionPosition(double x, double y) {
+    public void setExplosionCoordinates(double x, double y) {
         this.setLayoutX(x);
         this.setLayoutY(y);
     }
