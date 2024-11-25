@@ -139,7 +139,7 @@ KeyFrame gameLoop = new KeyFrame(Duration.millis(MILLISECOND_DELAY), e -> update
 | `Screen_Settings.java`         | Screen used to display the settings user can navigate to (Controls, Volume).                     | [com.example.demo.Screens](src/main/java/com/example/demo/Screens/Screen_Settings.java)            |
 | `Controls.java`                | Screen used to display and modify the user's controls.                                           | [com.example.demo.Screens.Settings](src/main/java/com/example/demo/Screens/Settings/Controls.java) |
 | `Volume.java`                  | Screen used to display and modify the game's volume (SFX, Music).                                | [com.example.demo.Screens.Settings](src/main/java/com/example/demo/Screens/Settings/Volume.java)   |
-| `LevelController.java`         | Controller used to transition to the next level.                                                 | [com.example.demo.Controller](src/main/java/com/example/demo/Controller/LevelController.java)      |
+| `LevelController.java`         | Controller used to start to the next level.                                                      | [com.example.demo.Controller](src/main/java/com/example/demo/Controller/LevelController.java)      |
 | `AudioController.java`         | Controller used to control the audios.                                                           | [com.example.demo.Controller](src/main/java/com/example/demo/Controller/AudioController.java)      |
 
 
@@ -180,7 +180,7 @@ KeyFrame gameLoop = new KeyFrame(Duration.millis(MILLISECOND_DELAY), e -> update
 - Increased fire rate and movement rate to increase difficulty.
 - Introduced cooldown before spawning when user first enters to level (user is exiting transition).
 - Introduced minimum frames boss should have shield deactivated.
-- Modified `takeDamage()` to show explosion and remove health bar when `health == 0`. 
+- Modified `takeDamage()` to show explosion when `health == 0`. 
 - Modified `showShield()` to show shieldImage when it is created in `Plane_Boss.java`.
 - Modified `hideShield()` to hide shieldImage.
 - Modified `updateShield()` to sync position of shield with boss.
@@ -190,11 +190,10 @@ KeyFrame gameLoop = new KeyFrame(Duration.millis(MILLISECOND_DELAY), e -> update
   -  If not done so, the position of boss will be (0,0) when it is destroyed (null).
 - Created `createHealthBar()` to create health bar showing boss' health.
 - Created `updateHealthBar()` to update boss' health when it takes damage. Also updates position of health bar based on coordinates of boss.
-- Created `triggerExplosion()` to show explosion when boss is defeated.
+- Created `triggerExplosion()` to show explosion and remove health bar when boss is defeated.
 - Created `getBossXCoordinate()` and `getBossYCoordinate()` to obtain coordinate of the boss.
 
 ### `Plane_User.java`
-- Modified default constructor to accept Stage as an argument.
 - Modified `updatePosition()` to introduce bounds on X-coordinate.
 - Modified `isMoving()` to also check for horizontalVelocity.
 - Modified `fireProjectile()` so that it plays a sound when firing projectiles.
@@ -220,7 +219,7 @@ KeyFrame gameLoop = new KeyFrame(Duration.millis(MILLISECOND_DELAY), e -> update
 - Modified `initializeHearts()` so that it doesn't have to initialize a new `HEART_IMAGE` everytime when it's called, just use static variable.
 
 ### `ShieldImage.java`
-- Created `updateShieldPosition()` to update the shield's position based on boss' coordinates.
+- Created `updateShieldCoordinates()` to update the shield's position based on boss' coordinates.
 
 ### `Main.java`
 - Introduced `keyBindings` variable to store key binds for user controls.
@@ -251,7 +250,7 @@ KeyFrame gameLoop = new KeyFrame(Duration.millis(MILLISECOND_DELAY), e -> update
 - Undeclared `initializeFriendlyUnits()` from abstract due to code duplication.
 - Modified `initializeScene()` to send `Runnable` actions to `Screen_PauseMenu`, as well as initializing other elements (`song, kill count`).
 - Modified `initializeBackground()` to handle key press/release in another function.
-- Modified `updateLevelView()` to update kill count too.
+- Modified `updateLevelView()` to update kill count's label too.
 - Removed `updateKillCount()` and placed it under `handleUserProjectileCollisions()` so kill count only increases if user's projectile hit enemy, provided enemy is destroyed.
 - Merged `winGame()` and `loseGame()` to `gameStatus()` to handle game's status.
 - Modified `goToNextLevel()` as it's now not an observer under `controller` anymore.

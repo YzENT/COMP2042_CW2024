@@ -20,9 +20,9 @@ public class Level_1 extends LevelParent {
 	private static final String NEXT_LEVEL = "com.example.demo.Levels.Level_2";
 
 	/**
-	 * The total number of enemies in level 1.
+	 * The maximum number of enemy in a frame.
 	 */
-	private static final int TOTAL_ENEMIES = 5;
+	private static final int MAX_ENEMIES_IN_FRAME = 5;
 
 	/**
 	 * The number of kills required to advance to the next level.
@@ -87,8 +87,7 @@ public class Level_1 extends LevelParent {
 			return;
 		}
 
-		int currentNumberOfEnemies = getCurrentNumberOfEnemies();
-		if (currentNumberOfEnemies < TOTAL_ENEMIES && Math.random() < ENEMY_SPAWN_PROBABILITY) {
+		if (getCurrentNumberOfEnemies() < MAX_ENEMIES_IN_FRAME && Math.random() < ENEMY_SPAWN_PROBABILITY) {
 			double newEnemyInitialYPosition = Math.random() * getEnemyMaximumYPosition();
 			ActiveActorDestructible newEnemy = new Plane_Enemy(getScreenWidth(), newEnemyInitialYPosition, ENEMY_FIRE_RATE);
 			addEnemyUnit(newEnemy);

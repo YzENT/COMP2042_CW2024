@@ -54,7 +54,7 @@ public class ShieldImage extends ImageView {
 	 * @param x the X coordinate
 	 * @param y the Y coordinate
 	 */
-	public void updateShieldPosition(double x, double y) {
+	public void updateShieldCoordinates(double x, double y) {
 		this.setLayoutX(x);
 		this.setLayoutY(y);
 	}

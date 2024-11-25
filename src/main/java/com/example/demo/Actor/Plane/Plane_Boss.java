@@ -221,7 +221,7 @@ public class Plane_Boss extends Plane {
 	 * Updates the shield state and position.
 	 */
 	private void updateShield() {
-		shieldImage.updateShieldPosition(getBossXCoordinate() - IMAGE_HEIGHT * 2, getBossYCoordinate() - (double) IMAGE_HEIGHT / 2);
+		shieldImage.updateShieldCoordinates(getBossXCoordinate() - IMAGE_HEIGHT * 2, getBossYCoordinate() - (double) IMAGE_HEIGHT / 2);
 
 		if (isShielded) {
 			framesWithShieldActivated++;
