@@ -1,6 +1,6 @@
 package com.example.demo.Screens.Settings;
 
-import com.example.demo.Initialize.AudioController;
+import com.example.demo.Controller.AudioController;
 import com.example.demo.JavaFXBaseTesting;
 import javafx.application.Platform;
 import javafx.scene.control.Slider;

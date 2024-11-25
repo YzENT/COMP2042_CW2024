@@ -3,7 +3,7 @@ package com.example.demo.Screens;
 import java.util.HashMap;
 import java.util.Map;
 
-import com.example.demo.Initialize.LevelController;
+import com.example.demo.Controller.LevelController;
 import javafx.animation.FillTransition;
 import javafx.animation.ScaleTransition;
 import javafx.animation.Timeline;
@@ -21,7 +21,7 @@ import javafx.scene.text.Text;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.util.Duration;
-import com.example.demo.Initialize.AudioController;
+import com.example.demo.Controller.AudioController;
 
 /**
  * Abstract class representing a base screen in the game.

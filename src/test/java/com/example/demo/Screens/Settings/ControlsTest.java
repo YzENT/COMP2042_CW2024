@@ -1,6 +1,6 @@
 package com.example.demo.Screens.Settings;
 
-import com.example.demo.Initialize.Main;
+import com.example.demo.Controller.Main;
 import com.example.demo.JavaFXBaseTesting;
 import javafx.application.Platform;
 import javafx.scene.input.KeyCode;

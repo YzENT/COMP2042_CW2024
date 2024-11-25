@@ -1,6 +1,6 @@
 package com.example.demo.Actor.WeaponProjectiles;
 
-import com.example.demo.Initialize.Main;
+import com.example.demo.Controller.Main;
 import com.example.demo.ActorsLogic.ActiveActorDestructible;
 
 /**

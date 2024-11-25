@@ -139,8 +139,8 @@ KeyFrame gameLoop = new KeyFrame(Duration.millis(MILLISECOND_DELAY), e -> update
 | `Screen_Settings.java`         | Screen used to display the settings user can navigate to (Controls, Volume).                     | [com.example.demo.Screens](src/main/java/com/example/demo/Screens/Screen_Settings.java)            |
 | `Controls.java`                | Screen used to display and modify the user's controls.                                           | [com.example.demo.Screens.Settings](src/main/java/com/example/demo/Screens/Settings/Controls.java) |
 | `Volume.java`                  | Screen used to display and modify the game's volume (SFX, Music).                                | [com.example.demo.Screens.Settings](src/main/java/com/example/demo/Screens/Settings/Volume.java)   |
-| `LevelController.java`         | Controller used to transition to the next level.                                                 | [com.example.demo.Initialize](src/main/java/com/example/demo/Initialize/LevelController.java)      |
-| `AudioController.java`         | Controller used to control the audios.                                                           | [com.example.demo.Initialize](src/main/java/com/example/demo/Initialize/AudioController.java)      |
+| `LevelController.java`         | Controller used to transition to the next level.                                                 | [com.example.demo.Controller](src/main/java/com/example/demo/Controller/LevelController.java)      |
+| `AudioController.java`         | Controller used to control the audios.                                                           | [com.example.demo.Controller](src/main/java/com/example/demo/Controller/AudioController.java)      |
 
 
 # Renamed Java Classes

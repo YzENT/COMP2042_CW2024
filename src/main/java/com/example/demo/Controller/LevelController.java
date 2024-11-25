@@ -1,4 +1,4 @@
-package com.example.demo.Initialize;
+package com.example.demo.Controller;
 
 import javafx.animation.FadeTransition;
 import javafx.scene.Scene;

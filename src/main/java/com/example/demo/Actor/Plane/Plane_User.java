@@ -2,7 +2,7 @@ package com.example.demo.Actor.Plane;
 
 import com.example.demo.ActorsLogic.ActiveActorDestructible;
 import com.example.demo.Actor.WeaponProjectiles.Projectile_User;
-import com.example.demo.Initialize.AudioController;
+import com.example.demo.Controller.AudioController;
 
 /**
  * Class representing the user-controlled plane in the game.

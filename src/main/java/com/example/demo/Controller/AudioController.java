@@ -1,16 +1,10 @@
-package com.example.demo.Initialize;
+package com.example.demo.Controller;
 
-import javafx.util.Duration;
 import java.util.Objects;
-import java.lang.reflect.Constructor;
-import java.lang.reflect.InvocationTargetException;
-import javafx.animation.FadeTransition;
-import javafx.scene.Scene;
+
 import javafx.scene.media.AudioClip;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
-import javafx.stage.Stage;
-import com.example.demo.Levels.LevelParent;
 
 /**
  * Controller class to manage the game levels and background entities.

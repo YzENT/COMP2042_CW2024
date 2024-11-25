@@ -22,7 +22,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
-import com.example.demo.Initialize.Main;
+import com.example.demo.Controller.Main;
 import com.example.demo.Screens.Screen_Settings;
 
 /**

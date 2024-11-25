@@ -1,4 +1,4 @@
-package com.example.demo.Initialize;
+package com.example.demo.Controller;
 
 import com.example.demo.JavaFXBaseTesting;
 import javafx.scene.media.MediaPlayer;

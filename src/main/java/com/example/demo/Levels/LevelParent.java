@@ -1,7 +1,7 @@
 package com.example.demo.Levels;
 
 import java.util.*;
-import javafx.stage.Stage;
+
 import javafx.animation.*;
 import javafx.scene.Group;
 import javafx.scene.Scene;
@@ -14,8 +14,8 @@ import com.example.demo.ActorsLogic.ActiveActorDestructible;
 import com.example.demo.Actor.Plane.Plane;
 import com.example.demo.Actor.Plane.Plane_User;
 import com.example.demo.ActorsLogic.UserControls;
-import com.example.demo.Initialize.AudioController;
-import com.example.demo.Initialize.Main;
+import com.example.demo.Controller.AudioController;
+import com.example.demo.Controller.Main;
 import com.example.demo.Screens.Screen_GameEnded;
 import com.example.demo.Screens.Screen_LoadingAnimation;
 import com.example.demo.Screens.Screen_PauseMenu;

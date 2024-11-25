@@ -10,7 +10,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
-import com.example.demo.Initialize.AudioController;
+import com.example.demo.Controller.AudioController;
 import com.example.demo.Screens.Screen_Settings;
 
 /**

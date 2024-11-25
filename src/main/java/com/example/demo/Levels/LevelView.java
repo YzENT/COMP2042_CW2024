@@ -5,7 +5,7 @@ import javafx.animation.FadeTransition;
 import javafx.scene.Group;
 import javafx.scene.control.Label;
 import com.example.demo.ImageEntities.HeartDisplay;
-import com.example.demo.Initialize.Main;
+import com.example.demo.Controller.Main;
 import static com.example.demo.Screens.BaseScreen.fontName;
 
 /**
