@@ -2,7 +2,6 @@ package com.example.demo.ActorsLogic;
 
 import java.util.*;
 import java.util.Map;
-import javafx.stage.Stage;
 import javafx.util.Duration;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
@@ -11,7 +10,6 @@ import javafx.scene.Group;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import com.example.demo.Initialize.Main;
-import com.example.demo.Initialize.Controller;
 import com.example.demo.Actor.Plane.Plane_User;
 import com.example.demo.Levels.LevelParent;
 
@@ -51,14 +49,9 @@ public class UserControls {
     private final Set<KeyCode> activeKeys = new HashSet<>();
 
     /**
-     * The controller for the game.
-     */
-    private final Controller controller;
-
-    /**
      * Indicates whether the user can fire a projectile.
      */
-    private static boolean canFire = true;
+    private static boolean userCanFire = true;
 
     /**
      * The rate at which the user can fire projectiles.
@@ -66,26 +59,18 @@ public class UserControls {
     private static final Duration FIRE_RATE = Duration.millis(100);
 
     /**
-     * The sound effect for the user firing a projectile.
-     * Source: <a href="https://pixabay.com/sound-effects/072807-heavy-machine-gun-50-caliber-39765/">Link to Shooting SFX</a>
-     */
-    private static final String USER_FIRE_SOUND = "/com/example/demo/audio/sfx/072807_heavy-machine-gun-50-caliber-39765.mp3";
-
-    /**
      * Constructor to initialize UserControls.
      *
      * @param user the user-controlled plane
      * @param root the root group of the scene
      * @param userProjectiles the list of user projectiles
-     * @param stage the game's stage
      */
-    public UserControls(Plane_User user, Group root, List<ActiveActorDestructible> userProjectiles, Stage stage) {
+    public UserControls(Plane_User user, Group root, List<ActiveActorDestructible> userProjectiles) {
         this.user = user;
         this.root = root;
         this.userProjectiles = userProjectiles;
         loadKeyBindings();
         checkActiveKey();
-        controller = new Controller(stage);
     }
 
     /**
@@ -113,17 +98,16 @@ public class UserControls {
      * Fires a projectile from the user-controlled plane with a 300-millisecond delay between each projectile.
      */
     private void fireProjectile() {
-        if (!canFire) return;
+        if (!userCanFire) return;
 
         ActiveActorDestructible projectile = user.fireProjectile();
         root.getChildren().add(projectile);
         userProjectiles.add(projectile);
-        controller.playSFX(USER_FIRE_SOUND);
 
         // Cooldown
-        canFire = false;
+        userCanFire = false;
         Timeline cooldown = new Timeline(
-                new KeyFrame(FIRE_RATE, e -> canFire = true)
+                new KeyFrame(FIRE_RATE, e -> userCanFire = true)
         );
         cooldown.setCycleCount(1);
         cooldown.play();

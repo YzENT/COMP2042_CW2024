@@ -1,7 +1,9 @@
 package com.example.demo.Actor.Plane;
 
+import javafx.stage.Stage;
 import com.example.demo.ActorsLogic.ActiveActorDestructible;
 import com.example.demo.Actor.WeaponProjectiles.Projectile_User;
+import com.example.demo.Initialize.Controller;
 
 /**
  * Class representing the user-controlled plane in the game.
@@ -84,12 +86,25 @@ public class Plane_User extends Plane {
 	private int numberOfKills = 0;
 
 	/**
+	 * The controller for the game.
+	 */
+	private final Controller controller;
+
+	/**
+	 * The sound effect for the user firing a projectile.
+	 * Source: <a href="https://pixabay.com/sound-effects/072807-heavy-machine-gun-50-caliber-39765/">Link to Shooting SFX</a>
+	 */
+	private static final String USER_FIRE_SOUND = "/com/example/demo/audio/sfx/072807_heavy-machine-gun-50-caliber-39765.mp3";
+
+	/**
 	 * Constructor to initialize the Plane_User object with initial health.
 	 *
 	 * @param initialHealth the initial health of the user plane
+	 * @param stage the game's stage
 	 */
-	public Plane_User(int initialHealth) {
+	public Plane_User(int initialHealth, Stage stage) {
 		super(IMAGE_NAME, IMAGE_HEIGHT, INITIAL_X_POSITION, INITIAL_Y_POSITION, initialHealth);
+		controller = new Controller(stage);
 	}
 
 	/**
@@ -133,6 +148,7 @@ public class Plane_User extends Plane {
 	 */
 	@Override
 	public ActiveActorDestructible fireProjectile() {
+		controller.playSFX(USER_FIRE_SOUND);
 		return new Projectile_User(getProjectileXPosition(PROJECTILE_X_POSITION_OFFSET), getProjectileYPosition(PROJECTILE_Y_POSITION_OFFSET));
 	}
 

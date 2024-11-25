@@ -148,14 +148,14 @@ public abstract class LevelParent {
 		this.root = new Group();
 		this.scene = new Scene(root, screenWidth, screenHeight);
 		this.timeline = new Timeline();
-		this.user = new Plane_User(playerInitialHealth);
+		this.user = new Plane_User(playerInitialHealth, (Stage) scene.getWindow());
 		this.friendlyUnits = new ArrayList<>();
 		this.enemyUnits = new ArrayList<>();
 		this.userProjectiles = new ArrayList<>();
 		this.enemyProjectiles = new ArrayList<>();
 
 		this.background = new ImageView(new Image(Objects.requireNonNull(getClass().getResource(backgroundImageName)).toExternalForm()));
-		this.userControls = new UserControls(user, root, userProjectiles, (Stage) scene.getWindow());
+		this.userControls = new UserControls(user, root, userProjectiles);
 		this.controller = new Controller(Main.getStage());
 		this.screenHeight = screenHeight;
 		this.screenWidth = screenWidth;

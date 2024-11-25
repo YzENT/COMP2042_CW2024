@@ -1,5 +1,6 @@
 package com.example.demo.Actor;
 
+import javafx.stage.Stage;
 import com.example.demo.Actor.Plane.Plane_User;
 import com.example.demo.JavaFXBaseTesting;
 import org.junit.jupiter.api.BeforeEach;
@@ -12,10 +13,11 @@ import static org.junit.jupiter.api.Assertions.*;
 class Plane_UserTest{
 
     private Plane_User user;
+    private Stage stage;
 
     @BeforeEach
     void setUp() {
-        user = new Plane_User(5);
+        user = new Plane_User(5, stage);
     }
 
     @Test

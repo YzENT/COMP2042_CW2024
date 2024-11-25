@@ -28,10 +28,10 @@ class UserControlsTest {
     @BeforeEach
     public void setUp() {
         // Initialize test objects
-        userPlane = new Plane_User(100); // Plane with initial health of 100
+        userPlane = new Plane_User(100, stage); // Plane with initial health of 100
         root = new Group();
         projectiles = new ArrayList<>();
-        userControls = new UserControls(userPlane, root, projectiles, stage);
+        userControls = new UserControls(userPlane, root, projectiles);
 
         // Simulate key bindings (normally loaded from Main)
         UserControls.loadKeyBindings();

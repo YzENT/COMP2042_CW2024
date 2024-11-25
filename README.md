@@ -190,8 +190,10 @@ KeyFrame gameLoop = new KeyFrame(Duration.millis(MILLISECOND_DELAY), e -> update
 - Created `getBossXCoordinate()` and `getBossYCoordinate()` to obtain coordinate of the boss.
 
 ### `Plane_User.java`
+- Modified default constructor to accept Stage as an argument.
 - Modified `updatePosition()` to introduce bounds on X-coordinate.
 - Modified `isMoving()` to also check for horizontalVelocity.
+- Modified `fireProjectile()` so that it plays a sound when firing projectiles.
 - Created `moveForward()` and `moveBackward()` for user to move horizontally.
 - Created `stopHorizontalMovement()` to stop user's horizontal movement.
 
