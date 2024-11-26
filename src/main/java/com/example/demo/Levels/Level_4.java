@@ -26,15 +26,21 @@ public class Level_4 extends LevelParent{
     /**
      * The cooldown period for spawning missiles.
      */
-    private static double missileSpawnCooldown = 30;
+    private static double missileSpawnCooldown = 50;
 
     /**
      * The targeted survival time in seconds.
      */
     private static final int SURVIVAL_SEC = 60;
 
-    private static final int MISSILE_COUNT = 5;
+    /**
+     * The probability that a nuclear missile will spawn.
+     */
+    private static double SPAWN_PROBABILITY = .05;
 
+    /**
+     * The user's survived time.
+     */
     private double survivedTime = 0;
 
     /**
@@ -48,6 +54,11 @@ public class Level_4 extends LevelParent{
         super.getLevelView().initializeTimerLabel();
     }
 
+    /**
+     * Checks if the game is over by evaluating the player's status and timer.
+     * If the player is destroyed, the game status is set to defeat.
+     * If the timer runs out and player survives, game status is set to victory.
+     */
     @Override
     protected void checkIfGameOver() {
         if (userIsDestroyed()) {
@@ -62,25 +73,29 @@ public class Level_4 extends LevelParent{
         }
     }
 
+    /**
+     * Spawns enemy units based on the spawn cooldown.
+     * If the cooldown is greater than zero, it is decremented.
+     * If cooldown is 0 and probability is greater, a missile is spawned.
+     */
     @Override
     protected void spawnEnemyUnits() {
         if (missileSpawnCooldown > 0) {
             missileSpawnCooldown--;
             return;
         }
-        spawnMissiles();
+        if (Math.random() < SPAWN_PROBABILITY) {
+            spawnMissiles();
+        }
     }
 
+    /**
+     * Method to spawn nuclear missiles and add them to enemyProjectile list.
+     */
     private void spawnMissiles() {
-        for (int i = 0; i < MISSILE_COUNT - getCurrentNumberOfProjectiles() - 3; i++) {
-            double yPosition = Math.random() * Main.getScreenHeight();
-            ActiveActorDestructible newMissile = new Projectile_Nuclear(Main.getScreenWidth(), yPosition);
-            addEnemyProjectile(newMissile);
-            super.shakeScreen(NUCLEAR_SFX);
-        }
-
-        //super.getLevelView().showMissileNotification(yPosition); //future patch maybe
-
+        ActiveActorDestructible newMissile = new Projectile_Nuclear(Main.getScreenWidth(), Math.random() * Main.getScreenHeight());
+        addEnemyProjectile(newMissile);
+        super.shakeScreen(NUCLEAR_SFX);
     }
 
     /**
@@ -93,11 +108,25 @@ public class Level_4 extends LevelParent{
         return new LevelView(getRoot(), PLAYER_INITIAL_HEALTH);
     }
 
+    /**
+     * Method to update user's survived time.
+     * If it's more than half of the time, difficulty increases.
+     */
     private void updateTimer() {
         survivedTime += getTimeline().getCycleDuration().toSeconds();
         getLevelView().updateTimerLabel(SURVIVAL_SEC - (int)survivedTime);
+
+        // Make it more difficult
+        if (survivedTime > (double) SURVIVAL_SEC /2) {
+            SPAWN_PROBABILITY = 0.15;
+        }
     }
 
+    /**
+     * Checks if the timer has finished.
+     *
+     * @return if timer has finished, return true, false otherwise
+     */
     private boolean timerRunsOut() {
         return survivedTime >= SURVIVAL_SEC;
     }

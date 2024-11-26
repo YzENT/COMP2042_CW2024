@@ -90,7 +90,7 @@ To only compile the jar file and not run the tests,
 - User's controls are now non-hardcoded, and it's stored in a `.properties` file under `<user>\Documents\SkyBattle_20617094`.
 
 ### New Levels
-- One new level has been added to the game.
+- Two new levels has been added to the game.
 
 ### Menu/Screens
 - New screens have been introduced to the game to improve the user's experience.

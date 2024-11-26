@@ -14,6 +14,11 @@ public class Level_3 extends LevelParent {
 	private static final String BACKGROUND_IMAGE_NAME = "/com/example/demo/images/backgrounds/level3.png";
 
 	/**
+	 * The class name of the next level.
+	 */
+	private static final String NEXT_LEVEL = "com.example.demo.Levels.Level_4";
+
+	/**
 	 * The initial health of the player.
 	 */
 	private static final int PLAYER_INITIAL_HEALTH = 5;
@@ -41,7 +46,7 @@ public class Level_3 extends LevelParent {
 	/**
 	 * Checks if the game is over by evaluating the player's and boss's status.
 	 * If the player is destroyed, the game status is set to defeat.
-	 * If the boss is destroyed, the game status is set to victory.
+	 * If the boss is destroyed, the game advances to the next level.
 	 */
 	@Override
 	protected void checkIfGameOver() {
@@ -51,7 +56,7 @@ public class Level_3 extends LevelParent {
 			return;
 		}
 		if (planeBoss.isDestroyed()) {
-			gameStatus(GameStatus.VICTORY);
+			goToNextLevel(NEXT_LEVEL);
 		}
 	}
 
