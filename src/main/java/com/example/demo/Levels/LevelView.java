@@ -39,6 +39,11 @@ public class LevelView {
 	private Label killCounterLabel;
 
 	/**
+	 * Label to display the timer counter
+	 */
+	private Label timerLabel;
+
+	/**
 	 * Constructor to initialize the LevelView.
 	 *
 	 * @param root the root group of the scene
@@ -72,7 +77,7 @@ public class LevelView {
 	 * Initializes the kill counter label.
 	 */
 	public void initializeKillCounter() {
-		killCounterLabel = new Label("Kills:");
+		killCounterLabel = new Label();
 		killCounterLabel.setLayoutX(Main.getScreenWidth() - 300);
 		killCounterLabel.setLayoutY(10);
 		killCounterLabel.setStyle("-fx-font-family: '" + fontName + "'; " +
@@ -93,6 +98,20 @@ public class LevelView {
 		} else {
 			killCounterLabel.setText("Kills :" + kills);
 		}
+	}
+
+	public void initializeTimerLabel() {
+		timerLabel = new Label();
+		timerLabel.setLayoutX(500);
+		timerLabel.setLayoutY(10);
+		timerLabel.setStyle("-fx-font-family: '" + fontName + "'; " +
+				"-fx-font-size: 20px; " +
+				"-fx-text-fill: black;");
+		root.getChildren().add(timerLabel);
+	}
+
+	public void updateTimerLabel(int secondsRemaining) {
+		timerLabel.setText("Time Remaining :" + secondsRemaining);
 	}
 
 	/**

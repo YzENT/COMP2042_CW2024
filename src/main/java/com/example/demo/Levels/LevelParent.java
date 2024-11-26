@@ -191,6 +191,7 @@ public abstract class LevelParent {
 		background.setOnKeyPressed(this::handleKeyPressed);
 		background.setOnKeyReleased(this::handleKeyReleased);
 		root.getChildren().add(background);
+		background.toBack();
 	}
 
 	/**
@@ -297,8 +298,7 @@ public abstract class LevelParent {
 			ActiveActorDestructible projectile = fighter.fireProjectile();
 
 			if (projectile != null) {
-				root.getChildren().add(projectile);
-				enemyProjectiles.add(projectile);
+				addEnemyProjectile(projectile);
 			}
 		});
 	}
@@ -311,6 +311,16 @@ public abstract class LevelParent {
 	protected void addEnemyUnit(ActiveActorDestructible enemy) {
 		enemyUnits.add(enemy);
 		root.getChildren().add(enemy);
+	}
+
+	/**
+	 * Adds an enemy projectile to the root.
+	 *
+	 * @param enemyProjectile the enemy projectile to add
+	 */
+	protected void addEnemyProjectile(ActiveActorDestructible enemyProjectile) {
+		root.getChildren().add(enemyProjectile);
+		enemyProjectiles.add(enemyProjectile);
 	}
 
 	/**
@@ -340,7 +350,9 @@ public abstract class LevelParent {
 	 * Handles collisions between friendly units and enemy units.
 	 */
 	private void handlePlaneCollisions() {
-		handleCollisions(friendlyUnits, enemyUnits, this::shakeScreen);
+		handleCollisions(friendlyUnits, enemyUnits, () -> {
+			shakeScreen(METAL_PIPE);
+		});
 	}
 
 	/**
@@ -361,7 +373,9 @@ public abstract class LevelParent {
 	 * Handles collisions between enemy projectiles and friendly units.
 	 */
 	private void handleEnemyProjectileCollisions() {
-		handleCollisions(enemyProjectiles, friendlyUnits, this::shakeScreen);
+		handleCollisions(enemyProjectiles, friendlyUnits, () -> {
+			shakeScreen(METAL_PIPE);
+		});
 	}
 
 	/**
@@ -372,7 +386,7 @@ public abstract class LevelParent {
 			if (enemyHasPenetratedDefenses(enemy)) {
 				user.takeDamage();
 				enemy.destroy();
-				shakeScreen();
+				shakeScreen(METAL_PIPE);
 			}
 		}
 	}
@@ -475,16 +489,16 @@ public abstract class LevelParent {
 	}
 
 	/**
-	 * Shakes the screen and plays collision SFX.
+	 * Shakes the screen and plays specified SFX.
 	 */
-	private void shakeScreen() {
+	protected void shakeScreen(String sfxToPlay) {
 		TranslateTransition translateTransition = new TranslateTransition(Duration.millis(50), root);
 		translateTransition.setFromX(-5);
 		translateTransition.setToX(5);
 		translateTransition.setCycleCount(4);
 		translateTransition.setAutoReverse(true);
 		translateTransition.play();
-		audioController.playSFX(METAL_PIPE);
+		audioController.playSFX(sfxToPlay);
 	}
 
 	/**
@@ -514,6 +528,25 @@ public abstract class LevelParent {
 	protected Group getRoot() {
 		return root;
 	}
+
+	/**
+	 * Gets the timeline.
+	 *
+	 * @return the timeline of program.
+	 */
+	public Timeline getTimeline() {
+		return timeline;
+	}
+
+	/**
+	 * Gets the level view.
+	 *
+	 * @return level's view of current level.
+	 */
+	public LevelView getLevelView() {
+		return levelView;
+	}
+
 
 	/**
 	 * Gets the current number of enemies.

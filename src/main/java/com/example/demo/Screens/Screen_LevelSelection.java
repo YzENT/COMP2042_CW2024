@@ -48,11 +48,11 @@ public class Screen_LevelSelection extends BaseScreen {
         Text title = initializeTitle(TITLE_TEXT, TITLE_SIZE);
         Button[] buttons = initializeButtons();
 
-        HBox levelButtons = new HBox(20, buttons[0], buttons[1], buttons[2]);
+        HBox levelButtons = new HBox(20, buttons[0], buttons[1], buttons[2], buttons[3]);
         levelButtons.setAlignment(Pos.CENTER);
         levelButtons.setPadding(new Insets(100));
 
-        VBox vbox = new VBox(20, title, levelButtons, buttons[3]);
+        VBox vbox = new VBox(20, title, levelButtons, buttons[4]);
         vbox.setAlignment(Pos.CENTER);
         vbox.setStyle("-fx-background-color: black;");
 
@@ -72,8 +72,9 @@ public class Screen_LevelSelection extends BaseScreen {
         Button level1Button = createButton("Easy", () -> goScreen_LoadingAnimation("com.example.demo.Levels.Level_1"));
         Button level2Button = createButton("Medium", () -> goScreen_LoadingAnimation("com.example.demo.Levels.Level_2"));
         Button level3Button = createButton("Hard", () -> goScreen_LoadingAnimation("com.example.demo.Levels.Level_3"));
+        Button level4Button = createButton("Extreme", () -> goScreen_LoadingAnimation("com.example.demo.Levels.Level_4"));
         Button backButton = createButton("Back", this::goScreen_PreviousScreen);
-        return new Button[]{level1Button, level2Button, level3Button, backButton};
+        return new Button[]{level1Button, level2Button, level3Button, level4Button, backButton};
     }
 
     /**

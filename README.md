@@ -126,22 +126,24 @@ KeyFrame gameLoop = new KeyFrame(Duration.millis(MILLISECOND_DELAY), e -> update
 
 # New Java Classes
 
-| New Classes                    | Description                                                                                      | Package                                                                                            |
-|--------------------------------|--------------------------------------------------------------------------------------------------|----------------------------------------------------------------------------------------------------|
-| `UserControls.java`            | This class controls the user's action, mapping's are obtained from `Main.java`.                  | [com.example.demo.ActorsLogic](src/main/java/com/example/demo/ActorsLogic/UserControls.java)       |
-| `ExplosionImage.java`          | This class initializes the explosion effect used for Plane_Boss.java when it's defeated.         | [com.example.demo.ImageEntities](src/main/java/com/example/demo/ImageEntities/ExplosionImage.java) |
-| `Level_3.java`                 | The third level of the game. It is still the boss enemy as original, because level 2 was remade. | [com.example.demo.Levels](src/main/java/com/example/demo/Levels/Level_3.java)                      |
-| `BaseScreen.java`              | Abstract class for other screens used in the application.                                        | [com.example.demo.Screens](src/main/java/com/example/demo/Screens/BaseScreen.java)                 |
-| `Screen_GameEnded.java`        | Screen used to display results of the game (VICTORY, DEFEAT).                                    | [com.example.demo.Screens](src/main/java/com/example/demo/Screens/Screen_GameEnded.java)           |
-| `Screen_LevelSelection.java`   | Screen used to select the level user wants to navigate to.                                       | [com.example.demo.Screens](src/main/java/com/example/demo/Screens/Screen_LevelSelection.java)      |
-| `Screen_LoadingAnimation.java` | Screen used for loading animation between levels.                                                | [com.example.demo.Screens](src/main/java/com/example/demo/Screens/Screen_LoadingAnimation.java)    |
-| `Screen_MainMenu.java`         | Screen used to display the Main Menu for user to navigate to different screens.                  | [com.example.demo.Screens](src/main/java/com/example/demo/Screens/Screen_MainMenu.java)            |
-| `Screen_PauseMenu.java`        | Screen displayed when user pauses the game in middle of game.                                    | [com.example.demo.Screens](src/main/java/com/example/demo/Screens/Screen_PauseMenu.java)           |
-| `Screen_Settings.java`         | Screen used to display the settings user can navigate to (Controls, Volume).                     | [com.example.demo.Screens](src/main/java/com/example/demo/Screens/Screen_Settings.java)            |
-| `Controls.java`                | Screen used to display and modify the user's controls.                                           | [com.example.demo.Screens.Settings](src/main/java/com/example/demo/Screens/Settings/Controls.java) |
-| `Volume.java`                  | Screen used to display and modify the game's volume (SFX, Music).                                | [com.example.demo.Screens.Settings](src/main/java/com/example/demo/Screens/Settings/Volume.java)   |
-| `LevelController.java`         | Controller used to start to the next level.                                                      | [com.example.demo.Controller](src/main/java/com/example/demo/Controller/LevelController.java)      |
-| `AudioController.java`         | Controller used to control the audios.                                                           | [com.example.demo.Controller](src/main/java/com/example/demo/Controller/AudioController.java)      |
+| New Classes                    | Description                                                                                      | Package                                                                                                                    |
+|--------------------------------|--------------------------------------------------------------------------------------------------|----------------------------------------------------------------------------------------------------------------------------|
+| `UserControls.java`            | This class controls the user's action, mapping's are obtained from `Main.java`.                  | [com.example.demo.ActorsLogic](src/main/java/com/example/demo/ActorsLogic/UserControls.java)                               |
+| `ExplosionImage.java`          | This class initializes the explosion effect used for Plane_Boss.java when it's defeated.         | [com.example.demo.ImageEntities](src/main/java/com/example/demo/ImageEntities/ExplosionImage.java)                         |
+| `Level_3.java`                 | The third level of the game. It is still the boss enemy as original, because level 2 was remade. | [com.example.demo.Levels](src/main/java/com/example/demo/Levels/Level_3.java)                                              |
+| `Level_4.java`                 | The fourth level of the game. Objective is to not die while trying to dodge nuclear missiles.    | [com.example.demo.Levels](src/main/java/com/example/demo/Levels/Level_4.java)                                              |
+| `BaseScreen.java`              | Abstract class for other screens used in the application.                                        | [com.example.demo.Screens](src/main/java/com/example/demo/Screens/BaseScreen.java)                                         |
+| `Screen_GameEnded.java`        | Screen used to display results of the game (VICTORY, DEFEAT).                                    | [com.example.demo.Screens](src/main/java/com/example/demo/Screens/Screen_GameEnded.java)                                   |
+| `Screen_LevelSelection.java`   | Screen used to select the level user wants to navigate to.                                       | [com.example.demo.Screens](src/main/java/com/example/demo/Screens/Screen_LevelSelection.java)                              |
+| `Screen_LoadingAnimation.java` | Screen used for loading animation between levels.                                                | [com.example.demo.Screens](src/main/java/com/example/demo/Screens/Screen_LoadingAnimation.java)                            |
+| `Screen_MainMenu.java`         | Screen used to display the Main Menu for user to navigate to different screens.                  | [com.example.demo.Screens](src/main/java/com/example/demo/Screens/Screen_MainMenu.java)                                    |
+| `Screen_PauseMenu.java`        | Screen displayed when user pauses the game in middle of game.                                    | [com.example.demo.Screens](src/main/java/com/example/demo/Screens/Screen_PauseMenu.java)                                   |
+| `Screen_Settings.java`         | Screen used to display the settings user can navigate to (Controls, Volume).                     | [com.example.demo.Screens](src/main/java/com/example/demo/Screens/Screen_Settings.java)                                    |
+| `Controls.java`                | Screen used to display and modify the user's controls.                                           | [com.example.demo.Screens.Settings](src/main/java/com/example/demo/Screens/Settings/Controls.java)                         |
+| `Volume.java`                  | Screen used to display and modify the game's volume (SFX, Music).                                | [com.example.demo.Screens.Settings](src/main/java/com/example/demo/Screens/Settings/Volume.java)                           |
+| `LevelController.java`         | Controller used to start to the next level.                                                      | [com.example.demo.Controller](src/main/java/com/example/demo/Controller/LevelController.java)                              |
+| `AudioController.java`         | Controller used to control the audios.                                                           | [com.example.demo.Controller](src/main/java/com/example/demo/Controller/AudioController.java)                              |
+| `Projectile_Nuclear.java`      | The nuclear projectile class used in level 4.                                                    | [com.example.demo.Actor.WeaponProjectiles](src/main/java/com/example/demo/Actor/WeaponProjectiles/Projectile_Nuclear.java) |
 
 
 # Renamed Java Classes
@@ -256,13 +258,15 @@ KeyFrame gameLoop = new KeyFrame(Duration.millis(MILLISECOND_DELAY), e -> update
 - Merged `winGame()` and `loseGame()` to `gameStatus()` to handle game's status.
 - Modified `goToNextLevel()` as it's now not an observer under `controller` anymore.
 - Modified `handleCollisions()` to accept `Runnable` as an argument, so code that meets the requirements can be executed afterward. (Shake Screen, Play SFX, etc...).
+- Created `addEnemyProjectile()` to create enemy projectiles in this method.
 - Created `pauseGame()` and `resumeGame()` to handle pause logic.
-- Created `shakeScreen()` when user collides with enemy projectile.
+- Created `shakeScreen()` to shake screen and plays SFX specified.
 - Created `handleKeyPressed()` and `handleKeyReleased()` to handle key actions.
 
 ### `LevelView.java`
 - Removed logics/creations related to WinImage and GameOverImage.
 - Created `initializeKillCounter()` and `updateKillCounter()` to display kill count of user at top right of screen.
+- Created `initializeTimerLabel()` and `updateTimerLabel()` for levels that are time based, to display the time.
 - Created `screenFade()` for transition visual's.
 
 # Unexpected Problems
