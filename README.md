@@ -69,7 +69,8 @@ To only compile the jar file and not run the tests,
 ## Implemented and Working Properly
 
 ### Keyboard Events Only
-- Users now can only navigate the application using keyboard, <b>ALL</b> mouse events are disabled. WASD keys mimics arrow keys to navigate through buttons.
+- Users now can only navigate the application using keyboard, <b>ALL</b> mouse events are disabled. 
+- WASD keys mimics arrow keys to navigate through buttons.
 
 ### Transition and Animations
 - Transition and animations have been added to the game to aid the user's visual experience. Such transitions are used in changing game screen, finishing the game, etc…
@@ -189,12 +190,12 @@ KeyFrame gameLoop = new KeyFrame(Duration.millis(MILLISECOND_DELAY), e -> update
 - Created `updateExplosionCoordinates()` to sync position of explosion with boss.
   -  If not done so, the position of boss will be (0,0) when it is destroyed (null).
 - Created `createHealthBar()` to create health bar showing boss' health.
-- Created `updateHealthBar()` to update boss' health when it takes damage. Also updates position of health bar based on coordinates of boss.
+- Created `updateHealthBar()` to update boss' health bar when it takes damage. Also updates position of health bar based on coordinates of boss.
 - Created `triggerExplosion()` to show explosion and remove health bar when boss is defeated.
 - Created `getBossXCoordinate()` and `getBossYCoordinate()` to obtain coordinate of the boss.
 
 ### `Plane_User.java`
-- Modified `updatePosition()` to introduce bounds on X-coordinate.
+- Modified `updatePosition()` to introduce upper and lower bounds on X-coordinate.
 - Modified `isMoving()` to also check for horizontalVelocity.
 - Modified `fireProjectile()` so that it plays a sound when firing projectiles.
 - Created `moveForward()` and `moveBackward()` for user to move horizontally.
