@@ -55,7 +55,7 @@ public abstract class Projectile extends ActiveActorDestructible {
 
 	/**
 	 * Updates the state of the projectile.
-	 * Destroys the projectile if it goes out of bounds.
+	 * Destroys the projectile if it has travelled the maximum distance.
 	 */
 	public void updateActor() {
 		updatePosition();

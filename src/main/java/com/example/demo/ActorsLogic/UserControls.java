@@ -95,7 +95,7 @@ public class UserControls {
     }
 
     /**
-     * Fires a projectile from the user-controlled plane with a 300-millisecond delay between each projectile.
+     * Fires a projectile from the user-controlled plane with a specified delay between each projectile.
      */
     private void fireProjectile() {
         if (!userCanFire) return;

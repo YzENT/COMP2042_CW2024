@@ -98,7 +98,7 @@ public abstract class LevelParent {
 	private final UserControls userControls;
 
 	/**
-	 * The controller for the game.
+	 * The audio controller for the game.
 	 */
 	private final AudioController audioController;
 

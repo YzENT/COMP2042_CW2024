@@ -51,7 +51,7 @@ public class Controls extends Screen_Settings {
     private EventHandler<KeyEvent> activeKeyListener = null;
 
     /**
-     * Temporary key bindings map used for storing key bindings before saving.
+     * Temporary key bindings map used for storing key bindings before overwriting the main one.
      */
     private final Map<String, KeyCode> tempKeyBindings = new HashMap<>(Main.getKeyBindings());
 

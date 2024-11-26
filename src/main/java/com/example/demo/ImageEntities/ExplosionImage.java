@@ -59,7 +59,7 @@ public class ExplosionImage extends ImageView {
     }
 
     /**
-     * Sets the position of the explosion image.
+     * Sets the coordinates of the explosion image.
      *
      * @param x the X coordinate
      * @param y the Y coordinate

@@ -85,7 +85,7 @@ public class Plane_User extends Plane {
 	private int numberOfKills = 0;
 
 	/**
-	 * The controller for the game.
+	 * The audio controller for the game.
 	 */
 	private final AudioController audioController;
 

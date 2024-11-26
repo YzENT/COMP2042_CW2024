@@ -2,8 +2,6 @@ package com.example.demo.Screens;
 
 import java.util.HashMap;
 import java.util.Map;
-
-import com.example.demo.Controller.LevelController;
 import javafx.animation.FillTransition;
 import javafx.animation.ScaleTransition;
 import javafx.animation.Timeline;
@@ -22,6 +20,7 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.util.Duration;
 import com.example.demo.Controller.AudioController;
+import com.example.demo.Controller.LevelController;
 
 /**
  * Abstract class representing a base screen in the game.
@@ -65,9 +64,9 @@ public abstract class BaseScreen {
     private static final double BUTTON_SCALE_OLD = 1.0;
 
     /**
-     * The duration of the transition effect.
+     * The duration of the transition effect for buttons.
      */
-    private static final double TRANSITION_DURATION = 0.5;
+    private static final double BUTTON_TRANSITION_DURATION = 0.5;
 
     /**
      * The font size for buttons.
@@ -77,7 +76,7 @@ public abstract class BaseScreen {
     /**
      * The radius of the drop shadow effect for buttons.
      */
-    private static final double SHADOW_RADIUS = 10;
+    private static final double BUTTON_SHADOW_RADIUS = 10;
 
     /**
      * The drop shadow effect for buttons.
@@ -196,7 +195,7 @@ public abstract class BaseScreen {
      * @param node the node to add the effect to
      */
     protected void addEffect(Node node) {
-        ScaleTransition st = new ScaleTransition(Duration.seconds(TRANSITION_DURATION), node);
+        ScaleTransition st = new ScaleTransition(Duration.seconds(BUTTON_TRANSITION_DURATION), node);
         st.setToX(BUTTON_SCALE_NEW);
         st.setToY(BUTTON_SCALE_NEW);
         st.setAutoReverse(true);
@@ -329,7 +328,7 @@ public abstract class BaseScreen {
     protected DropShadow createButtonShadow() {
         DropShadow shadow = new DropShadow();
         shadow.setColor(Color.WHITE);
-        shadow.setRadius(SHADOW_RADIUS);
+        shadow.setRadius(BUTTON_SHADOW_RADIUS);
         return shadow;
     }
 
