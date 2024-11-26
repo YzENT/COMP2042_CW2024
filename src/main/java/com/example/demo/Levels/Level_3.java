@@ -35,7 +35,7 @@ public class Level_3 extends LevelParent {
 	 * @param screenWidth the width of the screen
 	 */
 	public Level_3(double screenHeight, double screenWidth) {
-		super(BACKGROUND_IMAGE_NAME, screenHeight, screenWidth, PLAYER_INITIAL_HEALTH, 1);
+		super(BACKGROUND_IMAGE_NAME, screenHeight, screenWidth, PLAYER_INITIAL_HEALTH, 0);
 	}
 
 	/**

@@ -88,7 +88,11 @@ public class LevelView {
 	 * @param killRequired the number of kills required to advance
 	 */
 	public void updateKillCounter(int kills, int killRequired) {
-		killCounterLabel.setText("Kills :" + kills + "/" + killRequired);
+		if (killRequired != 0) {
+			killCounterLabel.setText("Kills :" + kills + "/" + killRequired);
+		} else {
+			killCounterLabel.setText("Kills :" + kills);
+		}
 	}
 
 	/**
