@@ -12,7 +12,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class AudioControllerTest {
 
     private AudioController audioController;
-    private static final int MILLISECOND_DELAY = 50; //this needs a delay as mediaPlayer can't execute immediately, natural delay
+    private static final int MILLISECOND_DELAY = 200; //this needs a delay as mediaPlayer can't execute immediately, natural delay
 
     @BeforeEach
     void setUp() {
