@@ -210,8 +210,12 @@ KeyFrame gameLoop = new KeyFrame(Duration.millis(MILLISECOND_DELAY), e -> update
 - Modified `takeDamage()` to check if health is at 0. If it is then `destroy`.
 - Undeclared `updatePosition()` from abstract method as all subclasses share the same code.
 - Created `updateActor()` so it gets called every frame.
-  - It checks if `projectile` has travelled too far, if true then destroy.
+  - It checks if `projectile` has travelled out of bounds, if true then destroy.
   - Also calls `updatePosition()` in this method.
+
+### `Projectile_User.java`
+- Overrode `updateActor()` in superclass as methods used are slightly different.
+- Created `maximumTravelDistanceAllowed()` instead of using `outOfBounds()` in `Projectile.java` as they travel in different directions.
 
 ### `Projectile_Boss.java`, `Projectile_Enemy.java`, `Projectile_User.java`
 - Now passes health and horizontalVelocity to superclass `Projectile.java`.

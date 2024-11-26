@@ -55,11 +55,11 @@ public abstract class Projectile extends ActiveActorDestructible {
 
 	/**
 	 * Updates the state of the projectile.
-	 * Destroys the projectile if it has travelled the maximum distance.
+	 * Destroys the projectile if it has travelled out of bounds.
 	 */
 	public void updateActor() {
 		updatePosition();
-		if (maximumTravelDistanceAllowed()) {
+		if (outOfBounds()) {
 			this.destroy();
 		}
 	}
@@ -74,13 +74,12 @@ public abstract class Projectile extends ActiveActorDestructible {
 	}
 
 	/**
-	 * Checks if the projectile has travelled too far.
+	 * Checks if the projectile is out of bounds.
 	 *
-	 * @return true if the projectile has travelled too far, false otherwise
+	 * @return true if the projectile has travelled out of bounds, false otherwise
 	 */
-	private boolean maximumTravelDistanceAllowed() {
-		// Divide by 2 so projectile doesn't fly too far
-		return getTranslateX() > (double) Main.getScreenWidth() / 2;
+	private boolean outOfBounds() {
+		return getTranslateX() < -Main.getScreenWidth();
 	}
 
 }

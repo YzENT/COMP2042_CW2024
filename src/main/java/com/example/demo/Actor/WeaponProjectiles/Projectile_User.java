@@ -1,5 +1,7 @@
 package com.example.demo.Actor.WeaponProjectiles;
 
+import com.example.demo.Controller.Main;
+
 /**
  * Class representing a user projectile in the game.
  */
@@ -33,6 +35,28 @@ public class Projectile_User extends Projectile {
 	 */
 	public Projectile_User(double initialXPos, double initialYPos) {
 		super(IMAGE_NAME, IMAGE_HEIGHT, initialXPos, initialYPos, HEALTH, HORIZONTAL_VELOCITY);
+	}
+
+	/**
+	 * Updates the state of the user projectile.
+	 * Destroys the projectile if it has travelled the maximum distance.
+	 */
+	@Override
+	public void updateActor() {
+		updatePosition();
+		if (maximumTravelDistanceAllowed()) {
+			this.destroy();
+		}
+	}
+
+	/**
+	 * Checks if the projectile has travelled too far.
+	 *
+	 * @return true if the projectile has travelled too far, false otherwise
+	 */
+	private boolean maximumTravelDistanceAllowed() {
+		// Divide by 2 so projectile doesn't fly too far
+		return getTranslateX() > (double) Main.getScreenWidth() / 2;
 	}
 
 }

@@ -547,7 +547,6 @@ public abstract class LevelParent {
 		return levelView;
 	}
 
-
 	/**
 	 * Gets the current number of enemies.
 	 *
@@ -555,6 +554,15 @@ public abstract class LevelParent {
 	 */
 	protected int getCurrentNumberOfEnemies() {
 		return enemyUnits.size();
+	}
+
+	/**
+	 * Gets the current number of projectiles.
+	 *
+	 * @return the current number of projectiles
+	 */
+	protected int getCurrentNumberOfProjectiles() {
+		return enemyProjectiles.size();
 	}
 
 	/**

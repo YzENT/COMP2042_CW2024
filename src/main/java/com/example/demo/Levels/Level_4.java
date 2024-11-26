@@ -26,14 +26,16 @@ public class Level_4 extends LevelParent{
     /**
      * The cooldown period for spawning missiles.
      */
-    private static double spawnCooldown = 30;
+    private static double missileSpawnCooldown = 30;
 
     /**
      * The targeted survival time in seconds.
      */
     private static final int SURVIVAL_SEC = 60;
 
-    private static double survivedTime = 0;
+    private static final int MISSILE_COUNT = 5;
+
+    private double survivedTime = 0;
 
     /**
      * Constructor to initialize Level_4.
@@ -62,15 +64,23 @@ public class Level_4 extends LevelParent{
 
     @Override
     protected void spawnEnemyUnits() {
-        if (spawnCooldown > 0) {
-            spawnCooldown--;
+        if (missileSpawnCooldown > 0) {
+            missileSpawnCooldown--;
             return;
         }
-        if (Math.random() < 0.01) {
-            ActiveActorDestructible newMissile = new Projectile_Nuclear(Main.getScreenWidth(), Math.random() * Main.getScreenHeight());
+        spawnMissiles();
+    }
+
+    private void spawnMissiles() {
+        for (int i = 0; i < MISSILE_COUNT - getCurrentNumberOfProjectiles() - 3; i++) {
+            double yPosition = Math.random() * Main.getScreenHeight();
+            ActiveActorDestructible newMissile = new Projectile_Nuclear(Main.getScreenWidth(), yPosition);
             addEnemyProjectile(newMissile);
             super.shakeScreen(NUCLEAR_SFX);
         }
+
+        //super.getLevelView().showMissileNotification(yPosition); //future patch maybe
+
     }
 
     /**
