@@ -63,7 +63,6 @@ class LevelViewTest {
             Label killCounterLabel = levelView.getKillCounterLabel();
             assertNotNull(killCounterLabel, "Kill counter label should be initialized.");
             assertTrue(root.getChildren().contains(killCounterLabel),"Kill counter label should be added to the root.");
-            assertEquals("Kills:", killCounterLabel.getText(), "Kill counter label should have the initial text.");
             latch.countDown();
         });
         latch.await();

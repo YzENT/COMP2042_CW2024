@@ -566,15 +566,6 @@ public abstract class LevelParent {
 	}
 
 	/**
-	 * Gets the current number of projectiles.
-	 *
-	 * @return the current number of projectiles
-	 */
-	protected int getCurrentNumberOfProjectiles() {
-		return enemyProjectiles.size();
-	}
-
-	/**
 	 * Gets the maximum Y position for enemies.
 	 *
 	 * @return the maximum Y position for enemies

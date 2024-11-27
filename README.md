@@ -99,6 +99,9 @@ To only compile the jar file and not run the tests,
 ### Visual/Sound effects
 - Elements above have been introduced to the game to improve user's experience.
 
+### Smoother User Controls
+- Game now checks for active keys now instead of press/release mechanism to ensure smooth gameplay.
+
 ## Implemented but Not Working Properly
 
 ### Dynamic Screen Size
