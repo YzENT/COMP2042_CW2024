@@ -87,7 +87,7 @@ class LevelViewTest {
         CountDownLatch latch = new CountDownLatch(1);
         Platform.runLater(() -> {
             AtomicBoolean fadeComplete = new AtomicBoolean(false);
-            levelView.screenFade(0.1, () -> fadeComplete.set(true));
+            levelView.fadeObjectOnScreen(0.1, root, () -> fadeComplete.set(true));
 
             new Timer().schedule(new TimerTask() {
                 @Override

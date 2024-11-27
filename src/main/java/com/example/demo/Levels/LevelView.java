@@ -1,9 +1,13 @@
 package com.example.demo.Levels;
 
+import javafx.animation.PauseTransition;
+import javafx.scene.Node;
 import javafx.util.Duration;
 import javafx.animation.FadeTransition;
 import javafx.scene.Group;
 import javafx.scene.control.Label;
+import javafx.beans.binding.Bindings;
+import javafx.beans.binding.DoubleBinding;
 import com.example.demo.ImageEntities.HeartDisplay;
 import com.example.demo.Controller.Main;
 import static com.example.demo.Screens.BaseScreen.fontName;
@@ -42,6 +46,11 @@ public class LevelView {
 	 * Label to display the timer counter
 	 */
 	private Label timerLabel;
+
+	/**
+	 * Label to display the entry message
+	 */
+	private Label entryMessageLabel;
 
 	/**
 	 * Constructor to initialize the LevelView.
@@ -100,9 +109,11 @@ public class LevelView {
 		}
 	}
 
+	/**
+	 * Initializes the timer counter.
+	 */
 	public void initializeTimerLabel() {
 		timerLabel = new Label();
-		timerLabel.setLayoutX(500);
 		timerLabel.setLayoutY(10);
 		timerLabel.setStyle("-fx-font-family: '" + fontName + "'; " +
 				"-fx-font-size: 20px; " +
@@ -110,24 +121,73 @@ public class LevelView {
 		root.getChildren().add(timerLabel);
 	}
 
+	/**
+	 * Updates the timer label based on time remaining.
+	 *
+	 * @param secondsRemaining the time needed to survive in seconds
+	 */
 	public void updateTimerLabel(int secondsRemaining) {
 		timerLabel.setText("Time Remaining :" + secondsRemaining);
+
+		DoubleBinding centeredX = Bindings.createDoubleBinding(() ->
+						(Main.getScreenWidth() - timerLabel.getWidth()) / 2,
+				timerLabel.widthProperty());
+
+		timerLabel.layoutXProperty().bind(centeredX);
 	}
 
 	/**
-	 * Fades the screen and executes an event after the fade transition.
+	 * Displays an entry message on the screen.
+	 *
+	 * @param message the message to display
+	 */
+	public void entryMessage(String message) {
+		entryMessageLabel = new Label(message);
+		entryMessageLabel.setStyle("-fx-font-family: '" + fontName + "'; " +
+				"-fx-font-size: 60px; " +
+				"-fx-text-fill: white;" +
+				"-fx-background-color: black");
+		entryMessageLabel.setVisible(false);
+		root.getChildren().add(entryMessageLabel);
+
+		DoubleBinding centeredX = Bindings.createDoubleBinding(() ->
+						(Main.getScreenWidth() - entryMessageLabel.getWidth()) / 2,
+				entryMessageLabel.widthProperty());
+
+		DoubleBinding centeredY = Bindings.createDoubleBinding(() ->
+						(Main.getScreenHeight() - entryMessageLabel.getHeight()) / 2,
+				entryMessageLabel.heightProperty());
+
+		entryMessageLabel.layoutXProperty().bind(centeredX);
+		entryMessageLabel.layoutYProperty().bind(centeredY);
+
+		PauseTransition waitMessageAppear = new PauseTransition(Duration.seconds(1));
+		waitMessageAppear.setOnFinished(e -> {
+			entryMessageLabel.setVisible(true);
+			// should play audio (future)
+
+			PauseTransition showMessage = new PauseTransition(Duration.seconds(1.5));
+			showMessage.setOnFinished(ev -> {
+				fadeObjectOnScreen(2.0, entryMessageLabel, () -> root.getChildren().remove(entryMessageLabel));
+			});
+			showMessage.play();
+
+		});
+		waitMessageAppear.play();
+	}
+
+	/**
+	 * Fades the object on screen and executes an event after the fade transition.
 	 *
 	 * @param transition_Time the duration of the fade transition
+	 * @param node the node that the transition needs to be applied to
 	 * @param afterFadeEvent the event to execute after the fade transition
 	 */
-	public void screenFade(double transition_Time, Runnable afterFadeEvent) {
-		FadeTransition fadeTransition = new FadeTransition(Duration.seconds(transition_Time), root);
+	public void fadeObjectOnScreen(double transition_Time, Node node, Runnable afterFadeEvent) {
+		FadeTransition fadeTransition = new FadeTransition(Duration.seconds(transition_Time), node);
 		fadeTransition.setFromValue(1.0);
 		fadeTransition.setToValue(0.0);
-		fadeTransition.setOnFinished(event -> {
-			root.getChildren().clear();
-			afterFadeEvent.run();
-		});
+		fadeTransition.setOnFinished(event -> afterFadeEvent.run());
 		fadeTransition.play();
 	}
 

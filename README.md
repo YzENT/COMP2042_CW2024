@@ -252,8 +252,9 @@ KeyFrame gameLoop = new KeyFrame(Duration.millis(MILLISECOND_DELAY), e -> update
 - Relationship with `UserControls.java` to pass keys/user logic in this class to that class.
   - Moved `fireProjectile()`
   - Moved key press/release actions
-- Modified default constructor to accept `(int)KILLS_TO_ADVANCE`.
-  - `userHasReachedKillTarget()` in subclasses has been moved to here.
+- Modified default constructor to accept `(int)KILLS_TO_ADVANCE` and `(String)messageOnScreen`.
+  - `userHasReachedKillTarget()` in subclasses has been moved to here, to check for `KILLS_TO_ADVANCE`.
+  - `messageOnScreen` is passed so it can call `LevelView.java` to show the message.
 - Undeclared `initializeFriendlyUnits()` from abstract due to code duplication.
 - Modified `initializeScene()` to send `Runnable` actions to `Screen_PauseMenu`, as well as initializing other elements (`song, kill count`).
 - Modified `initializeBackground()` to handle key press/release in another function.
@@ -269,9 +270,10 @@ KeyFrame gameLoop = new KeyFrame(Duration.millis(MILLISECOND_DELAY), e -> update
 
 ### `LevelView.java`
 - Removed logics/creations related to WinImage and GameOverImage.
+- Created `entryMessage()` to show user's goal when that level is played.
 - Created `initializeKillCounter()` and `updateKillCounter()` to display kill count of user at top right of screen.
 - Created `initializeTimerLabel()` and `updateTimerLabel()` for levels that are time based, to display the time.
-- Created `screenFade()` for transition visual's.
+- Created `fadeObjectOnScreen()` to fade objects on the screen/HUD.
 
 # Unexpected Problems
 1. When first forking and running the project, the game crashes when it tries to go to the next level. After further debugging, the issues were:

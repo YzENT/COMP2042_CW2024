@@ -68,6 +68,11 @@ public abstract class LevelParent {
 	private final int KILLS_TO_ADVANCE;
 
 	/**
+	 * The string message that appears on screen when user first enters the level.
+	 */
+	private final String MESSAGE_ON_SCREEN;
+
+	/**
 	 * The root group for the scene.
 	 */
 	private final Group root;
@@ -144,7 +149,7 @@ public abstract class LevelParent {
 	 * @param playerInitialHealth the initial health of the player
 	 * @param killsToAdvance the number of kills required to advance to the next level
 	 */
-	public LevelParent(String backgroundImageName, double screenHeight, double screenWidth, int playerInitialHealth, int killsToAdvance) {
+	public LevelParent(String backgroundImageName, double screenHeight, double screenWidth, int playerInitialHealth, int killsToAdvance, String messageOnScreen) {
 		this.root = new Group();
 		this.scene = new Scene(root, screenWidth, screenHeight);
 		this.timeline = new Timeline();
@@ -164,6 +169,7 @@ public abstract class LevelParent {
 		initializeTimeline();
 		friendlyUnits.add(user);
 		this.KILLS_TO_ADVANCE = killsToAdvance;
+		this.MESSAGE_ON_SCREEN = messageOnScreen;
 	}
 
 	/**
@@ -176,6 +182,7 @@ public abstract class LevelParent {
 		initializeFriendlyUnits();
 		levelView.showHeartDisplay();
 		levelView.initializeKillCounter();
+		levelView.entryMessage(MESSAGE_ON_SCREEN);
 		sendPauseMenuRunbacks();
 		audioController.playBGM(BGM_PATH);
 		return scene;
@@ -435,7 +442,8 @@ public abstract class LevelParent {
 	 */
 	protected void goToNextLevel(String levelName) {
 		timeline.stop();
-		levelView.screenFade(2, () -> {
+		levelView.fadeObjectOnScreen(2, root, () -> {
+			root.getChildren().clear();
 			Screen_LoadingAnimation.setGameLevel(levelName);
 			Screen_LoadingAnimation loadingAnimation = new Screen_LoadingAnimation((Stage) scene.getWindow(), Main.getScreenWidth(), Main.getScreenHeight());
 			loadingAnimation.show();
@@ -443,19 +451,20 @@ public abstract class LevelParent {
 	}
 
 	/**
-	 * Sets the game status.
+	 * Sets the game status and shows the results.
 	 *
 	 * @param result the game status
 	 */
 	protected void gameStatus(GameStatus result) {
 		timeline.stop();
-		levelView.screenFade(5, () -> {
-			FadeTransition fadeTransition = new FadeTransition(Duration.seconds(2), root);
-			Rectangle background = new Rectangle(Main.getScreenWidth(), Main.getScreenHeight(), Color.BLACK);
-			root.getChildren().addFirst(background);
-			fadeTransition.setFromValue(0);
-			fadeTransition.setToValue(1.0);
-			fadeTransition.play();
+		levelView.fadeObjectOnScreen(5, root, () -> {
+			root.getChildren().clear();
+			FadeTransition fadeToBlack = new FadeTransition(Duration.seconds(2), root);
+			Rectangle blackBackground = new Rectangle(Main.getScreenWidth(), Main.getScreenHeight(), Color.BLACK);
+			root.getChildren().addFirst(blackBackground);
+			fadeToBlack.setFromValue(0);
+			fadeToBlack.setToValue(1.0);
+			fadeToBlack.play();
 
 			Timeline volumeFade = new Timeline(
 					new KeyFrame(Duration.ZERO, new KeyValue(AudioController.getMediaPlayer().volumeProperty(), AudioController.getMusicVolume())),
@@ -463,7 +472,7 @@ public abstract class LevelParent {
 			);
 			volumeFade.play();
 
-			fadeTransition.setOnFinished(event -> {
+			fadeToBlack.setOnFinished(event -> {
 				audioController.stopBGM();
 				Screen_GameEnded end = new Screen_GameEnded((Stage) scene.getWindow(), Main.getScreenWidth(), Main.getScreenHeight());
 				end.setResults(result);

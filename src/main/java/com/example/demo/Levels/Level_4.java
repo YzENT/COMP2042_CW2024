@@ -13,6 +13,11 @@ public class Level_4 extends LevelParent{
     private static final String BACKGROUND_IMAGE_NAME = "/com/example/demo/images/backgrounds/level4.png";
 
     /**
+     * The custom message to appear on screen when user first enters level.
+     */
+    private static final String MESSAGE_ON_SCREEN = "Survive";
+
+    /**
      * The path to the nuclear missile SFX.
      * Source: <a href="https://www.soundsnap.com/missile_shooting_light_1">Link to nuclear missile sfx</a>
      */
@@ -50,7 +55,7 @@ public class Level_4 extends LevelParent{
      * @param screenWidth the width of the screen
      */
     public Level_4(double screenHeight, double screenWidth) {
-        super(BACKGROUND_IMAGE_NAME, screenHeight, screenWidth, PLAYER_INITIAL_HEALTH, 0);
+        super(BACKGROUND_IMAGE_NAME, screenHeight, screenWidth, PLAYER_INITIAL_HEALTH, 0, MESSAGE_ON_SCREEN);
         super.getLevelView().initializeTimerLabel();
     }
 

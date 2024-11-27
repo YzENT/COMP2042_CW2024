@@ -20,6 +20,11 @@ public class Level_2 extends LevelParent {
     private static final String NEXT_LEVEL = "com.example.demo.Levels.Level_3";
 
     /**
+     * The custom message to appear on screen when user first enters level.
+     */
+    private static final String MESSAGE_ON_SCREEN = "Defeat 20 enemies";
+
+    /**
      * The number of kills required to advance to the next level.
      */
     private static final int KILLS_TO_ADVANCE = 20;
@@ -51,7 +56,7 @@ public class Level_2 extends LevelParent {
      * @param screenWidth the width of the screen
      */
     public Level_2(double screenHeight, double screenWidth) {
-        super(BACKGROUND_IMAGE_NAME, screenHeight, screenWidth, PLAYER_INITIAL_HEALTH, KILLS_TO_ADVANCE);
+        super(BACKGROUND_IMAGE_NAME, screenHeight, screenWidth, PLAYER_INITIAL_HEALTH, KILLS_TO_ADVANCE, MESSAGE_ON_SCREEN);
     }
 
     /**

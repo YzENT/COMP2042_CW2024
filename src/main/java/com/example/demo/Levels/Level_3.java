@@ -19,6 +19,11 @@ public class Level_3 extends LevelParent {
 	private static final String NEXT_LEVEL = "com.example.demo.Levels.Level_4";
 
 	/**
+	 * The custom message to appear on screen when user first enters level.
+	 */
+	private static final String MESSAGE_ON_SCREEN = "Defeat the Boss";
+
+	/**
 	 * The initial health of the player.
 	 */
 	private static final int PLAYER_INITIAL_HEALTH = 5;
@@ -40,7 +45,7 @@ public class Level_3 extends LevelParent {
 	 * @param screenWidth the width of the screen
 	 */
 	public Level_3(double screenHeight, double screenWidth) {
-		super(BACKGROUND_IMAGE_NAME, screenHeight, screenWidth, PLAYER_INITIAL_HEALTH, 0);
+		super(BACKGROUND_IMAGE_NAME, screenHeight, screenWidth, PLAYER_INITIAL_HEALTH, 0, MESSAGE_ON_SCREEN);
 	}
 
 	/**
