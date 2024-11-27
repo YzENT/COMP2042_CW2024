@@ -208,4 +208,22 @@ public class LevelView {
 	public Label getKillCounterLabel() {
 		return killCounterLabel;
 	}
+
+	/**
+	 * Gets the timer label.
+	 *
+	 * @return the timer label
+	 */
+	public Label getTimerLabel() {
+		return timerLabel;
+	}
+
+	/**
+	 * Gets the entry message label.
+	 *
+	 * @return the custom message label
+	 */
+	public Label getEntryMessageLabel() {
+		return entryMessageLabel;
+	}
 }

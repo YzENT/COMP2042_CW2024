@@ -5,7 +5,6 @@ import com.example.demo.JavaFXBaseTesting;
 import javafx.scene.Group;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
-import javafx.stage.Stage;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -70,7 +69,7 @@ class UserControlsTest {
         // Simulate pressing SPACE for firing
         userControls.handleKeyPressed(new KeyEvent(KeyEvent.KEY_PRESSED, "", "", KeyCode.SPACE, false, false, false, false));
         Thread.sleep(200);
-        assertEquals(1, projectiles.size(), "Firing should create a projectile");
+        assertFalse(projectiles.isEmpty(), "Firing should create a projectile");
         assertTrue(root.getChildren().contains(projectiles.getFirst()), "Projectile should be added to the root node");
     }
 

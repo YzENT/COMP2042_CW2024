@@ -1,6 +1,5 @@
-package com.example.demo.Actor;
+package com.example.demo.Actor.Plane;
 
-import com.example.demo.Actor.Plane.Plane_Enemy;
 import com.example.demo.JavaFXBaseTesting;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

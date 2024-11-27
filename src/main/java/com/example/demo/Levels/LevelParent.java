@@ -136,7 +136,13 @@ public abstract class LevelParent {
 	 * Enum representing the game status.
 	 */
 	public enum GameStatus {
+		/**
+		 * User wins the game.
+		 */
 		VICTORY,
+		/**
+		 * User loses the game.
+		 */
 		DEFEAT
 	}
 
@@ -148,6 +154,7 @@ public abstract class LevelParent {
 	 * @param screenWidth the width of the screen
 	 * @param playerInitialHealth the initial health of the player
 	 * @param killsToAdvance the number of kills required to advance to the next level
+	 * @param messageOnScreen the custom message each level has to tell what the user's goal is
 	 */
 	public LevelParent(String backgroundImageName, double screenHeight, double screenWidth, int playerInitialHealth, int killsToAdvance, String messageOnScreen) {
 		this.root = new Group();

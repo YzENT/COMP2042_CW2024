@@ -1,5 +1,8 @@
 package com.example.demo.Actor.WeaponProjectiles;
 
+/**
+ * Class representing a nuclear projectile in the game.
+ */
 public class Projectile_Nuclear extends Projectile{
 
     /**
@@ -15,7 +18,7 @@ public class Projectile_Nuclear extends Projectile{
     /**
      * The horizontal velocity of the nuclear projectile.
      */
-    private static final int HORIZONTAL_VELOCITY = -10;
+    private static final int HORIZONTAL_VELOCITY = -20;
 
     /**
      * The health of the nuclear projectile.

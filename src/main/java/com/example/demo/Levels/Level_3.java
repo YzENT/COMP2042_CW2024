@@ -93,7 +93,7 @@ public class Level_3 extends LevelParent {
 	 *
 	 * @return the boss plane
 	 */
-	private Plane_Boss createBoss() {
+	protected Plane_Boss createBoss() {
 		planeBoss = new Plane_Boss();
 		getRoot().getChildren().addAll(
 				planeBoss.getShieldImage(),

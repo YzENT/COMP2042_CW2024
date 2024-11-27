@@ -1,5 +1,6 @@
 package com.example.demo.Levels;
 
+import com.example.demo.Actor.Plane.Plane_Boss;
 import com.example.demo.JavaFXBaseTesting;
 import javafx.application.Platform;
 import javafx.stage.Stage;
@@ -17,6 +18,7 @@ class LevelTest {
     private Level_1 level1;
     private Level_2 level2;
     private Level_3 level3;
+    private Level_4 level4;
     private Stage stage;
 
     @BeforeEach
@@ -27,6 +29,7 @@ class LevelTest {
             level1 = new Level_1(750, 1300);
             level2 = new Level_2(750, 1300);
             level3 = new Level_3(750, 1300);
+            level4 = new Level_4(750, 1300);
             latch.countDown();
         });
         latch.await();
@@ -48,6 +51,12 @@ class LevelTest {
     void testLevel3Initialization() {
         assertNotNull(level3, "Level 3 should be initialized");
         assertEquals(5, level3.getUser().getHealth(), "Player initial health should be 5");
+    }
+
+    @Test
+    void testLevel4Initialization() {
+        assertNotNull(level4, "Level 4 should be initialized");
+        assertEquals(5, level4.getUser().getHealth(), "Player initial health should be 5");
     }
 
     @Test
@@ -75,6 +84,15 @@ class LevelTest {
         }
         level3.checkIfGameOver();
         assertTrue(level3.userIsDestroyed(), "User should be destroyed after taking 5 damage");
+    }
+
+    @Test
+    void testLevel4GameOver() {
+        for (int i = 0; i < 5; i++) {
+            level4.getUser().takeDamage();
+        }
+        level4.checkIfGameOver();
+        assertTrue(level4.userIsDestroyed(), "User should be destroyed after taking 5 damage");
     }
 
     @Test
@@ -109,11 +127,13 @@ class LevelTest {
     void testLevel3AdvanceToNextLevel() throws InterruptedException {
         CountDownLatch latch = new CountDownLatch(1);
         Platform.runLater(() -> {
-            for (int i = 0; i < 1; i++) {
-                level3.getUser().incrementKillCount();
+            Plane_Boss boss = level3.createBoss();
+            int bossTotalHealth = boss.getHealth();
+            boss.setShielded(false);
+            for (int i = 0; i < bossTotalHealth; i++) {
+                boss.takeDamage();
             }
-            level3.checkIfGameOver();
-            assertTrue(level3.userHasReachedKillTarget(), "User should have reached the kill target to advance to the next level");
+            assertTrue(boss.isDestroyed(), "Boss should be destroyed to reach next level.");
             latch.countDown();
         });
         latch.await();

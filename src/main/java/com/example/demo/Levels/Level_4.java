@@ -4,6 +4,9 @@ import com.example.demo.Actor.WeaponProjectiles.Projectile_Nuclear;
 import com.example.demo.ActorsLogic.ActiveActorDestructible;
 import com.example.demo.Controller.Main;
 
+/**
+ * Class representing the fourth level of the game.
+ */
 public class Level_4 extends LevelParent{
 
     /**
