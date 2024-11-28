@@ -50,12 +50,12 @@ public class Level_3 extends LevelParent {
 	 */
 	@Override
 	protected void checkIfGameOver() {
-		if (getEnemySpawnCooldown() >= 0) return;
+		if (getEnemySpawnCooldown() > 0) return;
 		if (userIsDestroyed()) {
 			gameStatus(GameStatus.DEFEAT);
 			return;
 		}
-		if (planeBoss.isDestroyed()) {
+		if (planeBoss != null && planeBoss.isDestroyed()) {
 			goToNextLevel(NEXT_LEVEL);
 		}
 	}
