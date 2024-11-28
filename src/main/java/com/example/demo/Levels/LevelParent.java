@@ -133,6 +133,11 @@ public abstract class LevelParent {
 	private final List<ActiveActorDestructible> enemyProjectiles;
 
 	/**
+	 * The cooldown period for spawning enemies.
+	 */
+	private double enemySpawnCooldown = 30;
+
+	/**
 	 * Enum representing the game status.
 	 */
 	public enum GameStatus {
@@ -280,7 +285,11 @@ public abstract class LevelParent {
 	 * Updates the scene for each frame.
 	 */
 	private void updateScene() {
-		spawnEnemyUnits();
+		if (enemySpawnCooldown > 0) {
+			enemySpawnCooldown--;
+		} else {
+			spawnEnemyUnits();
+		}
 		updateActors();
 		generateEnemyFire();
 		handleEnemyPenetration();
@@ -518,6 +527,13 @@ public abstract class LevelParent {
 	}
 
 	/**
+	 * Resets the spawn timer to a random value (0.0 - 30.0).
+	 */
+	protected void resetEnemyCooldown() {
+		enemySpawnCooldown = Math.random() * 30;
+	}
+
+	/**
 	 * Checks if an enemy has penetrated defenses.
 	 *
 	 * @param enemy the enemy unit
@@ -611,9 +627,18 @@ public abstract class LevelParent {
 	/**
 	 * Gets the MILLISECOND_DELAY value for this class.
 	 *
-	 * @return the MILLISECOND_DELAY value for this class.
+	 * @return the MILLISECOND_DELAY value for this class
 	 */
 	public static double getProgramDelay() {
 		return MILLISECOND_DELAY;
+	}
+
+	/**
+	 * Gets the enemy spawn cooldown value.
+	 *
+	 * @return the cooldown for enemy spawning.
+	 */
+	protected double getEnemySpawnCooldown() {
+		return enemySpawnCooldown;
 	}
 }

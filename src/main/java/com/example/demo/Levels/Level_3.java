@@ -34,11 +34,6 @@ public class Level_3 extends LevelParent {
 	private Plane_Boss planeBoss;
 
 	/**
-	 * The cooldown period for spawning enemies.
-	 */
-	private static double spawnCooldown = 30;
-
-	/**
 	 * Constructor to initialize Level_3.
 	 *
 	 * @param screenHeight the height of the screen
@@ -55,7 +50,7 @@ public class Level_3 extends LevelParent {
 	 */
 	@Override
 	protected void checkIfGameOver() {
-		if (spawnCooldown > 0) return; // prevent error if planeBoss = null
+		if (getEnemySpawnCooldown() >= 0) return;
 		if (userIsDestroyed()) {
 			gameStatus(GameStatus.DEFEAT);
 			return;
@@ -72,8 +67,7 @@ public class Level_3 extends LevelParent {
 	 */
 	@Override
 	protected void spawnEnemyUnits() {
-		if (spawnCooldown > 0) spawnCooldown--;
-		if (getCurrentNumberOfEnemies() == 0 && spawnCooldown <= 0) {
+		if (getCurrentNumberOfEnemies() == 0 && super.getEnemySpawnCooldown() <= 0) {
 			addEnemyUnit(createBoss());
 		}
 	}

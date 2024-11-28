@@ -32,11 +32,6 @@ public class Level_4 extends LevelParent{
     private static final int PLAYER_INITIAL_HEALTH = 5;
 
     /**
-     * The cooldown period for spawning missiles.
-     */
-    private static double missileSpawnCooldown = 50;
-
-    /**
      * The targeted survival time in seconds.
      */
     private static final int SURVIVAL_SEC = 60;
@@ -88,10 +83,6 @@ public class Level_4 extends LevelParent{
      */
     @Override
     protected void spawnEnemyUnits() {
-        if (missileSpawnCooldown > 0) {
-            missileSpawnCooldown--;
-            return;
-        }
         if (Math.random() < SPAWN_PROBABILITY) {
             spawnMissiles();
         }
@@ -118,7 +109,7 @@ public class Level_4 extends LevelParent{
 
     /**
      * Method to update user's survived time.
-     * If it's more than half of the time, difficulty increases.
+     * If user survived half of requested time, difficulty increases.
      */
     private void updateTimer() {
         survivedTime += getTimeline().getCycleDuration().toSeconds();

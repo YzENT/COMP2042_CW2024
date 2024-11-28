@@ -50,11 +50,6 @@ public class Level_1 extends LevelParent {
 	private static final double ENEMY_FIRE_RATE = .01;
 
 	/**
-	 * The cooldown period for spawning enemies.
-	 */
-	private double spawnCooldown = 30;
-
-	/**
 	 * Constructor to initialize Level_1.
 	 *
 	 * @param screenHeight the height of the screen
@@ -87,16 +82,11 @@ public class Level_1 extends LevelParent {
 	 */
 	@Override
 	protected void spawnEnemyUnits() {
-		if (spawnCooldown > 0) {
-			spawnCooldown--;
-			return;
-		}
-
 		if (getCurrentNumberOfEnemies() < MAX_ENEMIES_IN_FRAME && Math.random() < ENEMY_SPAWN_PROBABILITY) {
 			double newEnemyInitialYPosition = Math.random() * getEnemyMaximumYPosition();
 			ActiveActorDestructible newEnemy = new Plane_Enemy(getScreenWidth(), newEnemyInitialYPosition, ENEMY_FIRE_RATE);
 			addEnemyUnit(newEnemy);
-			resetSpawnTimer();
+			super.resetEnemyCooldown();
 		}
 	}
 
@@ -108,12 +98,5 @@ public class Level_1 extends LevelParent {
 	@Override
 	protected LevelView instantiateLevelView() {
 		return new LevelView(getRoot(), PLAYER_INITIAL_HEALTH);
-	}
-
-	/**
-	 * Resets the spawn timer to a random value (0.0 - 30.0).
-	 */
-	private void resetSpawnTimer() {
-		spawnCooldown = Math.random() * 30;
 	}
 }

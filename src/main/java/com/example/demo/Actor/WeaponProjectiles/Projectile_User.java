@@ -51,11 +51,11 @@ public class Projectile_User extends Projectile {
 
 	/**
 	 * Checks if the projectile has travelled too far.
+	 * This has to be placed independently because projectile_user travels in different direction from other projectiles.
 	 *
 	 * @return true if the projectile has travelled too far, false otherwise
 	 */
 	private boolean maximumTravelDistanceAllowed() {
-		// Divide by 2 so projectile doesn't fly too far
 		return getTranslateX() > (double) Main.getScreenWidth() / 2;
 	}
 

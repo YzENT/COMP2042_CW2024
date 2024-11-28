@@ -105,7 +105,7 @@ public class LevelView {
 		if (killRequired != 0) {
 			killCounterLabel.setText("Kills :" + kills + "/" + killRequired);
 		} else {
-			killCounterLabel.setText("Kills :" + kills);
+			killCounterLabel.setText(null);
 		}
 	}
 

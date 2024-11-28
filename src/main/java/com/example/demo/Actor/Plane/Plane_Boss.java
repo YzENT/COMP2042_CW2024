@@ -327,7 +327,7 @@ public class Plane_Boss extends Plane {
 	 * @return true if the shield is exhausted, false otherwise
 	 */
 	private boolean shieldExhausted() {
-		return framesWithShieldActivated == MAX_FRAMES_WITH_SHIELD;
+		return framesWithShieldActivated >= MAX_FRAMES_WITH_SHIELD;
 	}
 
 	/**
