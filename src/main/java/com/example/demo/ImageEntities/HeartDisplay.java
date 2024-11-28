@@ -1,9 +1,10 @@
 package com.example.demo.ImageEntities;
 
-import java.util.Objects;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
+
+import java.util.Objects;
 
 /**
  * Class representing a display of heart images in the game.
@@ -14,11 +15,6 @@ public class HeartDisplay {
 	 * The name of the heart image file.
 	 */
 	private static final String HEART_IMAGE_NAME = "/com/example/demo/images/misc/heart.png";
-
-	/**
-	 * The heart image object.
-	 */
-	private static final Image HEART_IMAGE = new Image(Objects.requireNonNull(HeartDisplay.class.getResource(HEART_IMAGE_NAME)).toExternalForm());
 
 	/**
 	 * The height of the heart image.
@@ -74,7 +70,7 @@ public class HeartDisplay {
 	 */
 	private void initializeHearts() {
 		for (int i = 0; i < numberOfHeartsToDisplay; i++) {
-			ImageView heart = new ImageView(HEART_IMAGE);
+			ImageView heart = new ImageView(new Image(Objects.requireNonNull(getClass().getResource(HEART_IMAGE_NAME)).toExternalForm()));
 			heart.setFitHeight(HEART_HEIGHT);
 			heart.setPreserveRatio(true);
 			container.getChildren().add(heart);

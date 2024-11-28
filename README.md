@@ -79,12 +79,14 @@ To only compile the jar file and not run the tests,
 ### Information in-game
 - A health bar has been added for `boss` <b>only</b> for user to easier understand the status of the boss.
 - Kill count on top right has been added for user to easily understand the target they need to reach in that specific level.
+- A timer will be created for levels that is time based.
 
 ### Destroyable Projectiles
 - Projectile/Weapons now have been made destroyable in-game.
 
-### Horizontal Movement
+### Movements
 - User's can now move horizontally in-game, with proper boundaries set to not exceed the dimension of the application.
+- Game now checks for active keys now instead of press/release mechanism to ensure smooth gameplay.
 
 ### Non-hardcoded controls
 - User's controls are now non-hardcoded, and it's stored in a `.properties` file under `<user>\Documents\SkyBattle_20617094`.
@@ -98,9 +100,6 @@ To only compile the jar file and not run the tests,
 
 ### Visual/Sound effects
 - Elements above have been introduced to the game to improve user's experience.
-
-### Smoother User Controls
-- Game now checks for active keys now instead of press/release mechanism to ensure smooth gameplay.
 
 ## Implemented but Not Working Properly
 
@@ -184,11 +183,9 @@ KeyFrame gameLoop = new KeyFrame(Duration.millis(MILLISECOND_DELAY), e -> update
 
 ### `Plane_Boss.java`
 - Increased fire rate and movement rate to increase difficulty.
-- Introduced cooldown before spawning when user first enters to level (user is exiting transition).
 - Introduced minimum frames boss should have shield deactivated.
 - Modified `takeDamage()` to show explosion when `health == 0`. 
-- Modified `showShield()` to show shieldImage when it is created in `Plane_Boss.java`.
-- Modified `hideShield()` to hide shieldImage.
+- Modified `showShield()` and `hideShield()`to show and hide shieldImage.
 - Modified `updateShield()` to sync position of shield with boss.
 - Modified `shieldShouldBeActivated()` to check if minimum frames without shield is achieved too.
 - Removed `getProjectileInitialPosition()` as code duplication from superclass.
@@ -210,6 +207,7 @@ KeyFrame gameLoop = new KeyFrame(Duration.millis(MILLISECOND_DELAY), e -> update
 - Modified default constructor to accept arguments `(int) health, (int) horizontalVelocity`
   - `health` is passed here, so it can check and destroy if it's 0.
   - `horizontalVelocity` is passed here so abstract method `updatePosition()` can be undeclared and refactored.
+    - This was done because all projectiles only move horizontally.
 - Modified `takeDamage()` to check if health is at 0. If it is then `destroy`.
 - Undeclared `updatePosition()` from abstract method as all subclasses share the same code.
 - Created `updateActor()` so it gets called every frame.
@@ -218,15 +216,11 @@ KeyFrame gameLoop = new KeyFrame(Duration.millis(MILLISECOND_DELAY), e -> update
 
 ### `Projectile_User.java`
 - Overrode `updateActor()` in superclass as methods used are slightly different.
-- Created `maximumTravelDistanceAllowed()` instead of using `outOfBounds()` in `Projectile.java` as they travel in different directions.
+- Created `maximumTravelDistanceAllowed()` instead of using `outOfBounds()` from superclass `Projectile.java` as they travel in different directions.
 
 ### `Projectile_Boss.java`, `Projectile_Enemy.java`, `Projectile_User.java`
 - Now passes health and horizontalVelocity to superclass `Projectile.java`.
-- Moved both `updatePosition()` and `updateActor()` to superclass.
-
-### `HeartDisplay.java`
-- Created variable `Image HEART_IMAGE` to read from `String HEART_IMAGE_NAME`
-- Modified `initializeHearts()` so that it doesn't have to initialize a new `HEART_IMAGE` everytime when it's called, just use static variable.
+- Removed both `updatePosition()` and `updateActor()` as they exist in superclass.
 
 ### `ShieldImage.java`
 - Created `updateShieldCoordinates()` to update the shield's position based on boss' coordinates.
@@ -234,14 +228,12 @@ KeyFrame gameLoop = new KeyFrame(Duration.millis(MILLISECOND_DELAY), e -> update
 ### `Main.java`
 - Introduced `keyBindings` variable to store key binds for user controls.
 - Modified `start()` to now show `Screen_MainMenu` instead of going through `controller` and going to level directly.
-- Created `ensureConfigFileExists()`, `createParentDirectory()`, `writeDefaultConfig()`, `setKeyBindings()` to store and write configs.
+- Created `ensureConfigFileExists()`, `createParentDirectory()`, `writeDefaultConfig()`, `setKeyBindings()`, etc… to store and write configs.
 
 ### `Level_1.java`
 - `(int)KILLS_TO_ADVANCE` is now passed to superclass for logic check.
+  - `userHasReachedKillTarget()` is now moved to superclass.
 - `initializeFriendlyUnits()` is now moved to superclass due to code duplication.
-- `userHasReachedKillTarget()` is now moved to superclass due to code duplication.
-- Introduced spawn cooldown to since user will be exiting transition when stage is set.
-  - Enemies are only spawned when the cooldown has reached 0.
 
 ### `Level_2.java`
 - Same changes as `Level_1.java`, just increased difficulty.
@@ -258,7 +250,7 @@ KeyFrame gameLoop = new KeyFrame(Duration.millis(MILLISECOND_DELAY), e -> update
 - Modified default constructor to accept `(int)KILLS_TO_ADVANCE` and `(String)messageOnScreen`.
   - `userHasReachedKillTarget()` in subclasses has been moved to here, to check for `KILLS_TO_ADVANCE`.
   - `messageOnScreen` is passed so it can call `LevelView.java` to show the message.
-- Undeclared `initializeFriendlyUnits()` from abstract due to code duplication.
+- Undeclared `initializeFriendlyUnits()` from abstract due to code duplication from subclass. It is now moved to this class.
 - Modified `initializeScene()` to send `Runnable` actions to `Screen_PauseMenu`, as well as initializing other elements (`song, kill count`).
 - Modified `initializeBackground()` to handle key press/release in another function.
 - Modified `updateLevelView()` to update kill count's label too.
