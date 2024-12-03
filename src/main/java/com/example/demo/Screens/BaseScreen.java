@@ -16,29 +16,86 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import javafx.scene.text.Text;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.util.Duration;
-import com.example.demo.Initialize.Controller;
+import com.example.demo.Controller.AudioController;
+import com.example.demo.Controller.LevelController;
 
 /**
  * Abstract class representing a base screen in the game.
  */
 public abstract class BaseScreen {
 
+    /**
+     * The stage for the screen.
+     */
     protected final Stage stage;
+
+    /**
+     * The width of the screen.
+     */
     protected final int SCREEN_WIDTH;
+
+    /**
+     * The height of the screen.
+     */
     protected final int SCREEN_HEIGHT;
 
-    // Font for the arcade style
+    /**
+     * Font for the arcade style.
+     * Source: <a href="https://www.fontspace.com/press-start-2p-font-f11591">Link for arcade font</a>
+     */
     protected static final Font arcadeFont = Font.loadFont(BaseScreen.class.getResourceAsStream("/com/example/demo/fonts/PressStart2P-vaV7.ttf"), 0);
-    public static final String fontName = arcadeFont.getName();
-    private static final double BUTTON_SCALE_NEW = 1.2;
-    private static final double BUTTON_SCALE_OLD = 1.0;
-    private static final double TRANSITION_DURATION = 0.5;
-    private static final double BUTTON_FONT_SIZE = 30;
-    private static final double SHADOW_RADIUS = 10;
-    private final DropShadow buttonShadow;
-    private final Controller controller;
 
+    /**
+     * The name of the font.
+     */
+    public static final String fontName = arcadeFont.getName();
+
+    /**
+     * The new scale for buttons when hovered.
+     */
+    private static final double BUTTON_SCALE_NEW = 1.2;
+
+    /**
+     * The old scale for buttons when not hovered.
+     */
+    private static final double BUTTON_SCALE_OLD = 1.0;
+
+    /**
+     * The duration of the transition effect for buttons.
+     */
+    private static final double BUTTON_TRANSITION_DURATION = 0.5;
+
+    /**
+     * The font size for buttons.
+     */
+    private static final double BUTTON_FONT_SIZE = 30;
+
+    /**
+     * The radius of the drop shadow effect for buttons.
+     */
+    private static final double BUTTON_SHADOW_RADIUS = 10;
+
+    /**
+     * The drop shadow effect for buttons.
+     */
+    private final DropShadow buttonShadow;
+
+    /**
+     * The controller for managing the audios.
+     */
+    private final AudioController audioController;
+
+    /**
+     * The controller for managing the levels.
+     */
+    private final LevelController levelController;
+
+    /**
+     * Cache for storing instances of screens.
+     */
     private static final Map<Class<?>, BaseScreen> screenCache = new HashMap<>();
 
     /**
@@ -53,7 +110,8 @@ public abstract class BaseScreen {
         this.SCREEN_WIDTH = SCREEN_WIDTH;
         this.SCREEN_HEIGHT = SCREEN_HEIGHT;
         this.buttonShadow = createButtonShadow();
-        this.controller = new Controller(stage);
+        this.audioController = new AudioController();
+        this.levelController = new LevelController(stage);
     }
 
     /**
@@ -137,7 +195,7 @@ public abstract class BaseScreen {
      * @param node the node to add the effect to
      */
     protected void addEffect(Node node) {
-        ScaleTransition st = new ScaleTransition(Duration.seconds(TRANSITION_DURATION), node);
+        ScaleTransition st = new ScaleTransition(Duration.seconds(BUTTON_TRANSITION_DURATION), node);
         st.setToX(BUTTON_SCALE_NEW);
         st.setToY(BUTTON_SCALE_NEW);
         st.setAutoReverse(true);
@@ -170,28 +228,28 @@ public abstract class BaseScreen {
      * @param musicPath the path to the music file
      */
     protected void playBGM(String musicPath) {
-        controller.playBGM(musicPath);
+        audioController.playBGM(musicPath);
     }
 
     /**
      * Stops the background music.
      */
     protected void stopBGM() {
-        controller.stopBGM();
+        audioController.stopBGM();
     }
 
     /**
      * Pauses the background music.
      */
     protected void pauseBGM() {
-        controller.pauseBGM();
+        audioController.pauseBGM();
     }
 
     /**
      * Resumes the background music.
      */
     protected void resumeBGM() {
-        controller.resumeBGM();
+        audioController.resumeBGM();
     }
 
     /**
@@ -200,14 +258,14 @@ public abstract class BaseScreen {
      * @param sfxPath the path to the sound effect file
      */
     protected void playSFX(String sfxPath) {
-        controller.playSFX(sfxPath);
+        audioController.playSFX(sfxPath);
     }
 
     /**
      * Stops the sound effect.
      */
     protected void stopSFX() {
-        controller.stopSFX();
+        audioController.stopSFX();
     }
 
     /**
@@ -254,7 +312,7 @@ public abstract class BaseScreen {
      */
     protected void startLevel(String levelClassName) {
         try {
-            controller.goToLevel(levelClassName);
+            levelController.goToLevel(levelClassName);
         } catch (Exception e) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setContentText(e.getClass().toString());
@@ -270,7 +328,7 @@ public abstract class BaseScreen {
     protected DropShadow createButtonShadow() {
         DropShadow shadow = new DropShadow();
         shadow.setColor(Color.WHITE);
-        shadow.setRadius(SHADOW_RADIUS);
+        shadow.setRadius(BUTTON_SHADOW_RADIUS);
         return shadow;
     }
 
@@ -281,5 +339,46 @@ public abstract class BaseScreen {
      */
     protected void disableMouseInput(Scene scene) {
         scene.addEventFilter(MouseEvent.ANY, Event::consume);
+    }
+
+    /**
+     * Configures scene to allow WASD keys to mimic arrow keys globally.
+     *
+     * @param scene the Scene to configure
+     */
+    public void enableWASDNavigation(Scene scene) {
+        scene.addEventFilter(KeyEvent.KEY_PRESSED, event -> {
+            KeyCode code = event.getCode();
+            KeyEvent newEvent = null;
+
+            switch (code) {
+                case W -> newEvent = new KeyEvent(
+                        event.getEventType(), event.getCharacter(), event.getText(), KeyCode.UP,
+                        event.isShiftDown(), event.isControlDown(), event.isAltDown(), event.isMetaDown()
+                );
+                case A -> newEvent = new KeyEvent(
+                        event.getEventType(), event.getCharacter(), event.getText(), KeyCode.LEFT,
+                        event.isShiftDown(), event.isControlDown(), event.isAltDown(), event.isMetaDown()
+                );
+                case S -> newEvent = new KeyEvent(
+                        event.getEventType(), event.getCharacter(), event.getText(), KeyCode.DOWN,
+                        event.isShiftDown(), event.isControlDown(), event.isAltDown(), event.isMetaDown()
+                );
+                case D -> newEvent = new KeyEvent(
+                        event.getEventType(), event.getCharacter(), event.getText(), KeyCode.RIGHT,
+                        event.isShiftDown(), event.isControlDown(), event.isAltDown(), event.isMetaDown()
+                );
+            }
+
+            if (newEvent != null) {
+                event.consume(); // Consume the original WASD key press
+
+                // Send the new event to the currently focused node
+                if (scene.getFocusOwner() != null) {
+                    scene.getFocusOwner().fireEvent(newEvent);
+                }
+            }
+
+        });
     }
 }

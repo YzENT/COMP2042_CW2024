@@ -12,9 +12,24 @@ import javafx.stage.Stage;
  */
 public class Screen_PauseMenu extends BaseScreen {
 
+    /**
+     * The text of the title.
+     */
     private static final String TITLE_TEXT = "Game Paused";
+
+    /**
+     * The size of the title text.
+     */
     private static final double TITLE_SIZE = 50;
+
+    /**
+     * The runnable to be executed when the game is resumed.
+     */
     private static Runnable onResume;
+
+    /**
+     * The game scene to be resumed later.
+     */
     private static Scene gameScene;
 
     /**
@@ -46,6 +61,7 @@ public class Screen_PauseMenu extends BaseScreen {
         Scene scene = new Scene(vbox, SCREEN_WIDTH, SCREEN_HEIGHT);
         stage.setScene(scene);
         disableMouseInput(scene);
+        enableWASDNavigation(scene);
     }
 
     /**

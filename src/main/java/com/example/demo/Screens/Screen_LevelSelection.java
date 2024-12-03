@@ -1,9 +1,11 @@
 package com.example.demo.Screens;
 
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.layout.VBox;
+import javafx.scene.layout.HBox;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
@@ -12,8 +14,19 @@ import javafx.stage.Stage;
  */
 public class Screen_LevelSelection extends BaseScreen {
 
+    /**
+     * The text of the title.
+     */
     private static final String TITLE_TEXT = "Select Level";
-    private static final double TITLE_SIZE = 50;
+
+    /**
+     * The size of the title text.
+     */
+    private static final double TITLE_SIZE = 80;
+
+    /**
+     * The class name of the previous screen.
+     */
     private static String prevScreen;
 
     /**
@@ -35,14 +48,18 @@ public class Screen_LevelSelection extends BaseScreen {
         Text title = initializeTitle(TITLE_TEXT, TITLE_SIZE);
         Button[] buttons = initializeButtons();
 
-        VBox vbox = new VBox(70, title);
-        vbox.getChildren().addAll(buttons);
+        HBox levelButtons = new HBox(20, buttons[0], buttons[1], buttons[2], buttons[3]);
+        levelButtons.setAlignment(Pos.CENTER);
+        levelButtons.setPadding(new Insets(100));
+
+        VBox vbox = new VBox(20, title, levelButtons, buttons[4]);
         vbox.setAlignment(Pos.CENTER);
         vbox.setStyle("-fx-background-color: black;");
 
         Scene scene = new Scene(vbox, SCREEN_WIDTH, SCREEN_HEIGHT);
         stage.setScene(scene);
         disableMouseInput(scene);
+        enableWASDNavigation(scene);
     }
 
     /**
@@ -52,11 +69,12 @@ public class Screen_LevelSelection extends BaseScreen {
      */
     @Override
     protected Button[] initializeButtons() {
-        Button level1Button = createButton("Level 1", () -> goScreen_LoadingAnimation("com.example.demo.Levels.Level_1"));
-        Button level2Button = createButton("Level 2", () -> goScreen_LoadingAnimation("com.example.demo.Levels.Level_2"));
-        Button level3Button = createButton("Level 3", () -> goScreen_LoadingAnimation("com.example.demo.Levels.Level_3"));
+        Button level1Button = createButton("Easy", () -> goScreen_LoadingAnimation("com.example.demo.Levels.Level_1"));
+        Button level2Button = createButton("Medium", () -> goScreen_LoadingAnimation("com.example.demo.Levels.Level_2"));
+        Button level3Button = createButton("Hard", () -> goScreen_LoadingAnimation("com.example.demo.Levels.Level_3"));
+        Button level4Button = createButton("Extreme", () -> goScreen_LoadingAnimation("com.example.demo.Levels.Level_4"));
         Button backButton = createButton("Back", this::goScreen_PreviousScreen);
-        return new Button[]{level1Button, level2Button, level3Button, backButton};
+        return new Button[]{level1Button, level2Button, level3Button, level4Button, backButton};
     }
 
     /**

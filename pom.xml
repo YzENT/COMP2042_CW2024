@@ -62,7 +62,7 @@
           <execution>
             <id>default-cli</id>
             <configuration>
-              <mainClass>com.example.demo.Initialize.Main</mainClass>
+              <mainClass>com.example.demo.Controller.Main</mainClass>
             </configuration>
           </execution>
         </executions>
@@ -74,7 +74,7 @@
         <configuration>
           <archive>
             <manifest>
-              <mainClass>com.example.demo.Initialize.Main</mainClass>
+              <mainClass>com.example.demo.Controller.Main</mainClass>
             </manifest>
           </archive>
         </configuration>

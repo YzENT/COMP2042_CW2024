@@ -1,6 +1,6 @@
 package com.example.demo.Actor.WeaponProjectiles;
 
-import com.example.demo.Initialize.Main;
+import com.example.demo.Controller.Main;
 import com.example.demo.ActorsLogic.ActiveActorDestructible;
 
 /**
@@ -8,7 +8,14 @@ import com.example.demo.ActorsLogic.ActiveActorDestructible;
  */
 public abstract class Projectile extends ActiveActorDestructible {
 
+	/**
+	 * The health of the projectile.
+	 */
 	private int health;
+
+	/**
+	 * The horizontal velocity of the projectile.
+	 */
 	private final int horizontalVelocity;
 
 	/**
@@ -48,7 +55,7 @@ public abstract class Projectile extends ActiveActorDestructible {
 
 	/**
 	 * Updates the state of the projectile.
-	 * Destroys the projectile if it goes out of bounds.
+	 * Destroys the projectile if it has travelled out of bounds.
 	 */
 	public void updateActor() {
 		updatePosition();
@@ -69,10 +76,10 @@ public abstract class Projectile extends ActiveActorDestructible {
 	/**
 	 * Checks if the projectile is out of bounds.
 	 *
-	 * @return true if the projectile is out of bounds, false otherwise
+	 * @return true if the projectile has travelled out of bounds, false otherwise
 	 */
 	private boolean outOfBounds() {
-		return getTranslateX() > (double) Main.getScreenWidth() / 2;
+		return getTranslateX() < -Main.getScreenWidth();
 	}
 
 }

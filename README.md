@@ -69,7 +69,8 @@ To only compile the jar file and not run the tests,
 ## Implemented and Working Properly
 
 ### Keyboard Events Only
-- Users now can only navigate the application using keyboard, <b>ALL</b> mouse events are disabled.
+- Users now can only navigate the application using keyboard, <b>ALL</b> mouse events are disabled. 
+- WASD keys mimics arrow keys to navigate through buttons.
 
 ### Transition and Animations
 - Transition and animations have been added to the game to aid the user's visual experience. Such transitions are used in changing game screen, finishing the game, etc…
@@ -78,18 +79,20 @@ To only compile the jar file and not run the tests,
 ### Information in-game
 - A health bar has been added for `boss` <b>only</b> for user to easier understand the status of the boss.
 - Kill count on top right has been added for user to easily understand the target they need to reach in that specific level.
+- A timer will be created for levels that is time based.
 
 ### Destroyable Projectiles
 - Projectile/Weapons now have been made destroyable in-game.
 
-### Horizontal Movement
+### Movements
 - User's can now move horizontally in-game, with proper boundaries set to not exceed the dimension of the application.
+- Game now checks for active keys now instead of press/release mechanism to ensure smooth gameplay.
 
 ### Non-hardcoded controls
 - User's controls are now non-hardcoded, and it's stored in a `.properties` file under `<user>\Documents\SkyBattle_20617094`.
 
 ### New Levels
-- One new level has been added to the game.
+- Two new levels has been added to the game.
 
 ### Menu/Screens
 - New screens have been introduced to the game to improve the user's experience.
@@ -125,20 +128,24 @@ KeyFrame gameLoop = new KeyFrame(Duration.millis(MILLISECOND_DELAY), e -> update
 
 # New Java Classes
 
-| New Classes                    | Description                                                                                      | Package                                                                                            |
-|--------------------------------|--------------------------------------------------------------------------------------------------|----------------------------------------------------------------------------------------------------|
-| `UserControls.java`            | This class controls the user's action, mapping's are obtained from `Main.java`.                  | [com.example.demo.ActorsLogic](src/main/java/com/example/demo/ActorsLogic/UserControls.java)       |
-| `ExplosionImage.java`          | This class initializes the explosion effect used for Plane_Boss.java when it's defeated.         | [com.example.demo.ImageEntities](src/main/java/com/example/demo/ImageEntities/ExplosionImage.java) |
-| `Level_3.java`                 | The third level of the game. It is still the boss enemy as original, because level 2 was remade. | [com.example.demo.Levels](src/main/java/com/example/demo/Levels/Level_3.java)                      |
-| `BaseScreen.java`              | Abstract class for other screens used in the application.                                        | [com.example.demo.Screens](src/main/java/com/example/demo/Screens/BaseScreen.java)                 |
-| `Screen_GameEnded.java`        | Screen used to display results of the game (VICTORY, DEFEAT).                                    | [com.example.demo.Screens](src/main/java/com/example/demo/Screens/Screen_GameEnded.java)           |
-| `Screen_LevelSelection.java`   | Screen used to select the level user wants to navigate to.                                       | [com.example.demo.Screens](src/main/java/com/example/demo/Screens/Screen_LevelSelection.java)      |
-| `Screen_LoadingAnimation.java` | Screen used for loading animation between levels.                                                | [com.example.demo.Screens](src/main/java/com/example/demo/Screens/Screen_LoadingAnimation.java)    |
-| `Screen_MainMenu.java`         | Screen used to display the Main Menu for user to navigate to different screens.                  | [com.example.demo.Screens](src/main/java/com/example/demo/Screens/Screen_MainMenu.java)            |
-| `Screen_PauseMenu.java`        | Screen displayed when user pauses the game in middle of game.                                    | [com.example.demo.Screens](src/main/java/com/example/demo/Screens/Screen_PauseMenu.java)           |
-| `Screen_Settings.java`         | Screen used to display the settings user can navigate to (Controls, Volume).                     | [com.example.demo.Screens](src/main/java/com/example/demo/Screens/Screen_Settings.java)            |
-| `Controls.java`                | Screen used to display and modify the user's controls.                                           | [com.example.demo.Screens.Settings](src/main/java/com/example/demo/Screens/Settings/Controls.java) |
-| `Volume.java`                  | Screen used to display and modify the game's volume (SFX, Music)                                 | [com.example.demo.Screens.Settings](src/main/java/com/example/demo/Screens/Settings/Volume.java)   |
+| New Classes                    | Description                                                                                      | Package                                                                                                                    |
+|--------------------------------|--------------------------------------------------------------------------------------------------|----------------------------------------------------------------------------------------------------------------------------|
+| `UserControls.java`            | This class controls the user's action, mapping's are obtained from `Main.java`.                  | [com.example.demo.ActorsLogic](src/main/java/com/example/demo/ActorsLogic/UserControls.java)                               |
+| `ExplosionImage.java`          | This class initializes the explosion effect used for Plane_Boss.java when it's defeated.         | [com.example.demo.ImageEntities](src/main/java/com/example/demo/ImageEntities/ExplosionImage.java)                         |
+| `Level_3.java`                 | The third level of the game. It is still the boss enemy as original, because level 2 was remade. | [com.example.demo.Levels](src/main/java/com/example/demo/Levels/Level_3.java)                                              |
+| `Level_4.java`                 | The fourth level of the game. Objective is to not die while trying to dodge nuclear missiles.    | [com.example.demo.Levels](src/main/java/com/example/demo/Levels/Level_4.java)                                              |
+| `BaseScreen.java`              | Abstract class for other screens used in the application.                                        | [com.example.demo.Screens](src/main/java/com/example/demo/Screens/BaseScreen.java)                                         |
+| `Screen_GameEnded.java`        | Screen used to display results of the game (VICTORY, DEFEAT).                                    | [com.example.demo.Screens](src/main/java/com/example/demo/Screens/Screen_GameEnded.java)                                   |
+| `Screen_LevelSelection.java`   | Screen used to select the level user wants to navigate to.                                       | [com.example.demo.Screens](src/main/java/com/example/demo/Screens/Screen_LevelSelection.java)                              |
+| `Screen_LoadingAnimation.java` | Screen used for loading animation between levels.                                                | [com.example.demo.Screens](src/main/java/com/example/demo/Screens/Screen_LoadingAnimation.java)                            |
+| `Screen_MainMenu.java`         | Screen used to display the Main Menu for user to navigate to different screens.                  | [com.example.demo.Screens](src/main/java/com/example/demo/Screens/Screen_MainMenu.java)                                    |
+| `Screen_PauseMenu.java`        | Screen displayed when user pauses the game in middle of game.                                    | [com.example.demo.Screens](src/main/java/com/example/demo/Screens/Screen_PauseMenu.java)                                   |
+| `Screen_Settings.java`         | Screen used to display the settings user can navigate to (Controls, Volume).                     | [com.example.demo.Screens](src/main/java/com/example/demo/Screens/Screen_Settings.java)                                    |
+| `Controls.java`                | Screen used to display and modify the user's controls.                                           | [com.example.demo.Screens.Settings](src/main/java/com/example/demo/Screens/Settings/Controls.java)                         |
+| `Volume.java`                  | Screen used to display and modify the game's volume (SFX, Music).                                | [com.example.demo.Screens.Settings](src/main/java/com/example/demo/Screens/Settings/Volume.java)                           |
+| `LevelController.java`         | Controller used to start to the next level.                                                      | [com.example.demo.Controller](src/main/java/com/example/demo/Controller/LevelController.java)                              |
+| `AudioController.java`         | Controller used to control the audios.                                                           | [com.example.demo.Controller](src/main/java/com/example/demo/Controller/AudioController.java)                              |
+| `Projectile_Nuclear.java`      | The nuclear projectile class used in level 4.                                                    | [com.example.demo.Actor.WeaponProjectiles](src/main/java/com/example/demo/Actor/WeaponProjectiles/Projectile_Nuclear.java) |
 
 
 # Renamed Java Classes
@@ -167,6 +174,8 @@ KeyFrame gameLoop = new KeyFrame(Duration.millis(MILLISECOND_DELAY), e -> update
 
 `GameOverImage.java` & `WinImage.java` -> assets not used
 
+`Controller.java` -> detached to `AudioController.java` and `LevelController.java`
+
 # Modified Java Classes
 
 ## `com.example.demo.Actor`
@@ -174,22 +183,23 @@ KeyFrame gameLoop = new KeyFrame(Duration.millis(MILLISECOND_DELAY), e -> update
 
 ### `Plane_Boss.java`
 - Increased fire rate and movement rate to increase difficulty.
-- Introduced cooldown before spawning when user first enters to level (user is exiting transition).
 - Introduced minimum frames boss should have shield deactivated.
-- Modified `takeDamage()` to show explosion and remove health bar when `health == 0`. 
-- Modified `showShield()` to show shieldImage when it is created in `Plane_Boss.java`.
-- Modified `hideShield()` to hide shieldImage.
+- Modified `takeDamage()` to show explosion when `health == 0`. 
+- Modified `showShield()` and `hideShield()`to show and hide shieldImage.
 - Modified `updateShield()` to sync position of shield with boss.
-- Created `updateExplosion()` to sync position of explosion with boss.
+- Modified `shieldShouldBeActivated()` to check if minimum frames without shield is achieved too.
+- Removed `getProjectileInitialPosition()` as code duplication from superclass.
+- Created `updateExplosionCoordinates()` to sync position of explosion with boss.
   -  If not done so, the position of boss will be (0,0) when it is destroyed (null).
 - Created `createHealthBar()` to create health bar showing boss' health.
-- Created `updateHealthBar()` to update boss' health when it takes damage. Also updates position of health bar based on coordinates of boss.
-- Created `triggerExplosion()` to show explosion when boss is defeated.
-- Created `Boss_XCoordinate()` and `Boss_YCoordinate()` to obtain coordinate of the boss.
+- Created `updateHealthBar()` to update boss' health bar when it takes damage. Also updates position of health bar based on coordinates of boss.
+- Created `triggerExplosion()` to show explosion and remove health bar when boss is defeated.
+- Created `getBossXCoordinate()` and `getBossYCoordinate()` to obtain coordinate of the boss.
 
 ### `Plane_User.java`
-- Modified `updatePosition()` to introduce bounds on X-coordinate.
+- Modified `updatePosition()` to introduce upper and lower bounds on X-coordinate.
 - Modified `isMoving()` to also check for horizontalVelocity.
+- Modified `fireProjectile()` so that it plays a sound when firing projectiles.
 - Created `moveForward()` and `moveBackward()` for user to move horizontally.
 - Created `stopHorizontalMovement()` to stop user's horizontal movement.
 
@@ -197,42 +207,33 @@ KeyFrame gameLoop = new KeyFrame(Duration.millis(MILLISECOND_DELAY), e -> update
 - Modified default constructor to accept arguments `(int) health, (int) horizontalVelocity`
   - `health` is passed here, so it can check and destroy if it's 0.
   - `horizontalVelocity` is passed here so abstract method `updatePosition()` can be undeclared and refactored.
+    - This was done because all projectiles only move horizontally.
 - Modified `takeDamage()` to check if health is at 0. If it is then `destroy`.
 - Undeclared `updatePosition()` from abstract method as all subclasses share the same code.
 - Created `updateActor()` so it gets called every frame.
-  - It checks if `projectile` is out of bounds, if true then destroy.
+  - It checks if `projectile` has travelled out of bounds, if true then destroy.
   - Also calls `updatePosition()` in this method.
+
+### `Projectile_User.java`
+- Overrode `updateActor()` in superclass as methods used are slightly different.
+- Created `maximumTravelDistanceAllowed()` instead of using `outOfBounds()` from superclass `Projectile.java` as they travel in different directions.
 
 ### `Projectile_Boss.java`, `Projectile_Enemy.java`, `Projectile_User.java`
 - Now passes health and horizontalVelocity to superclass `Projectile.java`.
-- Moved both `updatePosition()` and `updateActor()` to superclass.
-
-### `HeartDisplay.java`
-- Created variable `Image HEART_IMAGE` to read from `String HEART_IMAGE_NAME`
-- Modified `initializeHearts()` so that it doesn't have to initialize a new `HEART_IMAGE` everytime when it's called, just use static variable.
+- Removed both `updatePosition()` and `updateActor()` as they exist in superclass.
 
 ### `ShieldImage.java`
-- Created `updateShieldPosition()` to update the shield's position based on boss' coordinates.
-
-### `Controller.java`
-- Removed `observer`.
-- Most modifications made here are for elements that are behind the scenes.
-- Modified `goToLevel()` to now have a transition when going to next level.
-- Created `playBGM()`, `stopBGM()`, `pauseBGM()`, `resumeBGM()`, which are for `MediaPlayer` to play music.
-- Created `playSFX()`, `stopSFX()`, which are for `AudioClip` to play short audios.
-- Created getter and setter for `sfxVolume` and `musicVolume`.
+- Created `updateShieldCoordinates()` to update the shield's position based on boss' coordinates.
 
 ### `Main.java`
 - Introduced `keyBindings` variable to store key binds for user controls.
 - Modified `start()` to now show `Screen_MainMenu` instead of going through `controller` and going to level directly.
-- Created `ensureConfigFileExists()`, `createParentDirectory()`, `writeDefaultConfig()`, `setKeyBindings()` to store and write configs.
+- Created `ensureConfigFileExists()`, `createParentDirectory()`, `writeDefaultConfig()`, `setKeyBindings()`, etc… to store and write configs.
 
 ### `Level_1.java`
 - `(int)KILLS_TO_ADVANCE` is now passed to superclass for logic check.
+  - `userHasReachedKillTarget()` is now moved to superclass.
 - `initializeFriendlyUnits()` is now moved to superclass due to code duplication.
-- `userHasReachedKillTarget()` is now moved to superclass due to code duplication.
-- Introduced spawn cooldown to since user will be exiting transition when stage is set.
-  - Enemies are only spawned when the cooldown has reached 0.
 
 ### `Level_2.java`
 - Same changes as `Level_1.java`, just increased difficulty.
@@ -246,24 +247,28 @@ KeyFrame gameLoop = new KeyFrame(Duration.millis(MILLISECOND_DELAY), e -> update
 - Relationship with `UserControls.java` to pass keys/user logic in this class to that class.
   - Moved `fireProjectile()`
   - Moved key press/release actions
-- Modified default constructor to accept `(int)KILLS_TO_ADVANCE`.
-  - `userHasReachedKillTarget()` in subclasses has been moved to here.
-- Undeclared `initializeFriendlyUnits()` from abstract due to code duplication.
+- Modified default constructor to accept `(int)KILLS_TO_ADVANCE` and `(String)messageOnScreen`.
+  - `userHasReachedKillTarget()` in subclasses has been moved to here, to check for `KILLS_TO_ADVANCE`.
+  - `messageOnScreen` is passed so it can call `LevelView.java` to show the message.
+- Undeclared `initializeFriendlyUnits()` from abstract due to code duplication from subclass. It is now moved to this class.
 - Modified `initializeScene()` to send `Runnable` actions to `Screen_PauseMenu`, as well as initializing other elements (`song, kill count`).
 - Modified `initializeBackground()` to handle key press/release in another function.
-- Modified `updateLevelView()` to update kill count too.
+- Modified `updateLevelView()` to update kill count's label too.
 - Removed `updateKillCount()` and placed it under `handleUserProjectileCollisions()` so kill count only increases if user's projectile hit enemy, provided enemy is destroyed.
 - Merged `winGame()` and `loseGame()` to `gameStatus()` to handle game's status.
 - Modified `goToNextLevel()` as it's now not an observer under `controller` anymore.
 - Modified `handleCollisions()` to accept `Runnable` as an argument, so code that meets the requirements can be executed afterward. (Shake Screen, Play SFX, etc...).
+- Created `addEnemyProjectile()` to create enemy projectiles in this method.
 - Created `pauseGame()` and `resumeGame()` to handle pause logic.
-- Created `shakeScreen()` when user collides with enemy projectile.
+- Created `shakeScreen()` to shake screen and plays SFX specified.
 - Created `handleKeyPressed()` and `handleKeyReleased()` to handle key actions.
 
 ### `LevelView.java`
 - Removed logics/creations related to WinImage and GameOverImage.
+- Created `entryMessage()` to show user's goal when that level is played.
 - Created `initializeKillCounter()` and `updateKillCounter()` to display kill count of user at top right of screen.
-- Created `screenFade()` for transition visual's.
+- Created `initializeTimerLabel()` and `updateTimerLabel()` for levels that are time based, to display the time.
+- Created `fadeObjectOnScreen()` to fade objects on the screen/HUD.
 
 # Unexpected Problems
 1. When first forking and running the project, the game crashes when it tries to go to the next level. After further debugging, the issues were:

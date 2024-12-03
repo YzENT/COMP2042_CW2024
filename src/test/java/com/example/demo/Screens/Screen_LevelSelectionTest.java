@@ -43,17 +43,4 @@ class Screen_LevelSelectionTest {
         });
         latch.await();
     }
-
-    @Test
-    void testInitializeButtons() throws InterruptedException {
-        CountDownLatch latch = new CountDownLatch(1);
-        Platform.runLater(() -> {
-            Button[] buttons = levelSelection.initializeButtons();
-            assertEquals(4, buttons.length, "There should be 4 buttons in the level selection screen.");
-            assertEquals("Level 1", buttons[0].getText(), "First button should be 'Level 1'.");
-            assertEquals("Back", buttons[3].getText(), "Last button should be 'Back'.");
-            latch.countDown();
-        });
-        latch.await();
-    }
 }

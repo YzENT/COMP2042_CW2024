@@ -8,14 +8,46 @@ import com.example.demo.Actor.Plane.Plane_Enemy;
  */
 public class Level_1 extends LevelParent {
 
+	/**
+     * The name of the background image for level 1.
+     * Source: <a href="https://craftpix.net/freebies/free-futuristic-city-pixel-art-backgrounds/">Link to background</a>
+     */
 	private static final String BACKGROUND_IMAGE_NAME = "/com/example/demo/images/backgrounds/level1.png";
+
+	/**
+	 * The class name of the next level.
+	 */
 	private static final String NEXT_LEVEL = "com.example.demo.Levels.Level_2";
-	private static final int TOTAL_ENEMIES = 5;
+
+	/**
+	 * The custom message to appear on screen when user first enters level.
+	 */
+	private static final String MESSAGE_ON_SCREEN = "Defeat 5 enemies";
+
+	/**
+	 * The maximum number of enemy in a frame.
+	 */
+	private static final int MAX_ENEMIES_IN_FRAME = 5;
+
+	/**
+	 * The number of kills required to advance to the next level.
+	 */
 	private static final int KILLS_TO_ADVANCE = 5;
+
+	/**
+	 * The probability of an enemy spawning.
+	 */
 	private static final double ENEMY_SPAWN_PROBABILITY = .20;
+
+	/**
+	 * The initial health of the player.
+	 */
 	private static final int PLAYER_INITIAL_HEALTH = 5;
+
+	/**
+	 * The fire rate of the enemy.
+	 */
 	private static final double ENEMY_FIRE_RATE = .01;
-	private double spawnCooldown = 30;
 
 	/**
 	 * Constructor to initialize Level_1.
@@ -24,7 +56,7 @@ public class Level_1 extends LevelParent {
 	 * @param screenWidth the width of the screen
 	 */
 	public Level_1(double screenHeight, double screenWidth) {
-		super(BACKGROUND_IMAGE_NAME, screenHeight, screenWidth, PLAYER_INITIAL_HEALTH, KILLS_TO_ADVANCE);
+		super(BACKGROUND_IMAGE_NAME, screenHeight, screenWidth, PLAYER_INITIAL_HEALTH, KILLS_TO_ADVANCE, MESSAGE_ON_SCREEN);
 	}
 
 	/**
@@ -50,17 +82,11 @@ public class Level_1 extends LevelParent {
 	 */
 	@Override
 	protected void spawnEnemyUnits() {
-		if (spawnCooldown > 0) {
-			spawnCooldown--;
-			return;
-		}
-
-		int currentNumberOfEnemies = getCurrentNumberOfEnemies();
-		if (currentNumberOfEnemies < TOTAL_ENEMIES && Math.random() < ENEMY_SPAWN_PROBABILITY) {
+		if (getCurrentNumberOfEnemies() < MAX_ENEMIES_IN_FRAME && Math.random() < ENEMY_SPAWN_PROBABILITY) {
 			double newEnemyInitialYPosition = Math.random() * getEnemyMaximumYPosition();
 			ActiveActorDestructible newEnemy = new Plane_Enemy(getScreenWidth(), newEnemyInitialYPosition, ENEMY_FIRE_RATE);
 			addEnemyUnit(newEnemy);
-			resetSpawnTimer();
+			super.resetEnemyCooldown();
 		}
 	}
 
@@ -72,12 +98,5 @@ public class Level_1 extends LevelParent {
 	@Override
 	protected LevelView instantiateLevelView() {
 		return new LevelView(getRoot(), PLAYER_INITIAL_HEALTH);
-	}
-
-	/**
-	 * Resets the spawn timer to a random value (0.0 - 30.0).
-	 */
-	private void resetSpawnTimer() {
-		spawnCooldown = Math.random() * 30;
 	}
 }

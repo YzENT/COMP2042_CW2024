@@ -7,10 +7,31 @@ import com.example.demo.Actor.Plane.Plane_Boss;
  */
 public class Level_3 extends LevelParent {
 
+	/**
+	 * The name of the background image for level 3.
+	 * Source: <a href="https://craftpix.net/freebies/free-futuristic-city-pixel-art-backgrounds/">Link to background</a>
+	 */
 	private static final String BACKGROUND_IMAGE_NAME = "/com/example/demo/images/backgrounds/level3.png";
+
+	/**
+	 * The class name of the next level.
+	 */
+	private static final String NEXT_LEVEL = "com.example.demo.Levels.Level_4";
+
+	/**
+	 * The custom message to appear on screen when user first enters level.
+	 */
+	private static final String MESSAGE_ON_SCREEN = "Defeat the Boss";
+
+	/**
+	 * The initial health of the player.
+	 */
 	private static final int PLAYER_INITIAL_HEALTH = 5;
+
+	/**
+	 * The boss plane for this level.
+	 */
 	private Plane_Boss planeBoss;
-	private static double spawnCooldown = 30;
 
 	/**
 	 * Constructor to initialize Level_3.
@@ -19,23 +40,23 @@ public class Level_3 extends LevelParent {
 	 * @param screenWidth the width of the screen
 	 */
 	public Level_3(double screenHeight, double screenWidth) {
-		super(BACKGROUND_IMAGE_NAME, screenHeight, screenWidth, PLAYER_INITIAL_HEALTH, 1);
+		super(BACKGROUND_IMAGE_NAME, screenHeight, screenWidth, PLAYER_INITIAL_HEALTH, 0, MESSAGE_ON_SCREEN);
 	}
 
 	/**
 	 * Checks if the game is over by evaluating the player's and boss's status.
 	 * If the player is destroyed, the game status is set to defeat.
-	 * If the boss is destroyed, the game status is set to victory.
+	 * If the boss is destroyed, the game advances to the next level.
 	 */
 	@Override
 	protected void checkIfGameOver() {
-		if (spawnCooldown > 0) return; // prevent error if planeBoss = null
+		if (getEnemySpawnCooldown() > 0) return;
 		if (userIsDestroyed()) {
 			gameStatus(GameStatus.DEFEAT);
 			return;
 		}
-		if (planeBoss.isDestroyed()) {
-			gameStatus(GameStatus.VICTORY);
+		if (planeBoss != null && planeBoss.isDestroyed()) {
+			goToNextLevel(NEXT_LEVEL);
 		}
 	}
 
@@ -46,8 +67,7 @@ public class Level_3 extends LevelParent {
 	 */
 	@Override
 	protected void spawnEnemyUnits() {
-		if (spawnCooldown > 0) spawnCooldown--;
-		if (getCurrentNumberOfEnemies() == 0 && spawnCooldown <= 0) {
+		if (getCurrentNumberOfEnemies() == 0 && super.getEnemySpawnCooldown() <= 0) {
 			addEnemyUnit(createBoss());
 		}
 	}
@@ -67,12 +87,13 @@ public class Level_3 extends LevelParent {
 	 *
 	 * @return the boss plane
 	 */
-	private Plane_Boss createBoss() {
+	protected Plane_Boss createBoss() {
 		planeBoss = new Plane_Boss();
-		getRoot().getChildren().addAll(planeBoss.getShieldImage(),
+		getRoot().getChildren().addAll(
+				planeBoss.getShieldImage(),
 				planeBoss.getHealthBar(),
-				planeBoss.getExplosionImage());
-		planeBoss.setRemoveHealthBar(() -> getRoot().getChildren().remove(planeBoss.getHealthBar()));
+				planeBoss.getExplosionImage()
+		);
 		return planeBoss;
 	}
 }

@@ -5,10 +5,29 @@ package com.example.demo.Actor.WeaponProjectiles;
  */
 public class Projectile_Boss extends Projectile {
 
+	/**
+	 * The image name for the boss projectile.
+	 */
 	private static final String IMAGE_NAME = "/com/example/demo/images/weapons/fireball.png";
+
+	/**
+	 * The height of the boss projectile image.
+	 */
 	private static final int IMAGE_HEIGHT = 75;
+
+	/**
+	 * The horizontal velocity of the boss projectile.
+	 */
 	private static final int HORIZONTAL_VELOCITY = -15;
+
+	/**
+	 * The initial X position of the boss projectile.
+	 */
 	private static final int INITIAL_X_POSITION = 950;
+
+	/**
+	 * The health of the boss projectile.
+	 */
 	private static final int HEALTH = 1;
 
 	/**

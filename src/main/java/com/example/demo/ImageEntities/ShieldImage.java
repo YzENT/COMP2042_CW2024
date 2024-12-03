@@ -9,8 +9,19 @@ import javafx.scene.image.ImageView;
  */
 public class ShieldImage extends ImageView {
 
+	/**
+	 * The name of the shield image file.
+	 */
 	private static final String IMAGE_NAME = "/com/example/demo/images/misc/shield.png";
+
+	/**
+	 * The shield image object.
+	 */
 	private static final Image SHIELD_IMAGE = new Image(Objects.requireNonNull(ShieldImage.class.getResource(IMAGE_NAME)).toExternalForm());
+
+	/**
+	 * The size of the shield image.
+	 */
 	private static final int SHIELD_SIZE = 200;
 
 	/**
@@ -43,7 +54,7 @@ public class ShieldImage extends ImageView {
 	 * @param x the X coordinate
 	 * @param y the Y coordinate
 	 */
-	public void updateShieldPosition(double x, double y) {
+	public void updateShieldCoordinates(double x, double y) {
 		this.setLayoutX(x);
 		this.setLayoutY(y);
 	}

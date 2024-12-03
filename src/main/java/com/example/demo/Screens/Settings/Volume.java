@@ -10,7 +10,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
-import com.example.demo.Initialize.Controller;
+import com.example.demo.Controller.AudioController;
 import com.example.demo.Screens.Screen_Settings;
 
 /**
@@ -18,8 +18,19 @@ import com.example.demo.Screens.Screen_Settings;
  */
 public class Volume extends Screen_Settings {
 
+    /**
+     * The text of the title.
+     */
     private static final String TITLE_TEXT = "Volume";
+
+    /**
+     * The size of the title text.
+     */
     private static final double TITLE_SIZE = 50;
+
+    /**
+     * The class name of the previous screen.
+     */
     private static String prevScreen;
 
     /**
@@ -50,6 +61,7 @@ public class Volume extends Screen_Settings {
         Scene scene = new Scene(vbox, SCREEN_WIDTH, SCREEN_HEIGHT);
         stage.setScene(scene);
         disableMouseInput(scene);
+        enableWASDNavigation(scene);
     }
 
     /**
@@ -69,8 +81,8 @@ public class Volume extends Screen_Settings {
      * @return a VBox containing the volume sliders
      */
     private VBox initializeVolumeSlider() {
-        HBox musicSlider = createSlider("Music", Controller.getMusicVolume(), Controller::setMusicVolume);
-        HBox sfxSlider = createSlider("SFX", Controller.getSfxVolume(), Controller::setSfxVolume);
+        HBox musicSlider = createSlider("Music", AudioController.getMusicVolume(), AudioController::setMusicVolume);
+        HBox sfxSlider = createSlider("SFX", AudioController.getSfxVolume(), AudioController::setSfxVolume);
 
         VBox vbox = new VBox(40, musicSlider, sfxSlider);
         vbox.setAlignment(Pos.CENTER);

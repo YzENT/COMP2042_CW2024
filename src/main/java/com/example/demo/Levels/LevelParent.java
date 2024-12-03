@@ -6,6 +6,7 @@ import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.image.*;
 import javafx.scene.input.*;
+import javafx.stage.Stage;
 import javafx.util.Duration;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
@@ -13,8 +14,8 @@ import com.example.demo.ActorsLogic.ActiveActorDestructible;
 import com.example.demo.Actor.Plane.Plane;
 import com.example.demo.Actor.Plane.Plane_User;
 import com.example.demo.ActorsLogic.UserControls;
-import com.example.demo.Initialize.Controller;
-import com.example.demo.Initialize.Main;
+import com.example.demo.Controller.AudioController;
+import com.example.demo.Controller.Main;
 import com.example.demo.Screens.Screen_GameEnded;
 import com.example.demo.Screens.Screen_LoadingAnimation;
 import com.example.demo.Screens.Screen_PauseMenu;
@@ -24,38 +25,129 @@ import com.example.demo.Screens.Screen_PauseMenu;
  */
 public abstract class LevelParent {
 
+	/**
+	 * The screen height adjustment value.
+	 */
 	private static final double SCREEN_HEIGHT_ADJUSTMENT = 150;
-	private static final int MILLISECOND_DELAY = 50;
-	private final double screenHeight;
-	private final double screenWidth;
-	private final double enemyMaximumYPosition;
-	private final int KILLS_TO_ADVANCE;
 
-	//https://pixabay.com/music/main-title-cinematic-epic-237173/
+	/**
+	 * The delay in milliseconds for the game loop.
+	 */
+	private static final int MILLISECOND_DELAY = 50;
+
+	/**
+	 * The path to the background music file.
+	 * Source: <a href="https://pixabay.com/music/main-title-cinematic-epic-237173/">Link to epic music</a>
+	 */
 	private static final String BGM_PATH = "/com/example/demo/audio/bgm/cinematic-epic-237173.mp3";
 
-	//https://www.youtube.com/watch?v=f8mL0_4GeV0
+	/**
+     * The path to the metal pipe sound effect file.
+     * Source: <a href="https://www.youtube.com/watch?v=f8mL0_4GeV0">Link to metal pipe falling sfx</a>
+     */
 	private static final String METAL_PIPE = "/com/example/demo/audio/sfx/metal pipe falling.mp3";
 
+	/**
+	 * The height of the screen.
+	 */
+	private final double screenHeight;
+
+	/**
+	 * The width of the screen.
+	 */
+	private final double screenWidth;
+
+	/**
+	 * The maximum Y position for enemies.
+	 */
+	private final double enemyMaximumYPosition;
+
+	/**
+	 * The number of kills required to advance to the next level.
+	 */
+	private final int KILLS_TO_ADVANCE;
+
+	/**
+	 * The string message that appears on screen when user first enters the level.
+	 */
+	private final String MESSAGE_ON_SCREEN;
+
+	/**
+	 * The root group for the scene.
+	 */
 	private final Group root;
+
+	/**
+	 * The timeline for the game loop.
+	 */
 	private final Timeline timeline;
+
+	/**
+	 * The user plane.
+	 */
 	private final Plane_User user;
+
+	/**
+	 * The scene for the level.
+	 */
 	private final Scene scene;
+
+	/**
+	 * The background image view.
+	 */
 	private final ImageView background;
+
+	/**
+	 * The user controls for the game.
+	 */
 	private final UserControls userControls;
-	private final Controller controller;
+
+	/**
+	 * The audio controller for the game.
+	 */
+	private final AudioController audioController;
+
+	/**
+	 * The level view.
+	 */
 	private final LevelView levelView;
 
+	/**
+	 * The list of friendly units.
+	 */
 	private final List<ActiveActorDestructible> friendlyUnits;
+
+	/**
+	 * The list of enemy units.
+	 */
 	private final List<ActiveActorDestructible> enemyUnits;
+
+	/**
+	 * The list of user projectiles.
+	 */
 	private final List<ActiveActorDestructible> userProjectiles;
+
+	/**
+	 * The list of enemy projectiles.
+	 */
 	private final List<ActiveActorDestructible> enemyProjectiles;
+
+	/**
+	 * The cooldown period for spawning enemies.
+	 */
+	private double enemySpawnCooldown = 30;
 
 	/**
 	 * Enum representing the game status.
 	 */
 	public enum GameStatus {
+		/**
+		 * User wins the game.
+		 */
 		VICTORY,
+		/**
+		 * User loses the game.
+		 */
 		DEFEAT
 	}
 
@@ -67,8 +159,9 @@ public abstract class LevelParent {
 	 * @param screenWidth the width of the screen
 	 * @param playerInitialHealth the initial health of the player
 	 * @param killsToAdvance the number of kills required to advance to the next level
+	 * @param messageOnScreen the custom message each level has to tell what the user's goal is
 	 */
-	public LevelParent(String backgroundImageName, double screenHeight, double screenWidth, int playerInitialHealth, int killsToAdvance) {
+	public LevelParent(String backgroundImageName, double screenHeight, double screenWidth, int playerInitialHealth, int killsToAdvance, String messageOnScreen) {
 		this.root = new Group();
 		this.scene = new Scene(root, screenWidth, screenHeight);
 		this.timeline = new Timeline();
@@ -80,7 +173,7 @@ public abstract class LevelParent {
 
 		this.background = new ImageView(new Image(Objects.requireNonNull(getClass().getResource(backgroundImageName)).toExternalForm()));
 		this.userControls = new UserControls(user, root, userProjectiles);
-		this.controller = new Controller(Main.getStage());
+		this.audioController = new AudioController();
 		this.screenHeight = screenHeight;
 		this.screenWidth = screenWidth;
 		this.enemyMaximumYPosition = screenHeight - SCREEN_HEIGHT_ADJUSTMENT;
@@ -88,6 +181,7 @@ public abstract class LevelParent {
 		initializeTimeline();
 		friendlyUnits.add(user);
 		this.KILLS_TO_ADVANCE = killsToAdvance;
+		this.MESSAGE_ON_SCREEN = messageOnScreen;
 	}
 
 	/**
@@ -100,8 +194,9 @@ public abstract class LevelParent {
 		initializeFriendlyUnits();
 		levelView.showHeartDisplay();
 		levelView.initializeKillCounter();
+		levelView.entryMessage(MESSAGE_ON_SCREEN);
 		sendPauseMenuRunbacks();
-		controller.playBGM(BGM_PATH);
+		audioController.playBGM(BGM_PATH);
 		return scene;
 	}
 
@@ -115,6 +210,7 @@ public abstract class LevelParent {
 		background.setOnKeyPressed(this::handleKeyPressed);
 		background.setOnKeyReleased(this::handleKeyReleased);
 		root.getChildren().add(background);
+		background.toBack();
 	}
 
 	/**
@@ -189,7 +285,11 @@ public abstract class LevelParent {
 	 * Updates the scene for each frame.
 	 */
 	private void updateScene() {
-		spawnEnemyUnits();
+		if (enemySpawnCooldown > 0) {
+			enemySpawnCooldown--;
+		} else {
+			spawnEnemyUnits();
+		}
 		updateActors();
 		generateEnemyFire();
 		handleEnemyPenetration();
@@ -221,8 +321,7 @@ public abstract class LevelParent {
 			ActiveActorDestructible projectile = fighter.fireProjectile();
 
 			if (projectile != null) {
-				root.getChildren().add(projectile);
-				enemyProjectiles.add(projectile);
+				addEnemyProjectile(projectile);
 			}
 		});
 	}
@@ -235,6 +334,16 @@ public abstract class LevelParent {
 	protected void addEnemyUnit(ActiveActorDestructible enemy) {
 		enemyUnits.add(enemy);
 		root.getChildren().add(enemy);
+	}
+
+	/**
+	 * Adds an enemy projectile to the root.
+	 *
+	 * @param enemyProjectile the enemy projectile to add
+	 */
+	protected void addEnemyProjectile(ActiveActorDestructible enemyProjectile) {
+		root.getChildren().add(enemyProjectile);
+		enemyProjectiles.add(enemyProjectile);
 	}
 
 	/**
@@ -264,7 +373,9 @@ public abstract class LevelParent {
 	 * Handles collisions between friendly units and enemy units.
 	 */
 	private void handlePlaneCollisions() {
-		handleCollisions(friendlyUnits, enemyUnits, this::shakeScreen);
+		handleCollisions(friendlyUnits, enemyUnits, () -> {
+			shakeScreen(METAL_PIPE);
+		});
 	}
 
 	/**
@@ -285,7 +396,9 @@ public abstract class LevelParent {
 	 * Handles collisions between enemy projectiles and friendly units.
 	 */
 	private void handleEnemyProjectileCollisions() {
-		handleCollisions(enemyProjectiles, friendlyUnits, this::shakeScreen);
+		handleCollisions(enemyProjectiles, friendlyUnits, () -> {
+			shakeScreen(METAL_PIPE);
+		});
 	}
 
 	/**
@@ -296,6 +409,7 @@ public abstract class LevelParent {
 			if (enemyHasPenetratedDefenses(enemy)) {
 				user.takeDamage();
 				enemy.destroy();
+				shakeScreen(METAL_PIPE);
 			}
 		}
 	}
@@ -344,37 +458,39 @@ public abstract class LevelParent {
 	 */
 	protected void goToNextLevel(String levelName) {
 		timeline.stop();
-		levelView.screenFade(2, () -> {
+		levelView.fadeObjectOnScreen(2, root, () -> {
+			root.getChildren().clear();
 			Screen_LoadingAnimation.setGameLevel(levelName);
-			Screen_LoadingAnimation loadingAnimation = new Screen_LoadingAnimation(Main.getStage(), Main.getScreenWidth(), Main.getScreenHeight());
+			Screen_LoadingAnimation loadingAnimation = new Screen_LoadingAnimation((Stage) scene.getWindow(), Main.getScreenWidth(), Main.getScreenHeight());
 			loadingAnimation.show();
 		});
 	}
 
 	/**
-	 * Sets the game status.
+	 * Sets the game status and shows the results.
 	 *
 	 * @param result the game status
 	 */
 	protected void gameStatus(GameStatus result) {
 		timeline.stop();
-		levelView.screenFade(5, () -> {
-			FadeTransition fadeTransition = new FadeTransition(Duration.seconds(2), root);
-			Rectangle background = new Rectangle(Main.getScreenWidth(), Main.getScreenHeight(), Color.BLACK);
-			root.getChildren().addFirst(background);
-			fadeTransition.setFromValue(0);
-			fadeTransition.setToValue(1.0);
-			fadeTransition.play();
+		levelView.fadeObjectOnScreen(5, root, () -> {
+			root.getChildren().clear();
+			FadeTransition fadeToBlack = new FadeTransition(Duration.seconds(2), root);
+			Rectangle blackBackground = new Rectangle(Main.getScreenWidth(), Main.getScreenHeight(), Color.BLACK);
+			root.getChildren().addFirst(blackBackground);
+			fadeToBlack.setFromValue(0);
+			fadeToBlack.setToValue(1.0);
+			fadeToBlack.play();
 
 			Timeline volumeFade = new Timeline(
-					new KeyFrame(Duration.ZERO, new KeyValue(Controller.getMediaPlayer().volumeProperty(), Controller.getMusicVolume())),
-					new KeyFrame(Duration.seconds(2), new KeyValue(Controller.getMediaPlayer().volumeProperty(), 0))
+					new KeyFrame(Duration.ZERO, new KeyValue(AudioController.getMediaPlayer().volumeProperty(), AudioController.getMusicVolume())),
+					new KeyFrame(Duration.seconds(2), new KeyValue(AudioController.getMediaPlayer().volumeProperty(), 0))
 			);
 			volumeFade.play();
 
-			fadeTransition.setOnFinished(event -> {
-				controller.stopBGM();
-				Screen_GameEnded end = new Screen_GameEnded(Main.getStage(), Main.getScreenWidth(), Main.getScreenHeight());
+			fadeToBlack.setOnFinished(event -> {
+				audioController.stopBGM();
+				Screen_GameEnded end = new Screen_GameEnded((Stage) scene.getWindow(), Main.getScreenWidth(), Main.getScreenHeight());
 				end.setResults(result);
 				end.show();
 			});
@@ -386,7 +502,7 @@ public abstract class LevelParent {
 	 */
 	private void pauseGame() {
 		timeline.pause();
-		Screen_PauseMenu pauseMenu = new Screen_PauseMenu(Main.getStage(), Main.getScreenWidth(), Main.getScreenHeight());
+		Screen_PauseMenu pauseMenu = new Screen_PauseMenu((Stage) scene.getWindow(), Main.getScreenWidth(), Main.getScreenHeight());
 		pauseMenu.show();
 	}
 
@@ -398,16 +514,23 @@ public abstract class LevelParent {
 	}
 
 	/**
-	 * Shakes the screen and plays collision SFX.
+	 * Shakes the screen and plays specified SFX.
 	 */
-	private void shakeScreen() {
+	protected void shakeScreen(String sfxToPlay) {
 		TranslateTransition translateTransition = new TranslateTransition(Duration.millis(50), root);
 		translateTransition.setFromX(-5);
 		translateTransition.setToX(5);
 		translateTransition.setCycleCount(4);
 		translateTransition.setAutoReverse(true);
 		translateTransition.play();
-		controller.playSFX(METAL_PIPE);
+		audioController.playSFX(sfxToPlay);
+	}
+
+	/**
+	 * Resets the spawn timer to a random value (0.0 - 30.0).
+	 */
+	protected void resetEnemyCooldown() {
+		enemySpawnCooldown = Math.random() * 30;
 	}
 
 	/**
@@ -436,6 +559,24 @@ public abstract class LevelParent {
 	 */
 	protected Group getRoot() {
 		return root;
+	}
+
+	/**
+	 * Gets the timeline.
+	 *
+	 * @return the timeline of program.
+	 */
+	public Timeline getTimeline() {
+		return timeline;
+	}
+
+	/**
+	 * Gets the level view.
+	 *
+	 * @return level's view of current level.
+	 */
+	public LevelView getLevelView() {
+		return levelView;
 	}
 
 	/**
@@ -484,31 +625,20 @@ public abstract class LevelParent {
 	}
 
 	/**
-	 * Displays hitboxes for debugging purposes.
+	 * Gets the MILLISECOND_DELAY value for this class.
+	 *
+	 * @return the MILLISECOND_DELAY value for this class
 	 */
-	private void displayHitboxes() {
-		displayHitboxesForActors(friendlyUnits);
-		displayHitboxesForActors(enemyUnits);
-		displayHitboxesForActors(userProjectiles);
-		displayHitboxesForActors(enemyProjectiles);
+	public static double getProgramDelay() {
+		return MILLISECOND_DELAY;
 	}
 
 	/**
-	 * Displays hitboxes for a list of actors.
+	 * Gets the enemy spawn cooldown value.
 	 *
-	 * @param actors the list of actors
+	 * @return the cooldown for enemy spawning.
 	 */
-	private void displayHitboxesForActors(List<ActiveActorDestructible> actors) {
-		for (ActiveActorDestructible actor : actors) {
-			Rectangle hitbox = new Rectangle(
-					actor.getBoundsInParent().getMinX(),
-					actor.getBoundsInParent().getMinY(),
-					actor.getBoundsInParent().getWidth(),
-					actor.getBoundsInParent().getHeight()
-			);
-			hitbox.setStroke(Color.RED);
-			hitbox.setFill(Color.TRANSPARENT);
-			root.getChildren().add(hitbox);
-		}
+	protected double getEnemySpawnCooldown() {
+		return enemySpawnCooldown;
 	}
 }

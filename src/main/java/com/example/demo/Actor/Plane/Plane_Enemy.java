@@ -8,12 +8,39 @@ import com.example.demo.Actor.WeaponProjectiles.Projectile_Enemy;
  */
 public class Plane_Enemy extends Plane {
 
+	/**
+	 * The image name for the enemy plane.
+	 */
 	private static final String IMAGE_NAME = "/com/example/demo/images/actors/enemyplane.png";
+
+	/**
+	 * The height of the enemy plane image.
+	 */
 	private static final int IMAGE_HEIGHT = 50;
+
+	/**
+	 * The horizontal velocity of the enemy plane.
+	 */
 	private static final int HORIZONTAL_VELOCITY = -6;
+
+	/**
+	 * The X position offset for the projectile.
+	 */
 	private static final double PROJECTILE_X_POSITION_OFFSET = -50.0;
+
+	/**
+	 * The Y position offset for the projectile.
+	 */
 	private static final double PROJECTILE_Y_POSITION_OFFSET = 20.0;
+
+	/**
+	 * The initial health of the enemy plane.
+	 */
 	private static final int INITIAL_HEALTH = 1;
+
+	/**
+	 * The fire rate of the enemy plane.
+	 */
 	private static double FIRE_RATE;
 
 	/**
@@ -44,9 +71,7 @@ public class Plane_Enemy extends Plane {
 	@Override
 	public ActiveActorDestructible fireProjectile() {
 		if (Math.random() < FIRE_RATE) {
-			double projectileXPosition = getProjectileXPosition(PROJECTILE_X_POSITION_OFFSET);
-			double projectileYPosition = getProjectileYPosition(PROJECTILE_Y_POSITION_OFFSET);
-			return new Projectile_Enemy(projectileXPosition, projectileYPosition);
+			return new Projectile_Enemy(getProjectileXPosition(PROJECTILE_X_POSITION_OFFSET), getProjectileYPosition(PROJECTILE_Y_POSITION_OFFSET));
 		}
 		return null;
 	}

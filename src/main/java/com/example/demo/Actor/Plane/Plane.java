@@ -7,6 +7,9 @@ import com.example.demo.ActorsLogic.ActiveActorDestructible;
  */
 public abstract class Plane extends ActiveActorDestructible {
 
+	/**
+	 * The health of the plane.
+	 */
 	private int health;
 
 	/**

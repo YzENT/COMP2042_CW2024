@@ -12,36 +12,134 @@ import com.example.demo.ImageEntities.ShieldImage;
  */
 public class Plane_Boss extends Plane {
 
+	/**
+	 * The image name for the boss plane.
+	 */
 	private static final String IMAGE_NAME = "/com/example/demo/images/actors/bossplane.png";
 
+	/**
+	 * The initial X position of the boss plane.
+	 */
 	private static final double INITIAL_X_POSITION = 1000;
+
+	/**
+	 * The initial Y position of the boss plane.
+	 */
 	private static final double INITIAL_Y_POSITION = 400;
+
+	/**
+	 * The Y position offset for the projectile.
+	 */
 	private static final double PROJECTILE_Y_POSITION_OFFSET = 50;
-	private static final double BOSS_FIRE_RATE = .3;
+
+	/**
+	 * The fire rate of the boss plane.
+	 */
+	private static final double BOSS_FIRE_RATE = .2;
+
+	/**
+	 * The probability of the boss plane activating its shield.
+	 */
 	private static final double BOSS_SHIELD_PROBABILITY = .05;
+
+	/**
+	 * The height of the boss plane image.
+	 */
 	private static final int IMAGE_HEIGHT = 70;
-	private static final int VERTICAL_VELOCITY = 12;
+
+	/**
+	 * The vertical velocity of the boss plane.
+	 */
+	private static final int VERTICAL_VELOCITY = 14;
+
+	/**
+	 * The initial health of the boss plane.
+	 */
 	private static final int HEALTH = 50;
+
+	/**
+	 * The frequency of moves per cycle for the boss plane.
+	 */
 	private static final int MOVE_FREQUENCY_PER_CYCLE = 100;
+
+	/**
+	 * The maximum number of frames the boss plane can move in the same direction.
+	 */
 	private static final int MAX_FRAMES_WITH_SAME_MOVE = 5;
+
+	/**
+	 * The upper bound for the Y position of the boss plane.
+	 */
 	private static final int Y_POSITION_UPPER_BOUND = 20;
+
+	/**
+	 * The lower bound for the Y position of the boss plane.
+	 */
 	private static final int Y_POSITION_LOWER_BOUND = 600;
+
+	/**
+	 * The maximum number of frames the shield can be activated.
+	 */
 	private static final int MAX_FRAMES_WITH_SHIELD = 50;
+
+	/**
+	 * The minimum number of frames the shield must be deactivated.
+	 */
 	private static final int MIN_FRAMES_WITHOUT_SHIELD = 50;
+
+	/**
+	 * The width of the health bar.
+	 */
 	private static final int HEALTH_BAR_WIDTH = 200;
+
+	/**
+	 * The color of the health bar.
+	 */
 	private static final String HEALTH_BAR_COLOUR = "RED";
 
+	/**
+	 * The number of consecutive moves in the same direction.
+	 */
 	private int consecutiveMovesInSameDirection = 0;
+
+	/**
+	 * The index of the current move in the move pattern.
+	 */
 	private int indexOfCurrentMove = 0;
+
+	/**
+	 * The number of frames the shield has been activated.
+	 */
 	private int framesWithShieldActivated = 0;
+
+	/**
+	 * The number of frames the shield has been deactivated.
+	 */
 	private int framesWithShieldDeactivated = 0;
 
+	/**
+	 * The move pattern for the boss plane.
+	 */
 	private final List<Integer> movePattern;
-	private final ShieldImage shieldImage;
-	private final ProgressBar healthBar;
-	private final ExplosionImage explosionImage;
-	private Runnable removeHealthBar;
 
+	/**
+	 * The shield image for the boss plane.
+	 */
+	private final ShieldImage shieldImage;
+
+	/**
+	 * The health bar for the boss plane.
+	 */
+	private final ProgressBar healthBar;
+
+	/**
+	 * The explosion image for the boss plane.
+	 */
+	private final ExplosionImage explosionImage;
+
+	/**
+	 * The shielded state of the boss plane.
+	 */
 	private boolean isShielded = false;
 
 	/**
@@ -77,7 +175,7 @@ public class Plane_Boss extends Plane {
 		updatePosition();
 		updateShield();
 		updateHealthBar();
-		updateExplosion();
+		updateExplosionCoordinates();
 	}
 
 	/**
@@ -87,7 +185,10 @@ public class Plane_Boss extends Plane {
 	 */
 	@Override
 	public ActiveActorDestructible fireProjectile() {
-		return bossFiresInCurrentFrame() ? new Projectile_Boss(getProjectileInitialPosition()) : null;
+		if (bossFiresInCurrentFrame()) {
+			return new Projectile_Boss(getProjectileYPosition(PROJECTILE_Y_POSITION_OFFSET));
+		}
+		return null;
 	}
 
 	/**
@@ -100,7 +201,6 @@ public class Plane_Boss extends Plane {
 			super.takeDamage();
 		}
 		if (getHealth() <= 0) {
-			removeHealthBar.run();
 			triggerExplosion();
 		}
 	}
@@ -121,7 +221,7 @@ public class Plane_Boss extends Plane {
 	 * Updates the shield state and position.
 	 */
 	private void updateShield() {
-		shieldImage.updateShieldPosition(Boss_XCoordinate() - IMAGE_HEIGHT * 2, Boss_YCoordinate() - (double) IMAGE_HEIGHT / 2);
+		shieldImage.updateShieldCoordinates(getBossXCoordinate() - IMAGE_HEIGHT * 2, getBossYCoordinate() - (double) IMAGE_HEIGHT / 2);
 
 		if (isShielded) {
 			framesWithShieldActivated++;
@@ -141,9 +241,9 @@ public class Plane_Boss extends Plane {
 	/**
 	 * Updates the explosion's image based on boss' current position.
 	 */
-	private void updateExplosion() {
+	private void updateExplosionCoordinates() {
 		//has to updated every frame because it will be (0,0) when boss is destroyed
-		explosionImage.setExplostionPosition(Boss_XCoordinate(), Boss_YCoordinate() - IMAGE_HEIGHT*2);
+		explosionImage.setExplosionCoordinates(getBossXCoordinate(), getBossYCoordinate() - IMAGE_HEIGHT*2);
 	}
 
 	/**
@@ -181,8 +281,8 @@ public class Plane_Boss extends Plane {
 	 * Updates the health bar position and progress.
 	 */
 	private void updateHealthBar() {
-		healthBar.setLayoutX(Boss_XCoordinate() + 50);
-		healthBar.setLayoutY(Boss_YCoordinate() - 50);
+		healthBar.setLayoutX(getBossXCoordinate() + 50);
+		healthBar.setLayoutY(getBossYCoordinate() - 50);
 		healthBar.setProgress((double) getHealth() / HEALTH); // expects a value between 0.0 and 1.0 only
 	}
 
@@ -205,19 +305,11 @@ public class Plane_Boss extends Plane {
 	}
 
 	/**
-	 * Sets the action to remove the health bar from root.
-	 *
-	 * @param action the action to remove the health bar
-	 */
-	public void setRemoveHealthBar(Runnable action) {
-		removeHealthBar = action;
-	}
-
-	/**
 	 * Triggers the explosion effect for the boss plane.
 	 */
 	private void triggerExplosion() {
 		explosionImage.showExplosion();
+		healthBar.setVisible(false);
 	}
 
 	/**
@@ -235,7 +327,7 @@ public class Plane_Boss extends Plane {
 	 * @return true if the shield is exhausted, false otherwise
 	 */
 	private boolean shieldExhausted() {
-		return framesWithShieldActivated == MAX_FRAMES_WITH_SHIELD;
+		return framesWithShieldActivated >= MAX_FRAMES_WITH_SHIELD;
 	}
 
 	/**
@@ -243,7 +335,7 @@ public class Plane_Boss extends Plane {
 	 *
 	 * @return the X coordinate
 	 */
-	private double Boss_XCoordinate() {
+	private double getBossXCoordinate() {
 		return getLayoutX() + getTranslateX();
 	}
 
@@ -252,7 +344,7 @@ public class Plane_Boss extends Plane {
 	 *
 	 * @return the Y coordinate
 	 */
-	private double Boss_YCoordinate() {
+	private double getBossYCoordinate() {
 		return getLayoutY() + getTranslateY();
 	}
 
@@ -263,15 +355,6 @@ public class Plane_Boss extends Plane {
 	 */
 	private boolean bossFiresInCurrentFrame() {
 		return Math.random() < BOSS_FIRE_RATE;
-	}
-
-	/**
-	 * Gets the initial position for the projectile.
-	 *
-	 * @return the initial Y position for the projectile
-	 */
-	private double getProjectileInitialPosition() {
-		return getLayoutY() + getTranslateY() + PROJECTILE_Y_POSITION_OFFSET;
 	}
 
 	/**

@@ -12,9 +12,20 @@ import javafx.stage.Stage;
  */
 public class Screen_MainMenu extends BaseScreen {
 
+    /**
+     * The text of the title.
+     */
     private static final String TITLE_TEXT = "Sky Battle";
+
+    /**
+     * The size of the title text.
+     */
     private static final double TITLE_SIZE = 100;
-    //https://pixabay.com/music/upbeat-intense-electro-trailer-music-243987/
+
+    /**
+     * The path to the background music file.
+     * Source: <a href="https://pixabay.com/music/upbeat-intense-electro-trailer-music-243987/">Link to Main Menu BGM</a>
+     */
     private static final String BGM_PATH = "/com/example/demo/audio/bgm/intense-electro-trailer-music-243987.mp3";
 
     /**
@@ -45,6 +56,7 @@ public class Screen_MainMenu extends BaseScreen {
         Scene scene = new Scene(vbox, SCREEN_WIDTH, SCREEN_HEIGHT);
         stage.setScene(scene);
         disableMouseInput(scene);
+        enableWASDNavigation(scene);
     }
 
     /**

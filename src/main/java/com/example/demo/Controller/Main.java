@@ -1,4 +1,4 @@
-package com.example.demo.Initialize;
+package com.example.demo.Controller;
 
 import java.io.*;
 import java.util.Map;
@@ -15,12 +15,29 @@ import com.example.demo.Screens.Screen_MainMenu;
  */
 public class Main extends Application {
 
+	/**
+	 * The width of the screen.
+	 */
 	private static final int SCREEN_WIDTH = 1300;
-	private static final int SCREEN_HEIGHT = 750;
-	private static final String TITLE = "Sky Battle";
-	private static Stage stage;
 
+	/**
+	 * The height of the screen.
+	 */
+	private static final int SCREEN_HEIGHT = 750;
+
+	/**
+	 * The title of the application window.
+	 */
+	private static final String TITLE = "Sky Battle";
+
+	/**
+	 * The key bindings for the application.
+	 */
 	private static Map<String, KeyCode> keyBindings;
+
+	/**
+	 * The path to the configuration file for key bindings.
+	 */
 	private static final String CONFIG_PATH = System.getProperty("user.home") + "/Documents/SkyBattle_20617094/keyConfigs.properties";
 
 	/**
@@ -32,7 +49,6 @@ public class Main extends Application {
 	 */
 	@Override
 	public void start(Stage stage) throws SecurityException, IllegalArgumentException {
-		Main.stage = stage;
 		stage.setTitle(TITLE);
 		stage.setResizable(false);
 		stage.setHeight(SCREEN_HEIGHT);
@@ -143,15 +159,6 @@ public class Main extends Application {
 	 */
 	public static int getScreenHeight() {
 		return SCREEN_HEIGHT;
-	}
-
-	/**
-	 * Gets the primary stage.
-	 *
-	 * @return the primary stage
-	 */
-	public static Stage getStage() {
-		return stage;
 	}
 
 	/**

@@ -22,7 +22,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
-import com.example.demo.Initialize.Main;
+import com.example.demo.Controller.Main;
 import com.example.demo.Screens.Screen_Settings;
 
 /**
@@ -30,13 +30,35 @@ import com.example.demo.Screens.Screen_Settings;
  */
 public class Controls extends Screen_Settings {
 
+    /**
+     * The text of the title.
+     */
     private static final String TITLE_TEXT = "Control Settings";
+
+    /**
+     * The size of the title text.
+     */
     private static final double TITLE_SIZE = 50;
+
+    /**
+     * The class name of the previous screen.
+     */
     private static String prevScreen;
+
+    /**
+     * The active key listener for key events.
+     */
     private EventHandler<KeyEvent> activeKeyListener = null;
+
+    /**
+     * Temporary key bindings map used for storing key bindings before overwriting the main one.
+     */
     private final Map<String, KeyCode> tempKeyBindings = new HashMap<>(Main.getKeyBindings());
 
-    // Keys that need to go through modifier (Shift + 1 = !), are ignored.
+    /**
+     * Map of key codes to their corresponding symbols.
+     * Keys that need to go through a modifier (e.g., Shift + 1 = !) are ignored.
+     */
     private static final Map<KeyCode, String> SYMBOL_MAP = Map.ofEntries(
             Map.entry(KeyCode.BACK_QUOTE, ""),
             Map.entry(KeyCode.MINUS, "-"),
@@ -176,7 +198,7 @@ public class Controls extends Screen_Settings {
      * @return a Text object containing the instructions
      */
     private Text initializeInstructions() {
-        Text instructionsText = new Text("TAB to Navigate\nENTER to Edit\nR to Restore Defaults");
+        Text instructionsText = new Text("ESC To Discard\nTAB to Navigate\nENTER to Edit\nR to Restore Defaults");
         instructionsText.setFill(Color.WHITE);
         instructionsText.setFont(arcadeFont);
         instructionsText.setStyle("-fx-font-size: 15px; ");
