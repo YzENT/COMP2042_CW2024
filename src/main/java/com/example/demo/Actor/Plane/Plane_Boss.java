@@ -15,7 +15,7 @@ public class Plane_Boss extends Plane {
 	/**
 	 * The image name for the boss plane.
 	 */
-	private static final String IMAGE_NAME = "/com/example/demo/images/actors/bossplane.png";
+	private static final String IMAGE_NAME = "/images/actors/bossplane.png";
 
 	/**
 	 * The initial X position of the boss plane.

@@ -12,7 +12,7 @@ public class Level_1 extends LevelParent {
      * The name of the background image for level 1.
      * Source: <a href="https://craftpix.net/freebies/free-futuristic-city-pixel-art-backgrounds/">Link to background</a>
      */
-	private static final String BACKGROUND_IMAGE_NAME = "/com/example/demo/images/backgrounds/level1.png";
+	private static final String BACKGROUND_IMAGE_NAME = "/images/backgrounds/level1.png";
 
 	/**
 	 * The class name of the next level.

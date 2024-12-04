@@ -13,7 +13,7 @@ public class Level_4 extends LevelParent{
      * The name of the background image for level 3.
      * Source: <a href="https://craftpix.net/freebies/free-futuristic-city-pixel-art-backgrounds/">Link to background</a>
      */
-    private static final String BACKGROUND_IMAGE_NAME = "/com/example/demo/images/backgrounds/level4.png";
+    private static final String BACKGROUND_IMAGE_NAME = "/images/backgrounds/level4.png";
 
     /**
      * The custom message to appear on screen when user first enters level.
@@ -24,7 +24,7 @@ public class Level_4 extends LevelParent{
      * The path to the nuclear missile SFX.
      * Source: <a href="https://www.soundsnap.com/missile_shooting_light_1">Link to nuclear missile sfx</a>
      */
-    private static final String NUCLEAR_SFX = "/com/example/demo/audio/sfx/355337-Missile_-Shot_1_-Light_Version.mp3";
+    private static final String NUCLEAR_SFX = "/audio/sfx/355337-Missile_-Shot_1_-Light_Version.mp3";
 
     /**
      * The initial health of the player.

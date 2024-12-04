@@ -11,7 +11,7 @@ public class Plane_Enemy extends Plane {
 	/**
 	 * The image name for the enemy plane.
 	 */
-	private static final String IMAGE_NAME = "/com/example/demo/images/actors/enemyplane.png";
+	private static final String IMAGE_NAME = "/images/actors/enemyplane.png";
 
 	/**
 	 * The height of the enemy plane image.

@@ -16,7 +16,7 @@ public class ExplosionImage extends ImageView {
      * The name of the explosion image file.
      * Source: <a href="https://www.rawpixel.com/search/explosion%20png/">Link to Explosion Image</a>
      */
-    private static final String IMAGE_NAME = "/com/example/demo/images/misc/explosion.png";
+    private static final String IMAGE_NAME = "/images/misc/explosion.png";
 
     /**
      * The size of the explosion image.

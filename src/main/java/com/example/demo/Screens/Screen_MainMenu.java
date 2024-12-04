@@ -26,7 +26,7 @@ public class Screen_MainMenu extends BaseScreen {
      * The path to the background music file.
      * Source: <a href="https://pixabay.com/music/upbeat-intense-electro-trailer-music-243987/">Link to Main Menu BGM</a>
      */
-    private static final String BGM_PATH = "/com/example/demo/audio/bgm/intense-electro-trailer-music-243987.mp3";
+    private static final String BGM_PATH = "/audio/bgm/intense-electro-trailer-music-243987.mp3";
 
     /**
      * Constructor to initialize the Screen_MainMenu.

@@ -10,7 +10,7 @@ public class Projectile_User extends Projectile {
 	/**
 	 * The image name for the user projectile.
 	 */
-	private static final String IMAGE_NAME = "/com/example/demo/images/weapons/userfire.png";
+	private static final String IMAGE_NAME = "/images/weapons/userfire.png";
 
 	/**
 	 * The height of the user projectile image.

@@ -21,7 +21,7 @@ class AudioControllerTest {
 
     @Test
     void playBGM() throws InterruptedException {
-        audioController.playBGM("/com/example/demo/audio/bgm/cinematic-epic-237173.mp3");
+        audioController.playBGM("/audio/bgm/cinematic-epic-237173.mp3");
         assertNotNull(AudioController.getMediaPlayer(), "MediaPlayer should be initialized after playBGM is called");
 
         //need to pause for a while because it doesn't start playing immediately
@@ -31,7 +31,7 @@ class AudioControllerTest {
 
     @Test
     void stopBGM() throws InterruptedException {
-        audioController.playBGM("/com/example/demo/audio/bgm/cinematic-epic-237173.mp3");
+        audioController.playBGM("/audio/bgm/cinematic-epic-237173.mp3");
         Thread.sleep(MILLISECOND_DELAY);
         audioController.stopBGM();
         assertNull(AudioController.getMediaPlayer(), "MediaPlayer should be null after stopBGM is called");
@@ -39,7 +39,7 @@ class AudioControllerTest {
 
     @Test
     void pauseBGM() throws InterruptedException {
-        audioController.playBGM("/com/example/demo/audio/bgm/cinematic-epic-237173.mp3");
+        audioController.playBGM("/audio/bgm/cinematic-epic-237173.mp3");
         Thread.sleep(MILLISECOND_DELAY);
         audioController.pauseBGM();
         Thread.sleep(MILLISECOND_DELAY);
@@ -48,7 +48,7 @@ class AudioControllerTest {
 
     @Test
     void resumeBGM() throws InterruptedException {
-        audioController.playBGM("/com/example/demo/audio/bgm/cinematic-epic-237173.mp3");
+        audioController.playBGM("/audio/bgm/cinematic-epic-237173.mp3");
         Thread.sleep(MILLISECOND_DELAY);
         audioController.pauseBGM();
         Thread.sleep(MILLISECOND_DELAY);
@@ -59,13 +59,13 @@ class AudioControllerTest {
 
     @Test
     void playSFX() {
-        audioController.playSFX("/com/example/demo/audio/sfx/metal pipe falling.mp3");
+        audioController.playSFX("/audio/sfx/metal pipe falling.mp3");
         assertNotNull(audioController.getAudioClip(), "AudioClip should be initialized after playSFX is called");
     }
 
     @Test
     void stopSFX() {
-        audioController.playSFX("/com/example/demo/audio/sfx/metal pipe falling.mp3");
+        audioController.playSFX("/audio/sfx/metal pipe falling.mp3");
         audioController.stopSFX();
         assertNull(audioController.getAudioClip(), "AudioClip should be null after stopSFX is called");
     }

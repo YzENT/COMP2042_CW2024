@@ -39,13 +39,13 @@ public abstract class LevelParent {
 	 * The path to the background music file.
 	 * Source: <a href="https://pixabay.com/music/main-title-cinematic-epic-237173/">Link to epic music</a>
 	 */
-	private static final String BGM_PATH = "/com/example/demo/audio/bgm/cinematic-epic-237173.mp3";
+	private static final String BGM_PATH = "/audio/bgm/cinematic-epic-237173.mp3";
 
 	/**
      * The path to the metal pipe sound effect file.
      * Source: <a href="https://www.youtube.com/watch?v=f8mL0_4GeV0">Link to metal pipe falling sfx</a>
      */
-	private static final String METAL_PIPE = "/com/example/demo/audio/sfx/metal pipe falling.mp3";
+	private static final String METAL_PIPE = "/audio/sfx/metal pipe falling.mp3";
 
 	/**
 	 * The height of the screen.

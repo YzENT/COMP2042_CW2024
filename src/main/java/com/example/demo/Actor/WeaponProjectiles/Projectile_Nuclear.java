@@ -8,7 +8,7 @@ public class Projectile_Nuclear extends Projectile{
     /**
      * The image name for the nuclear projectile.
      */
-    private static final String IMAGE_NAME = "/com/example/demo/images/weapons/nuclear.png";
+    private static final String IMAGE_NAME = "/images/weapons/nuclear.png";
 
     /**
      * The height of the nuclear projectile image.

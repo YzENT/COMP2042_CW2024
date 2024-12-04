@@ -46,7 +46,7 @@ public abstract class BaseScreen {
      * Font for the arcade style.
      * Source: <a href="https://www.fontspace.com/press-start-2p-font-f11591">Link for arcade font</a>
      */
-    protected static final Font arcadeFont = Font.loadFont(BaseScreen.class.getResourceAsStream("/com/example/demo/fonts/PressStart2P-vaV7.ttf"), 0);
+    protected static final Font arcadeFont = Font.loadFont(BaseScreen.class.getResourceAsStream("/fonts/PressStart2P-vaV7.ttf"), 0);
 
     /**
      * The name of the font.
@@ -168,7 +168,7 @@ public abstract class BaseScreen {
             action.run();
 
             //https://github.com/YzENT/Auntys-Kopitiam/blob/main/assets/SharedAssets/MouseClick.mp3
-            playSFX("/com/example/demo/audio/sfx/MouseClick.mp3");
+            playSFX("/audio/sfx/MouseClick.mp3");
         });
         setupFocusListener(button);
         return button;

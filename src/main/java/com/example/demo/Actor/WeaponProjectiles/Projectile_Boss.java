@@ -8,7 +8,7 @@ public class Projectile_Boss extends Projectile {
 	/**
 	 * The image name for the boss projectile.
 	 */
-	private static final String IMAGE_NAME = "/com/example/demo/images/weapons/fireball.png";
+	private static final String IMAGE_NAME = "/images/weapons/fireball.png";
 
 	/**
 	 * The height of the boss projectile image.

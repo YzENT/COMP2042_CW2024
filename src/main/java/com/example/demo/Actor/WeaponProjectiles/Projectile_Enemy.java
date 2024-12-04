@@ -8,7 +8,7 @@ public class Projectile_Enemy extends Projectile {
 	/**
 	 * The image name for the enemy projectile.
 	 */
-	private static final String IMAGE_NAME = "/com/example/demo/images/weapons/enemyFire.png";
+	private static final String IMAGE_NAME = "/images/weapons/enemyFire.png";
 
 	/**
 	 * The height of the enemy projectile image.

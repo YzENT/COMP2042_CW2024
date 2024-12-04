@@ -12,7 +12,7 @@ public class ShieldImage extends ImageView {
 	/**
 	 * The name of the shield image file.
 	 */
-	private static final String IMAGE_NAME = "/com/example/demo/images/misc/shield.png";
+	private static final String IMAGE_NAME = "/images/misc/shield.png";
 
 	/**
 	 * The shield image object.

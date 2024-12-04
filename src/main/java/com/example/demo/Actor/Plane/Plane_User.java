@@ -12,7 +12,7 @@ public class Plane_User extends Plane {
 	/**
 	 * The image name for the user plane.
 	 */
-	private static final String IMAGE_NAME = "/com/example/demo/images/actors/userplane.png";
+	private static final String IMAGE_NAME = "/images/actors/userplane.png";
 
 	/**
 	 * The upper bound for the Y position of the user plane.
@@ -93,7 +93,7 @@ public class Plane_User extends Plane {
 	 * The sound effect for the user firing a projectile.
 	 * Source: <a href="https://pixabay.com/sound-effects/072807-heavy-machine-gun-50-caliber-39765/">Link to Shooting SFX</a>
 	 */
-	private static final String USER_FIRE_SOUND = "/com/example/demo/audio/sfx/072807_heavy-machine-gun-50-caliber-39765.mp3";
+	private static final String USER_FIRE_SOUND = "/audio/sfx/072807_heavy-machine-gun-50-caliber-39765.mp3";
 
 	/**
 	 * Constructor to initialize the Plane_User object with initial health.

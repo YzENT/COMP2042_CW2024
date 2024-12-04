@@ -16,7 +16,7 @@ class ProjectileTest {
 
     @BeforeEach
     void setUp() {
-        enemyProjectile = new Projectile("/com/example/demo/images/weapons/userfire.png", 0, 0, 0, 1, 0) {
+        enemyProjectile = new Projectile("/images/weapons/userfire.png", 0, 0, 0, 1, 0) {
             @Override
             public void updatePosition() {
                 // No-op for testing
@@ -28,7 +28,7 @@ class ProjectileTest {
             }
         };
 
-        userProjectile = new Projectile("/com/example/demo/images/weapons/userfire.png", 0, 0, 0, 5, 0) {
+        userProjectile = new Projectile("/images/weapons/userfire.png", 0, 0, 0, 5, 0) {
             @Override
             public void updatePosition() {
                 // No-op for testing
