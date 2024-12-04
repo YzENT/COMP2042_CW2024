@@ -179,7 +179,8 @@ KeyFrame gameLoop = new KeyFrame(Duration.millis(MILLISECOND_DELAY), e -> update
 # Modified Java Classes
 
 ## `com.example.demo.Actor`
-- All images that belongs to this package has been resized and modified to improve hitbox dimensions.
+- All images that belongs to this package has been resized and modified to improve hitbox sizes.
+- The user's bullet however still has some whitespace around it so it's easier to hit the enemy.
 
 ### `Plane_Boss.java`
 - Increased fire rate and movement rate to increase difficulty.
