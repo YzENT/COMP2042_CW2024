@@ -302,3 +302,9 @@ KeyFrame gameLoop = new KeyFrame(Duration.millis(MILLISECOND_DELAY), e -> update
  - `.json` file was supposed to be the default format to store the keyBindings for the game, and `jackson-core` was used.
  - It worked properly launching through the IDE, but when launching through `start.bat`, the application wouldn't work properly as it couldn't detect one of the dependencies, nor could it install it.
  - It was then decided to use `.properties` file instead to store the key bindings.
+
+## Screenshots
+![MainMenu](.images/home.png)
+![Controls Page](.images/controls_settings.png)
+![Level Page](.images/level_selection.png)
+![Level Preview](.images/level3_preview.png)
